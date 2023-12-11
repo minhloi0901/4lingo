@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".HomeActivity"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/navbar_margin"
+    android:layout_marginBottom="@dimen/navbar_margin">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2">
+        <LinearLayout
+            android:layout_width="@dimen/huge_icon_width"
+            android:layout_height="@dimen/huge_icon_height"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/align_margin">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_green"
+                android:layout_weight="4"
+                android:id="@+id/wordMatchingFrame">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/word_matching_icon"
+                    android:layout_margin="@dimen/in_box_margin"/>
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WORD MATCHING"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/huge_icon_width"
+            android:layout_height="@dimen/huge_icon_height"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/align_margin">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_green"
+                android:layout_weight="4"
+                android:id="@+id/completeSentenceFrame">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/complete_sentence_icon"
+                    android:layout_margin="@dimen/in_box_margin"/>
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COMPLETE SENTENCE"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/huge_icon_width"
+            android:layout_height="@dimen/huge_icon_height"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/align_margin">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_green"
+                android:layout_weight="4"
+                android:id="@+id/multipleChoiceFrame">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/multiple_choice_icon"
+                    android:layout_margin="@dimen/in_box_margin"/>
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MULTIPLE CHOICE"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/huge_icon_width"
+            android:layout_height="@dimen/huge_icon_height"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/align_margin">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_green"
+                android:layout_weight="4"
+                android:id="@+id/conversationFrame">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/conversation_icon"
+                    android:layout_margin="@dimen/in_box_margin"/>
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONVERSATION"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </GridLayout>
+</LinearLayout>
