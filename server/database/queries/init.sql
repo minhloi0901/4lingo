@@ -114,8 +114,8 @@ CREATE TABLE IF NOT EXISTS review {
 	star FLOAT DEFAULT 1.0,
 	feedback VARCHAR(1024),
 	PRIMARY KEY (lesson_id, id),
-	FOREIGN KEY (lesson_id) REFERENCES lesson(id),
-	FOREIGN KEY (author) REFERENCES user(id)
+	FOREIGN KEY (lesson_id) REFERENCES lesson(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 };
 
 CREATE TABLE IF NOT EXISTS contest {
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS contest {
 	duration TIME,
 	number_of_registers INT DEFAULT 0,
 	PRIMARY KEY (id),
-	FOREIGN KEY (creator) REFERENCES user(id) 
+	FOREIGN KEY (creator) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE 
 };
 
 CREATE TABLE IF NOT EXISTS lesson_completion {
@@ -138,7 +138,8 @@ CREATE TABLE IF NOT EXISTS lesson_completion {
 	has_review BOOLEAN,
 	score_received INT NOT NULL,
 	PRIMARY KEY (lesson_id, user_id),
-	FOREIGN KEY (lesson_id, user_id) 
+	FOREIGN KEY (lesson_id) REFERENCES lesson(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE 
 };
 
 CREATE TABLE IF NOT EXISTS community_membership {
@@ -147,53 +148,69 @@ CREATE TABLE IF NOT EXISTS community_membership {
 	date_joined TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	role ENUM("Admin", "Member")
 	PRIMARY KEY (community_id, user_id),
-	FOREIGN KEY (community_id) REFERENCES community(id),
-	FOREIGN KEY (user_id) REFERENCES user(id)
+	FOREIGN KEY (community_id) REFERENCES community(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE 
 };
 
 CREATE TABLE IF NOT EXISTS lesson_question {
-	lesson_id,
-	question_id,
+	lesson_id INT NOT NULL,
+	question_id INT NOT NULL,
+	PRIMARY KEY (lesson_id, question_id),
+	FOREIGN KEY (lesson_id) REFERENCES lesson(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+	FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE ON UPDATE CASCADE 
 };
 
 CREATE TABLE IF NOT EXISTS contest_question {
-	contest_id,
-	id,
-
+	contest_id INT NOT NULL,
+	question_id INT NOT NULL ,
+	PRIMARY KEY (contest_id, question_id),
+	FOREIGN KEY (contest_id) REFERENCES contest(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+	FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE ON UPDATE CASCADE 
 };
 
 CREATE TABLE IF NOT EXISTS contest_participation {
-	contest_id,
-	id,
-	total_score,
-	time_participated,
-	rank,
+	contest_id INT NOT NULL,
+	participation_id INT NOT NULL,
+	total_score INT DEFAULT 0,
+	time_participated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	rank INT DEFAULT 0,
+	PRIMARY KEY (contest_id, participation_id),
+	FOREIGN KEY (contest_id) REFERENCES contest(id) ON DELETE CASCADE ON UPDATE CASCADE , 
+	FOREIGN KEY (participation_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE 
 };
 
 CREATE TABLE IF NOT EXISTS achievement {
-	id,
-	name,
-	content,
-	criteria,	
+	id INT AUTO_INCREMENT,
+	name VARCHAR(1024) NOT NULL,
+	content NVARCHAR(1024),
+	criteria INT NOT NULL,
+	PRIMARY KEY (id)	
 };
 
 CREATE TABLE IF NOT EXISTS user_achievement {
-	id,
-	achievement_id
-	date_achieved,
+	id INT AUTO_INCREMENT,
+	achievement_id INT NOT NULL,
+	date_achieved TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	FOREIGN KEY (achievement_id) REFERENCES achievement(id) ON DELETE CASCADE ON UPDATE CASCADE 
 };
 
 CREATE TABLE IF NOT EXISTS notification {
-	id,
-	user_id,
-	time,
-	content,
-	viewed,
+	id INT AUTO_INCREMENT,
+	user_id INT NOT NULL,
+	time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	content NVARCHAR(1024),
+	viewed BOOLEAN,
+	PRIMARY KEY (id),
+	FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 };
 
 CREATE TABLE IF NOT EXISTS community_membership {
-	community_id,
-	user_id,
-	date_joined,
-	role,
+	community_id INT NOT NULL,
+	user_id INT NOT NULL,
+	date_joined TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	role ENUM("Admin", "Member"),
+	PRIMARY KEY (community_id, user_id),
+	FOREIGN KEY (community_id) REFERENCES community(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES user(id ) ON DELETE CASCADE ON UPDATE CASCADE
 };
