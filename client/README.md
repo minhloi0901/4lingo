@@ -1,1 +1,28 @@
+# TODO lists
 
+- [ ] LoginActivity
+- [ ] RegisterActivity
+- [ ] GetPasswordActivity
+- [x] HomeActivity
+- [ ] LearningPathActivity
+- [ ] WordMatchingActivity
+- [ ] CompleteSentenceActivity
+- [ ] MultipleChoiceActivity
+- [ ] ConversationActivity   
+- [ ] DictionaryActivity
+- [ ] MistakeListActivity
+- [ ] NoteActivity
+- [ ] CompleteLessonActivity
+- [ ] ReviewActivity
+- [ ] LeaderBoardActivity
+- [ ] ContestActivity
+- [ ] CreateContestActivity
+- [ ] CompleteContestActivity
+- [ ] ProfileActivity
+- [ ] OverralActivity
+- [ ] AchievementActivity
+- [ ] CommunityActivity
+- [ ] CreateCommunityActivity
+- [ ] ShareActivity
+- [ ] LicenseActivity
+- [ ] ThanksActivity
