@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <HorizontalScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!--
 
@@ -21,7 +22,7 @@
     -->
     <ScrollView android:id="@+id/login_screen" android:layout_width="wrap_content" android:layout_height="match_parent">
         <RelativeLayout android:id="@+id/content_container" android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <RelativeLayout android:id="@+id/page_login_screen_ek1" android:layout_marginTop="0dp" android:layout_marginStart="0dp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <RelativeLayout android:id="@+id/page_login_screen_ek1" android:layout_marginTop="0dp" android:layout_marginStart="0dp" android:layout_width="match_parent" android:layout_height="match_parent">
                 <View android:id="@+id/_bg__login_screen_ek2" android:background="@drawable/_bg__login_screen_ek2_shape" android:layout_marginStart="0dp" android:layout_marginTop="0dp" android:layout_width="360dp" android:layout_height="640dp"/>
                 <RelativeLayout android:id="@+id/group_12" android:layout_marginTop="367dp" android:layout_marginStart="55dp" android:layout_width="wrap_content" android:layout_height="wrap_content">
                     <View android:id="@+id/_bg__group_12_ek1" android:background="@drawable/_bg__group_12_ek1_shape" android:layout_marginStart="-55dp" android:layout_marginTop="-367dp" android:layout_width="250dp" android:layout_height="50dp"/>
@@ -57,9 +58,12 @@
                         android:id="@+id/imageButton"
                         android:layout_width="38dp"
                         android:layout_height="33dp"
-                        app:srcCompat="@drawable/left_arrow"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@null"
-                        android:layout_margin="10dp"/>
+                        app:srcCompat="@drawable/left_arrow" />
 
                     <View
                         android:id="@+id/_bg__password_ek1"
@@ -91,9 +95,7 @@
                 </RelativeLayout>
                 <ImageView android:id="@+id/_2021_facebook_icon_1" android:src="@drawable/_2021_facebook_icon_1" android:contentDescription="_2021_facebook_icon_1" android:layout_marginStart="50dp" android:layout_marginTop="508dp" android:layout_width="30dp" android:layout_height="30.67dp"/>
                 <ImageView android:id="@+id/google__g__logo_1" android:src="@drawable/google__g__logo_1" android:contentDescription="google__g__logo_1" android:layout_marginStart="190dp" android:layout_marginTop="508dp" android:layout_width="30dp" android:layout_height="30dp"/>
-                <RelativeLayout android:id="@+id/frame_3" android:layout_marginTop="129dp" android:layout_marginStart="194dp" android:layout_width="wrap_content" android:layout_height="wrap_content">
-                    <View android:id="@+id/_bg__frame_3_ek1" android:background="@drawable/_bg__frame_3_ek1_shape" android:layout_marginStart="0dp" android:layout_marginTop="0dp" android:layout_width="100dp" android:layout_height="100dp"/>
-                </RelativeLayout>
+                <RelativeLayout android:id="@+id/frame_3" android:layout_marginTop="129dp" android:layout_marginStart="194dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

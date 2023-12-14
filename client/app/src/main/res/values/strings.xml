@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">4Lingo</string>
+    <string name="ek_img_content">ExportKit Image</string>
+    <string name="__ng_nh_p_string">Đăng nhập </string>
+    <string name="qu_n_m_t_kh_u_string">
+<u>Quên mật khẩu</u>
+</string>
+    <string name="__ng_nh_p__i_n_tho_i_string">ĐĂNG NHẬP ĐIỆN THOẠI ĐIỆN </string>
+    <string name="facebook_string">FACEBOOK</string>
+    <string name="google_string">GOOGLE</string>
+    <string name="ch_a_c__t_i_kho_n____ng_k__string">Chưa có tài khoản? Đăng </string>
+    <string name="h_y_b_t___u_h_c_c_ng_4lingo__string">Hãy bắt đầu học cùng 4lingo!</string>
+    <string name="__ng_nh_p_ek1_string">Đăng nhập</string>
+    <string name="t_n___ng_nh_p_string">Tên đăng nhập</string>
+    <string name="m_t_kh_u_string">Mật khẩu</string>
 </resources>
