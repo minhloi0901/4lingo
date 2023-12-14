@@ -32,5 +32,4 @@ public class LeaderBoardActivity extends MainActivity {
         RankingAdapter adapter = new RankingAdapter(rankingItemList, this);
         recyclerView.setAdapter(adapter);
     }
-
 }

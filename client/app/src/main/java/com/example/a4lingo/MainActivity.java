@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
     protected void renderNavigation() {
         ImageView leaderboardView = findViewById(R.id.leaderboard);
+        leaderboardView.setTooltipText("LeaderBoard");
         leaderboardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ImageView contestView = findViewById(R.id.contest);
+        contestView.setTooltipText("Contest");
         contestView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ImageView notificationView = findViewById(R.id.notification);
+        notificationView.setTooltipText("Notification");
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ImageView profileView = findViewById(R.id.profile);
+        profileView.setTooltipText("Profile");
         profileView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FrameLayout homeView = findViewById(R.id.home);
+        homeView.setTooltipText("Home");
         homeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FrameLayout searchView = findViewById(R.id.search);
+        searchView.setTooltipText("Search");
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         FrameLayout mistakeView = findViewById(R.id.mistake);
+        mistakeView.setTooltipText("Mistake");
         mistakeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         FrameLayout noteView = findViewById(R.id.note);
+        noteView.setTooltipText("Note");
         noteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
