@@ -1,4 +1,4 @@
-package com.example.a4lingo;
+package com.example.a4lingo.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.a4lingo.item.MistakeItem;
+import com.example.a4lingo.R;
 
 import java.util.List;
 

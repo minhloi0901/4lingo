@@ -1,4 +1,4 @@
-package com.example.a4lingo;
+package com.example.a4lingo.item;
 
 public class MistakeItem {
     private String assignmentType;

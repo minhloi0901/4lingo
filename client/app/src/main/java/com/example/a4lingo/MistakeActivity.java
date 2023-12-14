@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a4lingo.adapter.MistakeAdapter;
+import com.example.a4lingo.item.MistakeItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
