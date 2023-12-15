@@ -20,7 +20,7 @@
 - [ ] CompleteContestActivity
 - [x] ProfileActivity
 - [ ] OverralActivity
-- [ ] AchievementActivity
+- [x] AchievementActivity
 - [ ] CommunityActivity
 - [ ] CreateCommunityActivity
 - [ ] ShareActivity
