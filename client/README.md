@@ -1,6 +1,6 @@
 # TODO lists
 
-- [ ] LoginActivity
+- [x] LoginActivity
 - [ ] RegisterActivity
 - [ ] GetPasswordActivity
 - [x] HomeActivity
@@ -9,16 +9,16 @@
 - [ ] CompleteSentenceActivity
 - [ ] MultipleChoiceActivity
 - [ ] ConversationActivity   
-- [ ] DictionaryActivity
-- [ ] MistakeListActivity
-- [ ] NoteActivity
+- [x] DictionaryActivity
+- [x] MistakeListActivity
+- [x] NoteActivity
 - [ ] CompleteLessonActivity
 - [ ] ReviewActivity
-- [ ] LeaderBoardActivity
+- [x] LeaderBoardActivity
 - [ ] ContestActivity
 - [ ] CreateContestActivity
 - [ ] CompleteContestActivity
-- [ ] ProfileActivity
+- [x] ProfileActivity
 - [ ] OverralActivity
 - [ ] AchievementActivity
 - [ ] CommunityActivity
