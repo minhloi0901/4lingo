@@ -1,6 +1,7 @@
 package com.example.a4lingo;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -10,11 +11,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
 
-public class ProfileActivity extends MainActivity{
+public class ProfileActivity extends OneTopNavActivity{
     @Override
-    protected void renderLayout(){
-        super.renderLayout();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        renderLayout("Tài khoản", "LƯU");
+    }
+
+    @Override
+    protected void renderLayout(String pageTittle, String rightButtonText){
+        super.renderLayout(pageTittle, rightButtonText);
+
         LinearLayout root = (LinearLayout) findViewById(R.id.content);
+
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.activity_profile, root, false);
 
@@ -24,6 +34,33 @@ public class ProfileActivity extends MainActivity{
     @Override
     protected void renderNavigation(){
         super.renderNavigation();
+
+        findViewById(R.id.leftButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Ask if changed but didn't save
+                finish();
+            }
+        });
+
+        findViewById(R.id.rightButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Store to database
+
+                // Finish
+                finish();
+            }
+        });
+
+        findViewById(R.id.changeAvatar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), ChangeAvatarActivity.class);
+//                startActivity(intent);
+            }
+        });
+
 
         findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
             @Override

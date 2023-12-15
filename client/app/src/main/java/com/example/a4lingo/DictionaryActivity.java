@@ -13,7 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.a4lingo.adapter.DictionarySearchedWordsAdapter;
+
+import java.util.Arrays;
+
 public class DictionaryActivity extends MainActivity {
+    private DictionarySearchedWordsAdapter adapter;
     @Override
     protected void renderLayout(){
         super.renderLayout();
@@ -21,12 +29,18 @@ public class DictionaryActivity extends MainActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.activity_dictionary, root, false);
 
-        // Example usage
-        renderAnInstance(v, "Hello");
-        renderAnInstance(v, "World");
-        renderAnInstance(v, "Android");
+        renderAnInstance(v);
 
         root.addView(v);
+    }
+
+    private void renderAnInstance(View v) {
+        RecyclerView recyclerView = v.findViewById(R.id.searchedWordsRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new DictionarySearchedWordsAdapter(this, Arrays.asList("Hello", "Duo", "Lingo"));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -40,10 +54,9 @@ public class DictionaryActivity extends MainActivity {
                 ImageView imageView = findViewById(R.id.cancelSearchButton);
                 imageView.setVisibility(View.VISIBLE);
 
-                ScrollView scrollView = findViewById(R.id.searchedWordsScrollView);
-                LinearLayout linearLayout = findViewById(R.id.searchedWordsLinearLayout);
-                if (linearLayout.getChildCount() > 0){
-                    scrollView.setVisibility(View.VISIBLE);
+                RecyclerView recyclerView = findViewById(R.id.searchedWordsRecyclerView);
+                if (adapter.getItemCount() > 0){
+                    recyclerView.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -71,39 +84,22 @@ public class DictionaryActivity extends MainActivity {
             public void onClick(View view) {
                 view.setVisibility(View.GONE);
 
-                ScrollView scrollView = findViewById(R.id.searchedWordsScrollView);
-                scrollView.setVisibility(View.GONE);
+                RecyclerView recyclerView = findViewById(R.id.searchedWordsRecyclerView);
+                recyclerView.setVisibility(View.GONE);
 
                 editText.setText("");
 
             }
         });
 
-    }
 
-
-
-    private void renderAnInstance(View v, String word) {
-        ScrollView scrollView = v.findViewById(R.id.searchedWordsScrollView);
-        LinearLayout linearLayout = v.findViewById(R.id.searchedWordsLinearLayout);
-
-        LayoutInflater inflater = getLayoutInflater();
-        View dictionaryItem = inflater.inflate(R.layout.dictionary_item, linearLayout, false);
-
-        TextView textView = dictionaryItem.findViewById(R.id.searchedWord);
-        textView.setText(word);
-
-        ImageView imageView = dictionaryItem.findViewById(R.id.forwardToWordPageButton);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        ImageView audio = findViewById(R.id.audioButton);
+        audio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WordDictionaryActivity.class);
-                intent.putExtra("WORD", word);
-                startActivity(intent);
+                // Make sound
             }
         });
 
-        linearLayout.addView(dictionaryItem);
-//        scrollView.setVisibility(View.VISIBLE);
     }
 }

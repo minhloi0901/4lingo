@@ -51,8 +51,8 @@
             />
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/searchedWordsScrollView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchedWordsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginTop="-10dp"
@@ -60,15 +60,7 @@
         android:layout_marginRight="30dp"
         android:background="@drawable/dictionary_searched_words_background"
         android:visibility="gone"
-        >
-
-        <LinearLayout
-            android:id="@+id/searchedWordsLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp"/>
-    </ScrollView>
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
