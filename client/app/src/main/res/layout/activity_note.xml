@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MistakeActivity"
     >
 
-    <include
-        android:id="@+id/topNavBar"
-        layout="@layout/top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/topNavBar"
-        android:layout_above="@id/botNavBar"
         android:id="@+id/recyclerViewNotes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-    <include
-        android:layout_alignParentBottom="true"
-        android:id="@+id/botNavBar"
-        layout="@layout/bot_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</RelativeLayout>
+</LinearLayout>

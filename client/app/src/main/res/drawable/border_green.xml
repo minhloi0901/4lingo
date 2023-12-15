@@ -2,6 +2,6 @@
     android:shape="rectangle">
     <stroke
         android:width="3dp"
-        android:color="@color/green" /> <!-- Adjust the stroke width and color as desired -->
-    <corners android:radius="5dp" /> <!-- Adjust the corner radius if needed -->
+        android:color="@color/green" />
+    <corners android:radius="5dp" />
 </shape>

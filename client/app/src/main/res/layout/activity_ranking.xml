@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".LeaderBoardActivity">
-
-    <include
-        android:id="@+id/topNavBar"
-        layout="@layout/top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/inforBar"
@@ -21,7 +16,6 @@
         android:layout_marginTop="16dp"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:layout_below="@id/topNavBar"
         >
 
         <TextView
@@ -64,19 +58,10 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/inforBar"
-        android:layout_above="@id/botNavBar"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
         />
 
-    <include
-        android:layout_alignParentBottom="true"
-        android:id="@+id/botNavBar"
-        layout="@layout/bot_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -1,6 +1,9 @@
 package com.example.a4lingo;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,18 +16,24 @@ import java.util.List;
 
 public class LeaderBoardActivity extends MainActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ranking);
+    protected void renderLayout(){
+        super.renderLayout();
+        LinearLayout root = (LinearLayout) findViewById(R.id.content);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View v = layoutInflater.inflate(R.layout.activity_ranking, root, false);
 
-        renderLayout();
-        renderNavigation();
+        renderAnInstance(v);
 
-        renderAnInstance();
+        root.addView(v);
     }
 
-    private void renderAnInstance() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+    @Override
+    protected void renderNavigation(){
+        super.renderNavigation();
+    }
+
+    private void renderAnInstance(View v) {
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<RankingItem> rankingItemList = new ArrayList<>();
