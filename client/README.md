@@ -4,7 +4,7 @@
 - [ ] RegisterActivity
 - [ ] GetPasswordActivity
 - [x] HomeActivity
-- [ ] LearningPathActivity
+- [x] LearningPathActivity
 - [ ] WordMatchingActivity
 - [ ] CompleteSentenceActivity
 - [ ] MultipleChoiceActivity
