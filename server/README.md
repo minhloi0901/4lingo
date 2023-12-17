@@ -1,5 +1,12 @@
 # TODO lists
 
+### Users
+- [x] Create one Users
+- [x] Delete Users
+- [x] Find one Users
+- [x] Find all Users
+- [x] Update Users
+
 ### Students
 - [ ] Create one Students 
 - [ ] Delete Students
