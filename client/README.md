@@ -13,7 +13,7 @@
 - [x] MistakeListActivity
 - [x] NoteActivity
 - [ ] CompleteLessonActivity
-- [ ] ReviewActivity
+- [x] ReviewActivity
 - [x] LeaderBoardActivity
 - [ ] ContestActivity
 - [ ] CreateContestActivity
