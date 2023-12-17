@@ -1,8 +1,8 @@
 # TODO lists
 
 - [x] LoginActivity
-- [ ] RegisterActivity
-- [ ] GetPasswordActivity
+- [x] RegisterActivity
+- [x] GetPasswordActivity
 - [x] HomeActivity
 - [x] LearningPathActivity
 - [ ] WordMatchingActivity
