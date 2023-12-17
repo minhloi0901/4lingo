@@ -2,12 +2,12 @@ package com.example.a4lingo;
 
 import android.os.Bundle;
 
-public class ContestActivity extends OneTopNavActivity {
+public class LearningPathActivity extends OneTopNavActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        renderLayout("Cuộc thi", "TẠO");
+        renderLayout("Lộ trình học", null);
     }
     @Override
     protected void renderLayout(String pageTittle, String rightButtonText) {

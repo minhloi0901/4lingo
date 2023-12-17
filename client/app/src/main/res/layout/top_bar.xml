@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/navbar_margin"
+    android:orientation="horizontal"
+    android:id="@+id/topNavBar"
+    android:background="@color/nav">
+    <ImageView
+        android:layout_width="@dimen/fit_icon_size"
+        android:layout_height="@dimen/small_icon_size"
+        android:src="@drawable/leaderboard_icon"
+        android:layout_gravity="center"
+        android:id="@+id/leaderboard"
+        android:layout_weight="1"/>
+    <ImageView
+        android:layout_width="@dimen/fit_icon_size"
+        android:layout_height="@dimen/fit_icon_size"
+        android:src="@drawable/contest_icon"
+        android:layout_gravity="center"
+        android:id="@+id/contest"
+        android:layout_weight="1"/>
+    <ImageView
+        android:layout_width="@dimen/small_icon_size"
+        android:layout_height="@dimen/small_icon_size"
+        android:src="@drawable/notification_icon"
+        android:layout_gravity="center"
+        android:id="@+id/notification"
+        android:layout_weight="1"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/fit_icon_size"
+        android:layout_height="@dimen/fit_icon_size"
+        android:src="@drawable/profile_icon"
+        android:layout_gravity="center"
+        android:id="@+id/profile"
+        android:layout_weight="1">
+    </de.hdodenhof.circleimageview.CircleImageView>
+</LinearLayout>

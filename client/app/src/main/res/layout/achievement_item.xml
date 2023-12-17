@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/achievementItemLayout"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/achievementImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_achievement_instance"
+            android:layout_gravity="center_vertical"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+
+            <TextView
+                android:id="@+id/achievementName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chúa tể nhiệm vụ"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                />
+            <TextView
+                android:id="@+id/achievementDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hoàn thành 10 nhiệm vụ"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/horizontalProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/progress_bar_horizontal" />
+
+                <TextView
+                    android:id="@+id/progressTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5/10"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:paddingLeft="10dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/separatedLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/green"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>
