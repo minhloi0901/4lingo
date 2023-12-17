@@ -16,7 +16,7 @@
 - [x] ReviewActivity
 - [x] LeaderBoardActivity
 - [x] ContestActivity
-- [ ] CreateContestActivity
+- [x] CreateContestActivity
 - [ ] CompleteContestActivity
 - [x] ProfileActivity
 - [ ] OverralActivity
