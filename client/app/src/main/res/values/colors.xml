@@ -7,4 +7,6 @@
     <color name="cyan">#00FFFF</color>
     <color name="blue">#0000FF</color>
     <color name="gray">#48A9A9</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="light_yellow">#DCFFEB3B</color>
 </resources>
