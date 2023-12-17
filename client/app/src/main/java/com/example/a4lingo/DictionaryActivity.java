@@ -88,16 +88,6 @@ public class DictionaryActivity extends MainActivity {
                 recyclerView.setVisibility(View.GONE);
 
                 editText.setText("");
-
-            }
-        });
-
-
-        ImageView audio = findViewById(R.id.audioButton);
-        audio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Make sound
             }
         });
 

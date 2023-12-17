@@ -50,6 +50,14 @@ public class WordDictionaryActivity extends DictionaryActivity{
     @Override
     protected void renderNavigation(){
         super.renderNavigation();
+
+        ImageView audio = findViewById(R.id.audioButton);
+        audio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Make sound
+            }
+        });
     }
 
     private void renderAnInstance(View v, String meaning, String engSentence, String vieSentence) {
