@@ -15,7 +15,7 @@
 - [ ] CompleteLessonActivity
 - [x] ReviewActivity
 - [x] LeaderBoardActivity
-- [ ] ContestActivity
+- [x] ContestActivity
 - [ ] CreateContestActivity
 - [ ] CompleteContestActivity
 - [x] ProfileActivity
