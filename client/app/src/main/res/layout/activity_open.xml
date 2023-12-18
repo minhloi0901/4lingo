@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/root"
+    android:background="@drawable/background"
+    tools:context=".OpenActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+   <ImageView
+       android:id="@+id/open_bird"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:src="@drawable/bird_duolingo"
+       android:layout_gravity="center"
+
+       android:layout_margin="50dp"></ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="4LINGO"
+        android:textColor="@color/green"
+        android:textSize="30dp"
+        android:textStyle="bold"></TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cách học tiếng anh siêu vui nhộn, siêu hiệu quả và miễn phí!"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:layout_margin="35dp"></TextView>
+    <TextView
+        android:id="@+id/open_register"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TẠO TÀI KHOẢN MỚI"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/big_radius_border_green"
+        android:padding="16dp"
+        android:backgroundTint="#19D937"
+        />
+    <TextView
+        android:id="@+id/open_login"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TÔI ĐÃ CÓ TÀI KHOẢN"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/big_radius_border_green"
+        android:padding="16dp"
+        android:backgroundTint="#19D937"
+        />
+</LinearLayout>

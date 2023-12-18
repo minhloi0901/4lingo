@@ -1,10 +1,10 @@
 # TODO lists
 
 - [x] LoginActivity
-- [ ] RegisterActivity
-- [ ] GetPasswordActivity
+- [x] RegisterActivity
+- [x] GetPasswordActivity
 - [x] HomeActivity
-- [ ] LearningPathActivity
+- [x] LearningPathActivity
 - [ ] WordMatchingActivity
 - [ ] CompleteSentenceActivity
 - [ ] MultipleChoiceActivity
@@ -13,10 +13,10 @@
 - [x] MistakeListActivity
 - [x] NoteActivity
 - [ ] CompleteLessonActivity
-- [ ] ReviewActivity
+- [x] ReviewActivity
 - [x] LeaderBoardActivity
-- [ ] ContestActivity
-- [ ] CreateContestActivity
+- [x] ContestActivity
+- [x] CreateContestActivity
 - [ ] CompleteContestActivity
 - [x] ProfileActivity
 - [ ] OverralActivity

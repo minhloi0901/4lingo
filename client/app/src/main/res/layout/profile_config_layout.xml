@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/medium_radius_border_green"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Hiệu ứng âm thanh"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:layout_gravity="center_vertical"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/soundToggle"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:thumb="@drawable/thumb"
+            app:track="@drawable/track"
+            android:checked="true"
+            app:switchMinWidth="100dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#19D937" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Chế độ tối"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:layout_gravity="center_vertical"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/themeModeToggle"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:thumb="@drawable/thumb"
+            app:track="@drawable/track"
+            android:checked="true"
+            app:switchMinWidth="100dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#19D937" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Thông báo khích lệ"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:layout_gravity="center_vertical"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/notiToggle"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:thumb="@drawable/thumb"
+            app:track="@drawable/track"
+            android:checked="true"
+            app:switchMinWidth="100dp"
+            />
+
+    </LinearLayout>
+</LinearLayout>
