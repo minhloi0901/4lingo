@@ -9,8 +9,11 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class ShareActivity extends AppCompatActivity {
 
@@ -81,6 +84,19 @@ public class ShareActivity extends AppCompatActivity {
             }
         });
 
+        Button btn = findViewById(R.id.shareBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheet();
+            }
+        });
+    }
 
+    private void showBottomSheet() {
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.layout_bottom_sheet, null);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
     }
 }

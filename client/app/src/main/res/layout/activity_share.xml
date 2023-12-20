@@ -45,7 +45,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        android:id="@+id/shareBtn"/>
 
     <TextView
         android:layout_width="match_parent"
