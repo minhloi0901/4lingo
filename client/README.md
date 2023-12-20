@@ -12,7 +12,7 @@
 - [x] DictionaryActivity
 - [x] MistakeListActivity
 - [x] NoteActivity
-- [ ] CompleteLessonActivity
+- [x] CompleteLessonActivity
 - [x] ReviewActivity
 - [x] LeaderBoardActivity
 - [x] ContestActivity
