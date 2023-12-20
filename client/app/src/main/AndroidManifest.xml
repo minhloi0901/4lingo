@@ -13,13 +13,18 @@
         android:theme="@style/Theme._4Lingo"
         tools:targetApi="31">
         <activity
-            android:name=".CompleteLessonActivity"
+            android:name=".ShareActivity"
             android:exported="true">
 
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CompleteLessonActivity"
+            android:exported="true">
         </activity>
         <activity
             android:name=".CreateContestActivity"
