@@ -6,13 +6,13 @@
 
     <!-- Big Square Image -->
     <ImageView
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center_horizontal"
-
-        android:src="@drawable/duolingo_icon" /> <!-- Replace with your image resource -->
+        android:src="@drawable/duolingo_icon"
+        android:id="@+id/resultImg"/> <!-- Replace with your image resource -->
 
     <!-- Big TextView -->
     <TextView
@@ -23,7 +23,8 @@
         android:textColor="#FFA500"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:id="@+id/resultText"/>
 
     <!-- Horizontal LinearLayout with three elements -->
     <LinearLayout
@@ -58,7 +59,8 @@
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
                 android:textAlignment="center"
-                android:background="@drawable/solid_round_white"/>
+                android:background="@drawable/solid_round_white"
+                android:id="@+id/score"/>
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +87,8 @@
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
                 android:textAlignment="center"
-                android:background="@drawable/solid_round_white"/>
+                android:background="@drawable/solid_round_white"
+                android:id="@+id/time"/>
         </LinearLayout>
 
         <LinearLayout
@@ -112,7 +115,8 @@
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
                 android:textAlignment="center"
-                android:background="@drawable/solid_round_white"/>
+                android:background="@drawable/solid_round_white"
+                android:id="@+id/accuracy"/>
         </LinearLayout>
 
 
@@ -127,7 +131,8 @@
         android:background="@drawable/blue_process_bar_horizontal"
         style="@style/CustomButton"
         android:textSize="20sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:id="@+id/resultReviewButton"/>
 
     <!-- Button 2 -->
     <Button
@@ -138,5 +143,6 @@
         android:background="@drawable/progress_bar_horizontal"
         style="@style/CustomButton"
         android:textSize="20sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:id="@+id/resultContinueButton"/>
 </LinearLayout>
