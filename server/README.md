@@ -85,18 +85,18 @@
 - [ ] Update Contests
 
 ### Communitys
-- [ ] Create one Communitys
-- [ ] Delete Communitys
-- [ ] Find one Communitys
-- [ ] Find all Communitys
-- [ ] Update Communitys
+- [x] Create one Communitys
+- [x] Delete Communitys
+- [x] Find one Communitys
+- [x] Find all Communitys
+- [x] Update Communitys
 
 ### Posts
-- [ ] Create one Posts
-- [ ] Delete Posts
-- [ ] Find one Posts
-- [ ] Find all Posts
-- [ ] Update Posts
+- [x] Create one Posts
+- [x] Delete Posts
+- [x] Find one Posts
+- [x] Find all Posts
+- [x] Update Posts
 
 ### Comments 
 - [ ] Create one Comments
