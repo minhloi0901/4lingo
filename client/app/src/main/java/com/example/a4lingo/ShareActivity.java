@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class ShareActivity extends AppCompatActivity {
-
     String achieveName = "";
     String theDescription = "";
 

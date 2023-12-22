@@ -34,6 +34,7 @@
             android:layout_weight="1">
         </View>
         <ImageView
+            android:id="@+id/clockImageView"
             android:layout_width="@dimen/big_icon_size"
             android:layout_height="@dimen/item_height"
             android:layout_gravity="center|right"

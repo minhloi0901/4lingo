@@ -16,7 +16,6 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 public class CompleteLessonActivity extends OneTopNavActivity {
-
     int totalScore = 0;
     int theTime = 0;
     int theAccuracy = 0;
@@ -116,7 +115,7 @@ public class CompleteLessonActivity extends OneTopNavActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CompleteLessonActivity.this, HomeActivity.class);
+                Intent intent = new Intent(CompleteLessonActivity.this, ShareActivity.class);
                 startActivity(intent);
             }
         });

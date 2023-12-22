@@ -17,31 +17,33 @@
 
         <ImageView
             android:id="@+id/leftButton"
-            android:layout_width="35dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_left_back_arrow"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="7.5dp"
+            android:paddingRight="7.5dp"
             />
 
         <TextView
             android:id="@+id/pageTittle"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-
-            android:textSize="24sp"
-            android:textStyle="bold"
             android:layout_margin="5dp"
-            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/rightButton"
-            android:layout_width="35dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textColor="#FB0000"
             android:textStyle="bold|italic"

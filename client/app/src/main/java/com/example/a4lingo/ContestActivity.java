@@ -1,9 +1,11 @@
 package com.example.a4lingo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -85,5 +87,17 @@ public class ContestActivity extends OneTopNavActivity {
     @Override
     protected void renderNavigation() {
         super.renderNavigation();
+
+        TextView createContest = findViewById(R.id.rightButton);
+        createContest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Check authority
+
+                // Move to createContestActivity
+                Intent intent = new Intent(getApplicationContext(), CreateContestActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
