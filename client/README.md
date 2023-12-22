@@ -23,6 +23,6 @@
 - [x] AchievementActivity
 - [ ] CommunityActivity
 - [ ] CreateCommunityActivity
-- [ ] ShareActivity
+- [x] ShareActivity
 - [ ] LicenseActivity
 - [ ] ThanksActivity
