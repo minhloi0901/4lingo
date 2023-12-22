@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center_horizontal">
+
+    <!-- Horizontal view for avatar and talking box -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp">
+
+        <!-- ImageView for the avatar -->
+        <ImageView
+            android:id="@+id/avatarImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/duolingo_icon"
+            android:layout_marginRight="16dp"/>
+
+        <!-- TextView as a talking box -->
+        <TextView
+            android:id="@+id/talkingBoxTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bubble_background"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="10dp"
+            android:text="Trình độ tiếng anh của bạn ở mức nào?"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <!-- Button 1 -->
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đáp án 1"
+        android:textColor="@color/black"
+        style="@style/CustomButton"
+        android:background="@drawable/choice_background"
+        android:layout_marginBottom="16dp"
+        android:layout_marginVertical="10dp"/>
+
+    <!-- Button 2 -->
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đáp án 2"
+        android:textColor="@color/black"
+        style="@style/CustomButton"
+        android:background="@drawable/choice_background"
+        android:layout_marginBottom="16dp"
+        android:layout_marginVertical="10dp"/>
+
+    <!-- Button 3 -->
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đáp án 3"
+        android:textColor="@color/black"
+        style="@style/CustomButton"
+        android:background="@drawable/choice_background"
+        android:layout_marginBottom="16dp"
+        android:layout_marginVertical="10dp"/>
+
+    <!-- Button 4 -->
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đáp án 4"
+        android:textColor="@color/black"
+        style="@style/CustomButton"
+        android:background="@drawable/choice_background"
+        android:layout_marginBottom="16dp"
+        android:layout_marginVertical="10dp"/>
+
+    <!-- Continue button -->
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TIẾP TỤC"
+        android:background="@drawable/progress_bar_horizontal"
+        style="@style/CustomButton"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+</LinearLayout>

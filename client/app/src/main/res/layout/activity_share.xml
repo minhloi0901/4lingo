@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShareActivity"
+    android:background="#ddfce3"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/resultImg"
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitCenter"
+        android:src="@drawable/prize_cup" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chúc mừng bạn đã đạt được thành tích Quán Quân"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:padding="10dp"
+        android:id="@+id/text1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đạt hạng #1 ở bảng xếp hạng bất kỳ"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:padding="10dp"
+        android:id="@+id/text2"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chia sẻ"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/progress_bar_horizontal"
+        style="@style/CustomButton"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        tools:ignore="HardcodedText"
+        android:id="@+id/shareBtn"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="ĐÓNG"
+        android:padding="10dp"
+        android:textColor="#FF1100"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:id="@+id/shareOff"/>
+</LinearLayout>
