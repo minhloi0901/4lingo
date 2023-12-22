@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/leftButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
             android:src="@drawable/ic_left_back_arrow"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
@@ -31,21 +31,20 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
 
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textAlignment="center"
-            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:textColor="@color/black"
             />
 
         <TextView
             android:id="@+id/rightButton"
-            android:layout_width="50dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:textColor="#FB0000"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             android:textSize="20sp"
             android:layout_gravity="center_vertical"
             />
