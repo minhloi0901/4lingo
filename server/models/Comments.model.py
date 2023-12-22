@@ -9,16 +9,16 @@ sys.path.append(server_directory)
 from database.db import db
 from sqlalchemy.ext.declarative import declarative_base
 
-from server.models.Communities.model import Community
-from server.models.Users.model import User
-from server.models.Posts.model import Post
+from models.Communities.model import *
+from models.Users.model import *
+from models.Posts.model import *
 
 
 Session = db['Session']
 session = Session()
 Base = declarative_base()
 
-def Comment(Base):
+class Comment(Base):
 #     CREATE TABLE IF NOT EXISTS comment (
 # 	community_id INT NOT NULL,
 # 	post_id INT NOT NULL,
