@@ -31,15 +31,6 @@ class User(Base):
     # Class method to create a new user
     @classmethod
     def create_new_user(cls, username, password, role, email, phone_number=None):
-        # Check if user already exists
-        existing_user = session.query(cls).filter((cls.username == username) | (cls.email == email)).first()
-        if existing_user:
-            if existing_user.username == username:
-                print(f"User already exists with username: {existing_user.username}")
-            elif existing_user.email == email:
-                print(f"User already exists with email: {existing_user.email}")
-            return existing_user
-        
         new_user = cls (
             username=username,
             password=password,
