@@ -17,7 +17,7 @@ session = Session()
 Base = declarative_base()
 
 
-def Post(Base):
+class Post(Base):
 #     CREATE TABLE IF NOT EXISTS post (
 # 	community_id INT NOT NULL, 
 # 	id INT NOT NULL,
