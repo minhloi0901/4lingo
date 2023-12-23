@@ -26,3 +26,10 @@
 - [x] ShareActivity
 - [ ] LicenseActivity
 - [ ] ThanksActivity
+
+### SERVICE API TODO
+## LearningPathService
+- [ ] getLearningPathQuestions (): return list of questions 
+- [ ] getLearningPathAnswers (): return list of answers
+- [ ] getLearningPath (list of answers) : return starting lesson_id
+
