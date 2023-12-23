@@ -11,7 +11,10 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.LearningPathService;
 import com.example.a4lingo.Services.ProfileService;
+
+import java.util.ArrayList;
 
 public class ProfileActivity extends OneTopNavActivity{
     private ProfileService profileService;
@@ -89,6 +92,12 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LearningPathActivity.class);
+                LearningPathService learningPathService = new LearningPathService();
+                intent.putExtra("QUESTION_ID", 0);
+                intent.putStringArrayListExtra("QUESTION", learningPathService.getLearningPathQuestions());
+                intent.putExtra("ANSWER", learningPathService.getLearningPathAnswers());
+                ArrayList<Integer> selected_answer = new ArrayList<>();
+                intent.putIntegerArrayListExtra("SELECTED", selected_answer);
                 startActivity(intent);
             }
         });

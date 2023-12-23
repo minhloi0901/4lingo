@@ -10,9 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.LearningPathService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LearningPathActivity extends OneTopNavActivity {
     private Button button1, button2, button3, button4, continueButton;
@@ -23,6 +25,7 @@ public class LearningPathActivity extends OneTopNavActivity {
     private ArrayList<String> questions = null;
     // Sample answers
     private String[][] answers = null;
+    private ArrayList<Integer> selected_answer = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +39,9 @@ public class LearningPathActivity extends OneTopNavActivity {
         LinearLayout root = (LinearLayout) findViewById(R.id.content);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.activity_learning_path, root, false);
-        createSampleData();
         getIntentData();
         renderAnInstance(v);
         root.addView(v);
-    }
-
-    private void createSampleData() {
-        // Sample question ID
-        questionId = 0;
-
-        // Sample questionss
-        questions = new ArrayList<>();
-        questions.add("What is the capital of France?");
-        questions.add("Who wrote 'Hamlet'?");
-        questions.add("What is the formula for water?");
-
-        // Sample answers
-        answers = new String[][]{
-                {"Paris", "Rome", "Berlin", "Madrid"},   // Options for the first question
-                {"William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"}, // Options for the second question
-                {"H2O", "CO2", "O2", "N2"}               // Options for the third question
-        };
     }
 
     private void renderAnInstance(View v) {
@@ -115,21 +99,24 @@ public class LearningPathActivity extends OneTopNavActivity {
 
                     // SEND SELECTED ANSWER (selectedButtonId) to server
                     // BEGIN
-
+                        selected_answer.add(selectedButtonId);
                     //END
 
                     if (questionId < questions.size() - 1) {
                         Intent intent = new Intent(LearningPathActivity.this, LearningPathActivity.class);
                         int newQuestionId = questionId + 1;
-                        intent.putExtra("question_id", newQuestionId); // integer
-                        intent.putStringArrayListExtra("question", questions); // ArrayList<String>
-                        intent.putExtra("answer", answers); // String[][]
+                        intent.putExtra("QUESTION_ID", newQuestionId); // integer
+                        intent.putStringArrayListExtra("QUESTION", questions); // ArrayList<String>
+                        intent.putExtra("ANSWER", answers); // String[][]
+                        intent.putIntegerArrayListExtra("SELECTED", selected_answer);
                         startActivity(intent);
                     }
                     else {
                         // HANDLE WHEN OUT OF QUESTION
                         // BEGIN
                         Toast.makeText(LearningPathActivity.this, "Out of question", Toast.LENGTH_SHORT).show();
+                        LearningPathService learningPathService = new LearningPathService();
+                        String learningPath = learningPathService.getLearningPath(selected_answer);
                         // END
                     }
                 }
@@ -144,21 +131,25 @@ public class LearningPathActivity extends OneTopNavActivity {
         Intent intent = getIntent();
 
         // Get the question ID
-        if (intent.hasExtra("question_id")) {
-            questionId = intent.getIntExtra("question_id", -1); // -1 as default value
+        if (intent.hasExtra("QUESTION_ID")) {
+            questionId = intent.getIntExtra("QUESTION_ID", -1); // -1 as default value
         }
 
         // Get the list of questions
-        if (intent.hasExtra("question")) {
-            questions = intent.getStringArrayListExtra("question");
+        if (intent.hasExtra("QUESTION")) {
+            questions = intent.getStringArrayListExtra("QUESTION");
+        }
+
+        if (intent.hasExtra("SELECTED")) {
+            selected_answer = intent.getIntegerArrayListExtra("SELECTED");
         }
 
         // Get the 2D array of answers
-        if (intent.hasExtra("answer")) {
+        if (intent.hasExtra("ANSWER")) {
             // Assuming the 2D array is serialized as an array of strings
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                Serializable serializedAnswers = bundle.getSerializable("answer");
+                Serializable serializedAnswers = bundle.getSerializable("ANSWER");
                 if (serializedAnswers instanceof String[][]) {
                     answers = (String[][]) serializedAnswers;
                 }
