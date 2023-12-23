@@ -11,15 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.ContestService;
 import com.example.a4lingo.adapter.CommingContestAdapter;
 import com.example.a4lingo.adapter.ContestItemAdapter;
 import com.example.a4lingo.adapter.PreviousContestAdapter;
 import com.example.a4lingo.item.ContestItem;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class ContestActivity extends OneTopNavActivity {
     ArrayList<ContestItem> currentContest = new ArrayList<>();
@@ -39,33 +37,35 @@ public class ContestActivity extends OneTopNavActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.activity_contest, root, false);
 
-        createSampleData();
+        getData();
         renderAnInstance(v);
         root.addView(v);
     }
 
-    public static List<ContestItem> getSampleContestItems() {
-        List<ContestItem> sampleItems = new ArrayList<>();
+    private void getData() {
+        currentContest =  new ArrayList<>();
+        commingContest =  new ArrayList<>();
+        previousContest =  new ArrayList<>();
 
-        // Sample data creation
-        sampleItems.add(new ContestItem(1, 101, 50, "Contest A", 3, new Date(), addHoursToCurrentTime(1), 60));
-        sampleItems.add(new ContestItem(2, 102, 30, "Contest B", 2, new Date(), addHoursToCurrentTime(2), 120));
-        sampleItems.add(new ContestItem(3, 103, 40, "Contest C", 4, new Date(), addHoursToCurrentTime(3), 90));
-        // Add more items as needed
+        ContestService contestService = new ContestService();
+        ArrayList<Integer> lstCur = contestService.getCurrentContest();
+        ArrayList<Integer> lstPrev = contestService.getPreviousContest();
+        ArrayList<Integer> lstCom = contestService.getCommingContest();
 
-        return sampleItems;
-    }
+        for (int i = 0; i < lstCur.size(); ++i) {
+            ContestItem contestItem = contestService.getContest(lstCur.get(i));
+            currentContest.add(contestItem);
+        }
 
-    private static Date addHoursToCurrentTime(int hours) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR_OF_DAY, hours);
-        return calendar.getTime();
-    }
+        for (int i = 0; i < lstPrev.size(); ++i) {
+            ContestItem contestItem = contestService.getContest(lstPrev.get(i));
+            previousContest.add(contestItem);
+        }
 
-    private void createSampleData() {
-        currentContest = (ArrayList<ContestItem>) getSampleContestItems();
-        commingContest = (ArrayList<ContestItem>) getSampleContestItems();
-        previousContest = (ArrayList<ContestItem>) getSampleContestItems();
+        for (int i = 0; i < lstCom.size(); ++i) {
+            ContestItem contestItem = contestService.getContest(lstCom.get(i));
+            commingContest.add(contestItem);
+        }
     }
 
     private void renderAnInstance(View v) {
