@@ -27,5 +27,6 @@
     <color name="gray">#48A9A9</color>
     <color name="yellow">#FFEB3B</color>
     <color name="light_yellow">#DCFFEB3B</color>
->>>>>>> origin/tan1
+    <color name="greenColor">#19D937</color>
+    >>>>>>> origin/tan1
 </resources>
