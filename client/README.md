@@ -41,3 +41,6 @@
 - [ ] getPreviousContest () : return a list of contest_id that happened
 - [ ] getCurrentContest () : return a list of contest_id that is happening
 - [ ] getCommingContest () : return a list of contest_id is comming
+
+## LessonCompletedService
+- [ ] updateLessonResult (user_id, lesson_id, score) : update this result to table lesson_completion

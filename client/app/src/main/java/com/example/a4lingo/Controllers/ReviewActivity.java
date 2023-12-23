@@ -41,14 +41,14 @@ public class ReviewActivity extends OneTopNavActivity {
 
     private void getIntentData() {
         Intent intent = getIntent();
-        if (intent.hasExtra("lessonName")) {
-            lesson_name = intent.getStringExtra("lessonName");
+        if (intent.hasExtra("LESSON_NAME")) {
+            lesson_name = intent.getStringExtra("LESSON_NAME");
         } else {
             Toast.makeText(this, "Không có bài học nào", Toast.LENGTH_LONG).show();
         }
 
         if (intent.hasExtra("lesson_id")) {
-            lesson_id = intent.getIntExtra("lesson_id", 0);
+            lesson_id = intent.getIntExtra("LESSON_ID", 0);
         } else {
             Toast.makeText(this, "Không có bài học nào", Toast.LENGTH_LONG).show();
         }
