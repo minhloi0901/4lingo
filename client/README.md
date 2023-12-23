@@ -37,3 +37,7 @@
 - [ ] updateReview (int lesson_id, int ratingInt: số sao, String review: đánh giá): add review with lesson_id to database
 
 ## ContestService
+- [ ] getContest (contest_id) : return json with all attributes of a contest in database
+- [ ] getPreviousContest () : return a list of contest_id that happened
+- [ ] getCurrentContest () : return a list of contest_id that is happening
+- [ ] getCommingContest () : return a list of contest_id is comming
