@@ -12,9 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.ReviewService;
 
 public class ReviewActivity extends OneTopNavActivity {
     String lesson_name = "";
+    int lesson_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +46,17 @@ public class ReviewActivity extends OneTopNavActivity {
         } else {
             Toast.makeText(this, "Không có bài học nào", Toast.LENGTH_LONG).show();
         }
+
+        if (intent.hasExtra("lesson_id")) {
+            lesson_id = intent.getIntExtra("lesson_id", 0);
+        } else {
+            Toast.makeText(this, "Không có bài học nào", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void createSampleData() {
         lesson_name = "Miêu tả làng quê, làm quen thì quá khứ";
+        lesson_id = 0;
     }
 
     private void renderAnInstance(View v) {
@@ -76,7 +85,8 @@ public class ReviewActivity extends OneTopNavActivity {
                 else {
                     // Send ratingInt and review to server
                     // BEGIN
-
+                    ReviewService reviewService = new ReviewService();
+                    reviewService.updateReview(lesson_id, ratingInt, review);
                     // END
 
                     Toast.makeText(getApplicationContext(), "Chúng tôi đã ghi nhận đánh giá của bạn", Toast.LENGTH_LONG).show();

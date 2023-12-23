@@ -33,3 +33,5 @@
 - [ ] getLearningPathAnswers (): return list of answers
 - [ ] getLearningPath (list of answers) : return starting lesson_id
 
+## ReviewService
+- [ ] updateReview (int lesson_id, int ratingInt: số sao, String review: đánh giá): add review with lesson_id to database
