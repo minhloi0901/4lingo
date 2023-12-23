@@ -5,7 +5,4 @@
     android:orientation="vertical"
     android:id="@+id/vertical_mul_choices_layout"
     >
-
-
-
 </LinearLayout>
