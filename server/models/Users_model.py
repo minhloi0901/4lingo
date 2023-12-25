@@ -28,6 +28,7 @@ class User(Base):
     # Class method to create a new user
     @classmethod
     def create_new_user(cls, username, password, role, email, phone_number=None):
+        role = UserRole(role)
         new_user = cls (
             username=username,
             password=password,
@@ -80,7 +81,7 @@ class User(Base):
 # new_user = User.create_new_user(
 #     username='teacher_loi123',
 #     password='LOI123456',
-#     role=UserRole.TEACHER,
+#     role="TEACHER",
 #     email='teacher_loi@gmail.com',
 #     phone_number='12345678910'
 # )

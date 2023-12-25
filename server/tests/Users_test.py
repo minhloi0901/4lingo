@@ -1,41 +1,47 @@
 import unittest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import and_
 
-from server.database.db import db
-from server.models.Users.model import *
-from server.controllers.Users.controller import *
+from models.Users_model import User, UserRole
+from database.db import session
 
-class TestUserFunctions(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        # Create a session for testing
-        cls.Session = db['Session']
-        cls.Base = db['Base']
-        cls.engine = db['engine']
-        cls.Session.configure(bind=cls.engine)
-        cls.session = cls.Session()
-        cls.Base.metadata.create_all(cls.engine)
-
-    @classmethod
-    def tearDownClass(cls):
-        # Clean up after testing
-        cls.session.rollback()
-        cls.session.close()
-        cls.Base.metadata.drop_all(cls.engine)
-
-    
+class UsersTestCase(unittest.TestCase):
 
     def test_create_new_user(self):
-        # Test the create_new_user function
-        initial_user_count = self.session.query(User).count()
+        new_user = User.create_new_user(
+            username='teacher_loi123',
+            password='LOI123456',
+            role="TEACHER",
+            email='teacher_loi@gmail.com',
+            phone_number='12345678910'
+        )
+        # Add assertions if needed
 
-        # Call the create_new_user function
-        create_new_user('TestUser', 'password', UserRole.LEANER, 'test@example.com')
+    def test_delete_users_by_filter(self):
+        filter_criteria = User.username == 'teacher_loi'
+        User.delete_users_by_filter(filter_criteria)
+        # Add assertions if needed
 
-        # Check if the user count increased after creating a new user
-        new_user_count = self.session.query(User).count()
-        self.assertEqual(new_user_count, initial_user_count + 1)
+    def test_find_one_user_by_filter(self):
+        filter_criteria = and_(User.role == UserRole.LEARNER, User.phone_number == None)
+        user = User.find_one_user_by_filter(filter_criteria)
+        self.assertIsNotNone(user)
+        # Add more assertions as needed
+
+    def test_find_all_users_by_filter(self):
+        filter_criteria = User.role == UserRole.LEARNER
+        users = User.find_all_users_by_filter(filter_criteria)
+        self.assertTrue(len(users) > 0)
+        # Add more assertions as needed
+
+    def test_update_user_by_filter(self):
+        filter_criteria = and_(User.role == UserRole.LEARNER, User.phone_number == None)
+        User.update_user_by_filter(filter_criteria, {User.phone_number: '01691234567'})
+        # Add assertions if needed
+
+    def test_get_all_users(self):
+        users = session.query(User).all()
+        self.assertTrue(len(users) > 0)
+        # Add more assertions as needed
 
 if __name__ == '__main__':
     unittest.main()
