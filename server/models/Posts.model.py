@@ -9,8 +9,6 @@ sys.path.append(server_directory)
 from database.db import db
 from sqlalchemy.ext.declarative import declarative_base
 
-from server.models.Communities.model import Community
-from server.models.Users.model import User
 
 Session = db['Session']
 session = Session()
@@ -46,7 +44,7 @@ class Post(Base):
 	posted_by = relationship("User", back_populates="post")
  
 	
-	# Composite primary key 
+	# Constraints
 	__table_args__ = (
 		PrimaryKeyConstraint('community_id', 'id'),
 	)
