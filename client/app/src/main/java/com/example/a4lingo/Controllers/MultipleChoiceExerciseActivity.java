@@ -24,7 +24,7 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
     private long startTimeMillis;
     private final MultipleChoiceService multipleChoiceService = new MultipleChoiceService();
     private LinearLayout mulChoiceLayout;
-    private final List<MultipleChoiceQuestion> questions = multipleChoiceService.getMultipleChoiceQuestions();
+    private final List<MultipleChoiceQuestion> questions = multipleChoiceService.getMultipleChoiceQuestions(null);
     private int questionIndex = 0;
     private int correctCount = 0;
     private BottomSheetDialog bottomSheetDialog;

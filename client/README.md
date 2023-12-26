@@ -44,3 +44,37 @@
 
 ## LessonCompletedService
 - [ ] updateLessonResult (user_id, lesson_id, score) : update this result to table lesson_completion
+
+## ConversationExerciseService
+- [ ] getCurrentConversationExercise(String userID): get current conversation exercise. 
+    API returned format: 
+    {
+        "npc":"npc message",
+        "user": user messages (a list of responses, the correct answer is the first message)
+        "npc"...
+        "user"...
+    }
+
+## MultipleChoiceService
+- [ ] getMultipleChoiceQuestions(String userID): get current multiple choice questions.
+    API returned format:
+    [
+        {
+            "question": a question,
+            "choices: [list of choices],
+            "correct_answer": correctAnswerIndex
+        },
+        ...
+    ]
+
+## SentenceTranslationService
+- [ ] getTranslationQuestions(String userID): get current translation questions.
+    API returned format:
+    [
+        {
+            "origin": the original sentence needs to be translated,
+            "destination: the correct translation,
+            "possible_words": [list of possible words]
+        },
+        ...
+    ]

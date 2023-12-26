@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MultipleChoiceService {
-    public List<MultipleChoiceQuestion> getMultipleChoiceQuestions() {
+    public List<MultipleChoiceQuestion> getMultipleChoiceQuestions(String userID) {
         List<MultipleChoiceQuestion> questions = new ArrayList<>();
 
         // Sample question 1
