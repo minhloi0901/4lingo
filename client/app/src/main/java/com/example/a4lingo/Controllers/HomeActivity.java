@@ -30,6 +30,7 @@ public class HomeActivity extends MainActivity {
                 Intent intent = new Intent(getApplicationContext(), WordMatchingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -40,6 +41,8 @@ public class HomeActivity extends MainActivity {
                 Intent intent = new Intent(getApplicationContext(), SentenceTranslationActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
+
             }
         });
 
@@ -47,6 +50,10 @@ public class HomeActivity extends MainActivity {
         multipleChoiceFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MultipleChoiceExerciseActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
 
             }
         });
@@ -58,6 +65,8 @@ public class HomeActivity extends MainActivity {
                 Intent intent = new Intent(getApplicationContext(), ConversationExerciseActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
+
             }
         });
     }

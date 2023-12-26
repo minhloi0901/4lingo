@@ -1,34 +1,54 @@
 package com.example.a4lingo.Controllers;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.SentenceTranslationService;
+import com.example.a4lingo.Services.Utils;
+import com.example.a4lingo.item.TranslationQuestion;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SentenceTranslationActivity extends MainActivity {
+    LinearLayout root;
+    View v;
+    private final SentenceTranslationService sentenceTranslationService = new SentenceTranslationService();
+    private final List<TranslationQuestion> questions = sentenceTranslationService.getTranslationQuestions();
+    private int questionIndex = 0;
+
     private FlexboxLayout sourceContainer;
     private FlexboxLayout destinationContainer;
+    private long startTimeMillis;
+    private String originalSentence;
+    private String destinationSentence;
+    private List<String> possibleWords = new ArrayList<>();
+    private BottomSheetDialog bottomSheetDialog;
+    private int correctCount = 0;
 
     protected void renderLayout() {
         super.renderLayout();
+        startTimeMillis = SystemClock.elapsedRealtime();
 
-        LinearLayout root = (LinearLayout) findViewById(R.id.content);
+        setQuestion(questions.get(questionIndex));
+
+        root = (LinearLayout) findViewById(R.id.content);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View v = layoutInflater.inflate(R.layout.activity_sentence_translation, root, false);
+        v = layoutInflater.inflate(R.layout.activity_sentence_translation, root, false);
 
         renderAnInstance(v);
 
         root.addView(v);
-
     }
     protected void renderNavigation() {
         super.renderNavigation();
@@ -43,65 +63,74 @@ public class SentenceTranslationActivity extends MainActivity {
             }
         });
 
-        TextView checkResBtn = findViewById(R.id.checkResButton);
+        TextView checkResBtn = findViewById(R.id.continueButton);
         checkResBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isCorrect = true;
-                String message = "Tuyệt vời!";
-                showBottomSheet(isCorrect, message);
+                String translatedSentence = getTranslatedSentence(destinationContainer);
+                Log.i("Translated Sentence: ", translatedSentence);
+                if (getTranslatedSentence(destinationContainer).equals(destinationSentence)){
+                    String message = "Tuyệt vời!";
+                    bottomSheetDialog = Utils.showBottomSheet(SentenceTranslationActivity.this, true, message);
+                    correctCount++;
+                }
+                else {
+                    String message = "Cố gắng hơn nữa nhé!";
+                    bottomSheetDialog = Utils.showBottomSheet(SentenceTranslationActivity.this, false, message);
+                }
+
+                TextView continueBtn = bottomSheetDialog.findViewById(R.id.continueButton);
+                assert continueBtn != null;
+                continueBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        questionIndex++;
+                        boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, SentenceTranslationActivity.this, correctCount);
+                        if (completed){
+                            finish();
+                        }else {
+                            if (bottomSheetDialog.isShowing()) {
+                                bottomSheetDialog.dismiss();
+                            }
+                            renderAnInstance(v);
+                        }
+                    }
+                });
             }
         });
     }
 
-    private void showBottomSheet(boolean isCorrect, String message) {
-        View bottomSheetView = getLayoutInflater().inflate(R.layout.check_sentence_translation_bottom_sheet_item, null);
-        ImageView resStateImgView = bottomSheetView.findViewById(R.id.resultState);
-        TextView resMessage = bottomSheetView.findViewById(R.id.resultMessage);
-
-        if (isCorrect)
-            resStateImgView.setImageResource(R.drawable.ic_correct);
-        else
-            resStateImgView.setImageResource(R.drawable.ic_incorrect);
-
-        resMessage.setText(message);
-
-
-        TextView continueBtn = bottomSheetView.findViewById(R.id.continueButton);
-        continueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Check
-                // If it is last question, end ...
-                // Else move to the next question
-                Intent intent = new Intent(getApplicationContext(), SentenceTranslationActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                int qIndex = 6;
-                intent.putExtra("Q_INDEX", qIndex);
-                startActivity(intent);
-            }
-        });
-
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
+    // Function to set the current question
+    private void setQuestion(TranslationQuestion question) {
+        startTimeMillis = SystemClock.elapsedRealtime();
+        originalSentence = question.getOriginalSentence();
+        destinationSentence = question.getDestinationSentence();
+        possibleWords = question.getPossibleWords();
+        // Print the details
+        System.out.println("Start Time: " + startTimeMillis);
+        System.out.println("Original Sentence: " + originalSentence);
+        System.out.println("Destination Sentence: " + destinationSentence);
+        System.out.println("Possible Words: " + possibleWords);
     }
 
     private void renderAnInstance(View v) {
         sourceContainer = v.findViewById(R.id.sourceContainer);
         destinationContainer = v.findViewById(R.id.destinationContainer);
 
+        sourceContainer.removeAllViews();
+        destinationContainer.removeAllViews();
+
+        setQuestion(questions.get(questionIndex));
+
+        TextView originalSentenceTextView = v.findViewById(R.id.originalSentence);
+        originalSentenceTextView.setText(originalSentence);
+
+        TextView progressTextView = v.findViewById(R.id.progressTextView);
+        progressTextView.setText((questionIndex + 1)  + "/" + questions.size());
+
         // Initialize words in the source container
-        addWordToContainer("Tôi", sourceContainer);
-        addWordToContainer("cười", sourceContainer);
-        addWordToContainer("bởi", sourceContainer);
-        addWordToContainer("vì", sourceContainer);
-        addWordToContainer("bạn", sourceContainer);
-        addWordToContainer("cười", sourceContainer);
-        addWordToContainer("cho", sourceContainer);
-        addWordToContainer("thấy", sourceContainer);
-        addWordToContainer("Cô", sourceContainer);
+        for (String word: possibleWords)
+            addWordToContainer(word, sourceContainer);
     }
 
     private void addWordToContainer(String word, FlexboxLayout container) {
@@ -156,5 +185,25 @@ public class SentenceTranslationActivity extends MainActivity {
 
         // Add the word item to the container
         container.addView(wordFrame);
+    }
+
+
+
+    private String getTranslatedSentence(FlexboxLayout container) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View child = container.getChildAt(i);
+           if (child instanceof LinearLayout) {
+
+                // If the child is a TextView, append its text to the StringBuilder
+                stringBuilder.append(((TextView) child.findViewById(R.id.wordTextView)).getText().toString());
+
+                // Optionally, add a space between words
+                stringBuilder.append(" ");
+            }
+        }
+
+        return stringBuilder.toString().trim();
     }
 }

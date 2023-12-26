@@ -15,7 +15,7 @@
         >
 
         <ImageView
-            android:id="@+id/backButton"
+            android:id="@+id/ignoreButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
@@ -33,17 +33,16 @@
             android:layout_alignParentRight="true"
             >
             <ImageView
-                android:id="@+id/clockImageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center"
                 android:src="@drawable/clock_icon"
+                android:layout_gravity="center"
                 />
             <TextView
-                android:id="@+id/timeCounting"
+                android:id="@+id/timerTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1:30"
+                android:text="00:00:00"
                 android:textStyle="bold"
                 android:textSize="30sp"
                 android:padding="10dp"

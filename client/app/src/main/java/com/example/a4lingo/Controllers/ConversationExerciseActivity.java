@@ -1,34 +1,37 @@
 package com.example.a4lingo.Controllers;
 
 import android.content.Intent;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.ConversationExerciseService;
+import com.example.a4lingo.Services.Utils;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class ConversationExerciseActivity extends MainActivity{
-    private String[][] messages = new String[][] {
-            {"Hi! What can I do for you?"},
-            {"Hi professor. I wanted to talk to you about my grade for the last assignment.", "Well I got  lower grade than I was expecting and was hoping to better understand what I did wrong."},
-            {"Hi! What can I do for you?"},
-            {"Choice A", "Choice B", "Choice C", "Choice D"}
-    };
+    private final ConversationExerciseService conversationExerciseService = new ConversationExerciseService();
+    private final String[][] messages = conversationExerciseService.getCurrentConversationExercise(null);
     private int currentMessageIndex = 0;
-    private LinearLayout root = null;
     private View v = null;
+    private int correctCount = 0;
+    private int incorrectCount = 0;
+    private long startTimeMillis;
     @Override
     protected void renderLayout() {
         super.renderLayout();
-        root = (LinearLayout) findViewById(R.id.content);
+        startTimeMillis = SystemClock.elapsedRealtime();
+
+        LinearLayout root = (LinearLayout) findViewById(R.id.content);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         v = layoutInflater.inflate(R.layout.activity_conversation_exercise, root, false);
 
@@ -60,60 +63,55 @@ public class ConversationExerciseActivity extends MainActivity{
 
     private void renderResponsesForSelecting(LinearLayout linearLayout) {
         LinearLayout mulChoicesLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.vertical_multiple_choices_layout, linearLayout, false);
-        // Choice's layout parameters
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        layoutParams.setMargins(40, 20, 40, 20);
 
         // Create an instance of Random
         Random random = new Random();
 
         // Generate a random number within the specified range
         int randomNumber = random.nextInt(messages[currentMessageIndex].length);
-        swap(messages[currentMessageIndex], 0, randomNumber);
-        for (int i = 0; i < messages[currentMessageIndex].length; i++){
-            boolean isCorrect = false;
-            if (i == randomNumber)
-                isCorrect = true;
-
-            mulChoicesLayout.addView(getAChoice(linearLayout, mulChoicesLayout, layoutParams, messages[currentMessageIndex][i], isCorrect));
-        }
+        Utils.swap(messages[currentMessageIndex], 0, randomNumber);
+        for (int i = 0; i < messages[currentMessageIndex].length; i++)
+            mulChoicesLayout.addView(getAChoice(linearLayout, mulChoicesLayout, messages[currentMessageIndex][i], i == randomNumber));
 
         linearLayout.addView(mulChoicesLayout);
-    }
 
-    private static <T> void swap(T[] array, int index1, int index2) {
-        if (index1 >= 0 && index1 < array.length && index2 >= 0 && index2 < array.length) {
-            T temp = array[index1];
-            array[index1] = array[index2];
-            array[index2] = temp;
-        } else {
-            // Handle invalid indices if needed
-            System.out.println("Invalid indices");
-        }
+        // Set on click listener.
+        TextView continueBtn = v.findViewById(R.id.continueButton);
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Please select the correct response!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @NonNull
-    private TextView getAChoice(LinearLayout linearLayout, LinearLayout mulChoicesLayout, LinearLayout.LayoutParams layoutParams, String text, boolean isCorrectAnswer) {
-        TextView choice = new TextView(mulChoicesLayout.getContext());
-        choice.setLayoutParams(layoutParams);
-        choice.setBackgroundResource(R.drawable.border_gray);
+    private TextView getAChoice(LinearLayout linearLayout, LinearLayout mulChoicesLayout, String text, boolean isCorrectAnswer) {
+        // Use LayoutInflater to inflate the choice TextView from XML
+        LayoutInflater inflater = LayoutInflater.from(linearLayout.getContext());
+        TextView choice = (TextView) inflater.inflate(R.layout.choice_item, linearLayout, false);
+
+        // Set attributes for the choice TextView
         choice.setText(text);
-        choice.setTextSize(26);
         choice.setTag(isCorrectAnswer);
-        choice.setPadding(40, 20, 40, 20);
+
         choice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("Index", String.valueOf(currentMessageIndex));
                 boolean isCorrect = (boolean) choice.getTag();
                 if (isCorrect){
                     linearLayout.removeView(mulChoicesLayout);
                     addUserMessage(linearLayout, text);
+                    correctCount++;
+                    Log.d("Correct count", String.valueOf(correctCount));
                 }
                 else{
-                    choice.setBackgroundResource(R.drawable.border_green);
+                    choice.setBackgroundResource(R.drawable.border_gray);
+                    choice.setAlpha(0.3f);
+                    choice.setOnClickListener(null);
+                    incorrectCount++;
+                    Log.d("Incorrect count", String.valueOf(incorrectCount));
                 }
             }
         });
@@ -136,12 +134,12 @@ public class ConversationExerciseActivity extends MainActivity{
         linearLayout.addView(userLayout);
         currentMessageIndex++;
 
-
-        TextView continueBtn = v.findViewById(R.id.checkResButton);
+        TextView continueBtn = v.findViewById(R.id.continueButton);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkCompletion();
+                if (checkCompletion())
+                    return;
                 addNpcMessage(linearLayout);
             }
         });
@@ -162,33 +160,43 @@ public class ConversationExerciseActivity extends MainActivity{
 
         // Set message
         TextView npcMessageLayout = npcLayout.findViewById(R.id.messageTextView);
-        npcMessageLayout.setText(indentText(messages[currentMessageIndex++][0]));
+        npcMessageLayout.setText(indentText(messages[currentMessageIndex][0]));
+        currentMessageIndex++;
 
         // Add item
         linearLayout.addView(npcLayout);
 
         // Set responses
-        TextView continueBtn = v.findViewById(R.id.checkResButton);
-        if (continueBtn == null){
-            Log.d("TAG", "addNpcMessage: Null");
-            return;
-        }
+        TextView continueBtn = v.findViewById(R.id.continueButton);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkCompletion();
+                if (checkCompletion())
+                    return;
                 renderResponsesForSelecting(linearLayout);
             }
         });
     }
 
-    private void checkCompletion() {
+    private boolean checkCompletion() {
         if (currentMessageIndex == messages.length){
+            long endTimeMillis = SystemClock.elapsedRealtime();  // Record the end time
+            long elapsedTimeSeconds = (endTimeMillis - startTimeMillis) / 1000;
+
             Intent intent = new Intent(getApplicationContext(), CompleteLessonActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("SCORE", 100);
+            intent.putExtra("TIME", elapsedTimeSeconds);
+            intent.putExtra("ACCURACY", correctCount  * 100.0f / (incorrectCount + correctCount));
+            intent.putExtra("LESSON_ID", 001);
+//            intent.putExtra("LESSON_ID", "001");
+
             startActivity(intent);
             finish();
+
+            return true;
         }
+        return false;
     }
 
     private String indentText(String text) {

@@ -18,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateContestActivity extends OneTopNavActivity {
-
     String[] privacyOptions = new String[] {"Public", "Private"};
     private Spinner spinnerPrivacy;
 

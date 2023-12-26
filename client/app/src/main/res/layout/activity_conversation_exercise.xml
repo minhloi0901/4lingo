@@ -45,11 +45,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
         </LinearLayout>
     </ScrollView>
 
     <TextView
-        android:id="@+id/checkResButton"
+        android:id="@+id/continueButton"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

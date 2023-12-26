@@ -3,6 +3,7 @@ package com.example.a4lingo.Controllers;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +17,8 @@ import com.example.a4lingo.Services.CompleteLessonService;
 
 public class CompleteLessonActivity extends OneTopNavActivity {
     int totalScore = 0;
-    int theTime = 0;
-    int theAccuracy = 0;
+    float theTime = 0;
+    float theAccuracy = 0;
 
     String lessonName = "";
     int lesson_id = 0;
@@ -55,15 +56,15 @@ public class CompleteLessonActivity extends OneTopNavActivity {
 
         // Check if the Intent has the extra keys for score, time, accuracy, and name
         if (!intent.hasExtra("SCORE") || !intent.hasExtra("TIME") ||
-                !intent.hasExtra("ACCURACY") || !intent.hasExtra("NAME")) {
+                !intent.hasExtra("ACCURACY") || !intent.hasExtra("LESSON_ID")) {
             // If any of the keys are missing, show a long Toast message
             Toast.makeText(this, "Lack of results", Toast.LENGTH_LONG).show();
         } else {
             // All keys are present, retrieve the values
             totalScore = intent.getIntExtra("SCORE", 0); // Retrieve the score value
-            theTime = intent.getIntExtra("TIME", 0); // Retrieve the time value
-            theAccuracy = intent.getIntExtra("ACCURACY", 0); // Retrieve the accuracy value
-            lessonName = intent.getStringExtra("NAME"); // Retrieve the name string
+            theTime = intent.getFloatExtra("TIME", 0f); // Retrieve the time value
+            theAccuracy = intent.getFloatExtra("ACCURACY", 0.0f); // Retrieve the accuracy value
+//            lessonName = intent.getStringExtra("LESSON_NAME"); // Retrieve the name string
             lesson_id = intent.getIntExtra("LESSON_ID", 0);
             // Use the score, time, accuracy, and name as needed in your activity
         }
