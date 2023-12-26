@@ -6,9 +6,9 @@
 - [x] HomeActivity
 - [x] LearningPathActivity
 - [ ] WordMatchingActivity
-- [ ] CompleteSentenceActivity
-- [ ] MultipleChoiceActivity
-- [ ] ConversationActivity   
+- [x] CompleteSentenceActivity
+- [x] MultipleChoiceActivity
+- [x] ConversationActivity   
 - [x] DictionaryActivity
 - [x] MistakeListActivity
 - [x] NoteActivity
