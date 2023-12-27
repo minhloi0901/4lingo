@@ -78,3 +78,7 @@
         },
         ...
     ]
+
+## RegisterService
+- [ ] registerUser(String userName, String email, String password): register user with specified username, email and password
+    Return registration results as integer: code error or success
