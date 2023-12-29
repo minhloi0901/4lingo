@@ -9,6 +9,8 @@ sys.path.append(server_directory)
 from database.db import db
 from sqlalchemy.ext.declarative import declarative_base
 
+from Communities_model import Community
+from Users_model import User
 
 Session = db['Session']
 session = Session()
@@ -29,7 +31,7 @@ class Post(Base):
 # 	FOREIGN KEY (community_id) REFERENCES community(id) ON DELETE CASCADE ON UPDATE CASCADE,
 # 	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 # );
-	__table_name__ = 'post'
+	__tablename__ = 'post'
 	community_id = Column(Integer, ForeignKey('community.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, primary_key=True)
 	id = Column(Integer, primary_key=True)
 	author = Column(Integer, ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
@@ -40,8 +42,8 @@ class Post(Base):
 	number_of_views = Column(Integer, default=0)
  
 	# relationships
-	posted_in = relationship("Community", back_populates="post")
-	posted_by = relationship("User", back_populates="post")
+	community = relationship("Community", back_populates="post")
+	user = relationship("User", back_populates="post")
  
 	
 	# Constraints
@@ -52,31 +54,12 @@ class Post(Base):
 	
 	@classmethod
 	def create_post(cls, community_id, author, content):
-		# Check if community exists
-		existing_community = session.query(Community).filter(Community.id == community_id).first()
-		if not existing_community:
-			print(f"Community does not exist with id: {community_id}")
-			return None
-
-		# Check if author exists
-		existing_author = session.query(User).filter(User.id == author).first()
-		if not existing_author:
-			print(f"Author does not exist with id: {author}")
-			return None
-
-		# Check if post already exists
-		existing_post = session.query(cls).filter(cls.community_id == community_id, cls.id == id).first()
-		if existing_post:
-			print(f"Post already exists with id: {id}")
-			return existing_post
-
 		new_post = cls (
 			community_id=community_id,
 			id=id,
 			author=author,
 			content=content
 		)
-  
 		session.add(new_post)
 		session.commit()
 		print("New post created.")
@@ -103,5 +86,7 @@ class Post(Base):
 		session.commit()
 		print(f"Updated {updated_count} communities.")
 		return updated_count
+
+
 
 
