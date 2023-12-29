@@ -124,6 +124,7 @@
     ]
  
 ## NoteService
+- [ ] getListWord (int user_id): gửi về server user_id, server trả về một json chứa các từ vựng trong note của user_id đó. Ví dụ như sau:  
     [
         {
             "word": "Apple",
@@ -143,3 +144,5 @@
         }
         // ... additional words ...
     ]
+
+- [ ] getListWord (int user_id, String word): gửi server user_id và word về server, server xóa từ word khỏi bảng Note của user_id

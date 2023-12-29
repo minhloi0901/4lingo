@@ -35,6 +35,10 @@ public class NoteService {
         return  getWordItemsFromJson(theJsonString);
     }
 
+    public void deleteWord(int user_id, String word) {
+        // send user_id and word to server to delete in database
+    }
+
     public List<WordItem> getWordItemsFromJson(String jsonString) {
         List<WordItem> wordItemList = new ArrayList<>();
 
