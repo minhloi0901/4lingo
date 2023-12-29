@@ -173,4 +173,35 @@
         // ... additional mistakes ...
     ]
 
-- [] deleteMistake(int user_id, int mistake_id): gửi về server user_id, mistake_id. Server xóa mistake có mistake_id và user_id trong database. 
+- [ ] deleteMistake(int user_id, int mistake_id): gửi về server user_id, mistake_id. Server xóa mistake có mistake_id và user_id trong database. 
+
+
+## LeaderBoardService
+- [ ] getRakingList(): server trả về danh sách trên ranking bằng json. ví dụ: 
+    [
+        {
+            "rank": 1,
+            "avatarResId": 1001,
+            "name": "John Doe",
+            "score": 1500
+        },
+        {
+            "rank": 2,
+            "avatarResId": 1002,
+            "name": "Jane Smith",
+            "score": 1450
+        },
+        {
+            "rank": 3,
+            "avatarResId": 1003,
+            "name": "Alice Johnson",
+            "score": 1400
+        },
+        {
+            "rank": 4,
+            "avatarResId": 1004,
+            "name": "Bob Brown",
+            "score": 1350
+        }
+        // ... additional ranking items ...
+    ]
