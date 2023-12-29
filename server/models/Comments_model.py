@@ -9,9 +9,9 @@ sys.path.append(server_directory)
 from database.db import db
 from sqlalchemy.ext.declarative import declarative_base
 
-from models.Communities.model import *
-from models.Users.model import *
-from models.Posts.model import *
+from Communities_model import Community
+from Users_model import User
+from Posts_model import Post
 
 
 Session = db['Session']
@@ -34,7 +34,7 @@ class Comment(Base):
 # 	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
 # 	FOREIGN KEY (parent) REFERENCES comment(id) ON DELETE CASCADE ON UPDATE CASCADE
 # );
-    __table_name__ = 'comment'
+    __tablename__ = 'comment'
     
     community_id = Column(Integer, ForeignKey('community.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, primary_key=True)
     post_id = Column(Integer, ForeignKey('post.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, primary_key=True)
@@ -51,9 +51,9 @@ class Comment(Base):
     )
     
     # Relationships
-    commented_in = relationship('Post', back_populates='comments')
-    commented_by = relationship('User', back_populates='comments')
-    replies = relationship('Comment', back_populates='parent_comment')
+    post = relationship('Post', back_populates='comments')
+    user = relationship('User', back_populates='comments')
+    comment = relationship('Comment', back_populates='comment')
     
     
     @classmethod
@@ -125,5 +125,7 @@ class Comment(Base):
             print("1 comment updated.")
         else:
             print(f"{updated_count} comments updated.")
+    
+    
     
     

@@ -2,10 +2,7 @@ from enum import Enum
 from operator import and_
 from sqlalchemy import Integer, Column, String
 from sqlalchemy import Enum as SQLAlchemyEnum
-import os, sys
-current_directory = os.path.dirname(os.path.abspath(__file__))
-server_directory = os.path.abspath(os.path.join(current_directory, '..'))
-sys.path.append(server_directory)
+
 from database.db import db
 
 Session = db['Session']
@@ -31,15 +28,7 @@ class User(Base):
     # Class method to create a new user
     @classmethod
     def create_new_user(cls, username, password, role, email, phone_number=None):
-        # Check if user already exists
-        existing_user = session.query(cls).filter((cls.username == username) | (cls.email == email)).first()
-        if existing_user:
-            if existing_user.username == username:
-                print(f"User already exists with username: {existing_user.username}")
-            elif existing_user.email == email:
-                print(f"User already exists with email: {existing_user.email}")
-            return existing_user
-        
+        role = UserRole(role)
         new_user = cls (
             username=username,
             password=password,
@@ -86,37 +75,5 @@ class User(Base):
             print("1 user updated.")
         else:
             print(f"{updated_count} users updated.")
-        
-
-# test create_new_user function
-# new_user = User.create_new_user(
-#     username='teacher_loi',
-#     password='LOI123456',
-#     role=UserRole.TEACHER,
-#     email='teacher_loi@gmail.com',
-#     phone_number='12345678910'
-# )
-        
-# test delete_users_by_filter function
-# filter_criteria = User.username == 'teacher_loi'
-# User.delete_users_by_filter(filter_criteria)
-        
-# test find_one_user_by_filter function
-# filter_criteria = and_(User.role == UserRole.LEANER, User.phone_number == None) 
-# user = User.find_one_user_by_filter(filter_criteria)
-# print(user.username)
-        
-# test find_all_users_by_filter function
-# filter_criteria = User.role == UserRole.LEANER
-# users = User.find_all_users_by_filter(filter_criteria)
-# for user in users:
-#     print(user.username)
-        
-# test update_user_by_filter function
-# filter_criteria = and_(User.role == UserRole.LEANER, User.phone_number == None) 
-# User.update_user_by_filter(filter_criteria, {User.phone_number: '01691234567'})
-
-# print all users
-# users = session.query(User).all()
-# for user in users:
-#     print(user.username)
+            
+            

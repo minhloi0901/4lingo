@@ -1,20 +1,24 @@
 from sqlalchemy import Integer, Column, String, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.ext.declarative import declarative_base
 
-import os, sys
-current_directory = os.path.dirname(os.path.abspath(__file__))
-server_directory = os.path.abspath(os.path.join(current_directory, '..'))
-sys.path.append(server_directory)
+# import os, sys
+# current_directory = os.path.dirname(os.path.abspath(__file__))
+# server_directory = os.path.abspath(os.path.join(current_directory, '..'))
+# sys.path.append(server_directory)
+
 from database.db import db
 from sqlalchemy.ext.declarative import declarative_base
 
+from Users_model import User, UserRole
 
 Session = db['Session']
 session = Session()
 Base = declarative_base()
 
-class Communities(Base):
+
+
+class Community(Base):
 #     CREATE TABLE IF NOT EXISTS community (
 # 	id INT AUTO_INCREMENT,
 # 	name VARCHAR(128) NOT NULL UNIQUE,
@@ -25,6 +29,8 @@ class Communities(Base):
 # 	PRIMARY KEY (id),
 # 	FOREIGN KEY (manager) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 # );
+
+
     __tablename__ = 'community'
     id = Column(Integer, primary_key=True)
     name = Column(String(128), nullable=False, unique=True)
@@ -33,25 +39,14 @@ class Communities(Base):
     number_of_users = Column(Integer, default=0)
     date_create = Column(DateTime)
     
-    managed_by = relationship("User", back_populates="communities")
+    user = relationship(User, back_populates="community")
+   
     
     @classmethod
-    def create_community(cls, name, manager, description=None):
-        # Check if community already exists
-        existing_community = session.query(cls).filter(cls.name == name).first()
-        if existing_community:
-            print(f"Community already exists with name: {existing_community.name}")
-            return existing_community
-        
-        # Check if manager exists
-        existing_manager = session.query(User).filter(User.id == manager).first()
-        if not existing_manager:
-            print(f"Manager does not exist with id: {manager}")
-            return None
-        
+    def create_new_community(cls, name, manager, description=None):
         new_community = cls (
             name=name,
-            manager=existing_manager,
+            manager=manager,
             description=description
         )
         
@@ -86,6 +81,7 @@ class Communities(Base):
         print(f"Updated {updated_count} communities.")
         return updated_count
     
-    
-    
-    
+
+# User create
+#User.create_new_user('quoctrung', 'pass', UserRole.TEACHER, 'email', '09123')
+Community.create_new_community('community', 7, 'desc')
