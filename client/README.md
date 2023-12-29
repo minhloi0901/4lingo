@@ -145,4 +145,32 @@
         // ... additional words ...
     ]
 
-- [ ] getListWord (int user_id, String word): gửi server user_id và word về server, server xóa từ word khỏi bảng Note của user_id
+- [ ] deleteWord (int user_id, String word): gửi server user_id và word về server, server xóa từ word khỏi bảng Note của user_id   
+
+## MistakeService
+- [] getListMistake(int user_id): gửi về server user_id, server trả về json gồm các mistake của người user_id. Ví dụ như: 
+    [
+        {
+            "mistake_id": 1,
+            "assignmentType": "Grammar",
+            "mistakeDescription": "Incorrect verb tense usage"
+        },
+        {
+            "mistake_id": 2,
+            "assignmentType": "Vocabulary",
+            "mistakeDescription": "Misuse of 'affect' instead of 'effect'"
+        },
+        {
+            "mistake_id": 3,
+            "assignmentType": "Pronunciation",
+            "mistakeDescription": "Incorrect stress on the second syllable of 'record'"
+        },
+        {
+            "mistake_id": 4,
+            "assignmentType": "Spelling",
+            "mistakeDescription": "Misspelled 'necessary' as 'neccessary'"
+        }
+        // ... additional mistakes ...
+    ]
+
+- [] deleteMistake(int user_id, int mistake_id): gửi về server user_id, mistake_id. Server xóa mistake có mistake_id và user_id trong database. 
