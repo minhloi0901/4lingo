@@ -82,3 +82,17 @@
 ## RegisterService
 - [ ] registerUser(String userName, String email, String password): register user with specified username, email and password
     Return registration results as integer: code error or success
+
+## CreateContestService
+- [ ] updateContest(): gửi về server 1 json diễn tả contest được tạo. Server update contest được tạo vào database. Ví dụ json như sau: 
+    {
+    "contestId": 0,
+    "creator": 123, // User ID
+    "numberOfRegisters": 0,
+    "contestName": "Sample Contest",
+    "difficulty": 5,
+    "timeCreated": "2023-12-29T15:30:00Z", // Example ISO 8601 formatted date-time
+    "timeBegin": "2024-01-01T10:00:00Z", // Example ISO 8601 formatted date-time
+    "duration": 60
+    }
+ 
