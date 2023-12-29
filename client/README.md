@@ -95,4 +95,31 @@
     "timeBegin": "2024-01-01T10:00:00Z", // Example ISO 8601 formatted date-time
     "duration": 60
     }
+
+## AchivementService
+- [ ] getAchivements(int user_id): gửi về server user_id. Server trả lại một json thể hiện các achivements mà user_id này có. Ví dụ: 
+    [
+        {
+            "name": "First Step",
+            "description": "Complete your first lesson.",
+            "progress": 1,
+            "total": 1,
+            "imageResourceId": 101
+        },
+        {
+            "name": "Persistent Learner",
+            "description": "Complete 10 lessons.",
+            "progress": 7,
+            "total": 10,
+            "imageResourceId": 102
+        },
+        {
+            "name": "Quiz Master",
+            "description": "Score 100% in 5 quizzes.",
+            "progress": 3,
+            "total": 5,
+            "imageResourceId": 103
+        }
+        // ... additional achievements ...
+    ]
  
