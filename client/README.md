@@ -123,3 +123,23 @@
         // ... additional achievements ...
     ]
  
+## NoteService
+    [
+        {
+            "word": "Apple",
+            "meaning": "A fruit with red, green, or yellow skin and a sweet taste"
+        },
+        {
+            "word": "Book",
+            "meaning": "A set of pages that are bound together and written on"
+        },
+        {
+            "word": "Cat",
+            "meaning": "A small domesticated carnivorous mammal with soft fur"
+        },
+        {
+            "word": "Dog",
+            "meaning": "A domesticated carnivorous mammal that typically has a long snout"
+        }
+        // ... additional words ...
+    ]
