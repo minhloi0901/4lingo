@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.LeaderBoardService;
 import com.example.a4lingo.adapter.RankingAdapter;
 import com.example.a4lingo.item.RankingItem;
 
@@ -37,9 +38,12 @@ public class LeaderBoardActivity extends MainActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<RankingItem> rankingItemList = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            rankingItemList.add(new RankingItem(i, R.drawable.profile_icon, "User " + i, 1000 + i * 100));
-        }
+//        for (int i = 1; i <= 10; i++) {
+//            rankingItemList.add(new RankingItem(i, R.drawable.profile_icon, "User " + i, 1000 + i * 100));
+//        }
+
+        LeaderBoardService leaderBoardService = new LeaderBoardService();
+        rankingItemList = leaderBoardService.getRakingList();
 
         RankingAdapter adapter = new RankingAdapter(rankingItemList, this);
         recyclerView.setAdapter(adapter);

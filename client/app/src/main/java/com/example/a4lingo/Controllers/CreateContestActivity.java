@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.CreateContestService;
+import com.example.a4lingo.item.ContestItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,8 @@ import java.util.Date;
 public class CreateContestActivity extends OneTopNavActivity {
     String[] privacyOptions = new String[] {"Public", "Private"};
     private Spinner spinnerPrivacy;
+
+    int user_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,24 @@ public class CreateContestActivity extends OneTopNavActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.activity_create_contest, root, false);
         root.addView(v);
+        getIntentData();
         setupSpinner();
+    }
+
+    private void getIntentData() {
+        // Get the intent that started this activity
+        Intent intent = getIntent();
+
+        // Check if the intent has extra data with the tag USER_ID
+        if (intent.hasExtra("USER_ID")) {
+            // Retrieve the USER_ID value and store it in user_id
+            user_id = intent.getIntExtra("USER_ID", 0); // 0 is a default value
+        } else {
+            // Handle the case where USER_ID is not provided
+            // For example, you might set a default value or show an error message
+            user_id = 0; // Setting default value as 0
+            // Optionally, you can show an error message or take other appropriate actions
+        }
     }
 
     private void setupSpinner() {
@@ -100,12 +121,28 @@ public class CreateContestActivity extends OneTopNavActivity {
                     return;
                 }
 
+                // Parsing the date and time for timeBegin
+                SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                Date timeBegin;
+                try {
+                    timeBegin = dateTimeFormat.parse(contestDate + " " + contestTime);
+                } catch (ParseException e) {
+                    Toast.makeText(CreateContestActivity.this, "Invalid date or time format", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Use the gathered data to create ContestItem object
+                Date timeCreated = new Date(); // Current date and time for timeCreated
+
                 // TODO: SEND data to server
                 // BEGIN
-
+                ContestItem theContest = new ContestItem(0, user_id, 0, contestName, contestMinRating, timeCreated, timeBegin, contestDuration);
+                CreateContestService createContestService = new CreateContestService();
+                createContestService.updateContest(theContest);
                 // END
 
                 Intent intent = new Intent(CreateContestActivity.this, HomeActivity.class);
+                intent.putExtra("USER_ID", user_id);
                 startActivity(intent);
             }
         });

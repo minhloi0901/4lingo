@@ -39,8 +39,13 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         // Set data to views
         holder.achievementNameTextView.setText(achievement.getName());
         holder.achievementDescriptionTextView.setText(achievement.getDescription());
-        holder.achievementImageView.setImageResource(achievement.getImageResourceId());
-
+        try {
+            holder.achievementImageView.setImageResource(achievement.getImageResourceId());
+        } catch (Exception e) {
+            // If there's an error, set a default image
+            holder.achievementImageView.setImageResource(R.drawable.ic_achievement_instance); // Replace 'default_image' with your default image name
+        }
+        holder.achievementImageView.setImageResource(R.drawable.ic_achievement_instance);
         // Set progress data
         holder.progressBar.setMax(achievement.getTotal());
         holder.progressBar.setProgress(achievement.getProgress());

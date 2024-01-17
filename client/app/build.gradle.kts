@@ -46,4 +46,5 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("com.google.code.gson:gson:2.8.6")
 }
