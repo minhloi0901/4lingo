@@ -1,8 +1,10 @@
 package com.example.a4lingo.Controllers;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.RegisterService;
@@ -24,6 +27,12 @@ public class RegisterActivity extends OneTopNavActivity {
     private String email;
     private String password1;
     private String password2;
+
+    public interface RegistrationCallback {
+        void onRegistrationSuccess(String message);
+        void onRegistrationFailure(String error);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,15 +167,33 @@ public class RegisterActivity extends OneTopNavActivity {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Check
-                int success = registerService.registerUser(userName, email, password1);
+                userName = userNameEditText.getText().toString().trim();
+                email = emailEditText.getText().toString().trim();
+                password1 = passwordText1.getText().toString().trim();
+                password2 = passwordText2.getText().toString().trim();
 
-                if (success == 0){
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
+                // Validate empty fields
+                if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password1) || TextUtils.isEmpty(password2)) {
+                    Toast.makeText(getApplicationContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                // Validate matching passwords
+                if (!password1.equals(password2)) {
+                    Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // CAL API HERE, AND TOAST THE RESPONSE
+                // BEGIN
+
+                // END
+
+//                if (success == 0){
+//                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                    startActivity(intent);
+//                }
             }
         });
-
     }
 }
