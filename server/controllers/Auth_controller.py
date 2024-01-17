@@ -1,30 +1,55 @@
 from flask import jsonify, request, make_response
-from models import Users_model
-import bcrypt 
-from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+from models.Users_model import User
 from middlewares.Auth_middleware import generate_token
+from sqlalchemy.exc import IntegrityError
 
 salt_rounds = 10
 
+from flask import jsonify, request, make_response
+from werkzeug.security import generate_password_hash
+from models.Users_model import User
+from middlewares.Auth_middleware import generate_token
+from sqlalchemy.exc import IntegrityError
+
 def signup():
-    data = request.json
-    password = data.get('password')
-
-    # Hash the password
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    data['password'] = hashed_password
-
-    # Create new user with hashed password
     try:
-        new_user = Users_model(data)
-        new_user.save()
-        response = make_response(login(request))
+        data = request.json
+        username = data.get('username')
+        password = data.get('password')
+        role = data.get('role')  # Make sure 'role' is in your JSON data
+        email = data.get('email')
+        phone_number = data.get('phone_number')
+
+        # Hash the password using Flask's built-in utility
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+        data['password'] = hashed_password
+
+        # Create new user with hashed password
+        new_user = User.create_new_user(
+            username=username,
+            password=password,
+            role=role,
+            email=email,
+            phone_number=phone_number
+        )
+
+        response = make_response(jsonify({'message': 'User created successfully'}))
         response.status_code = 201
         return response
+    except IntegrityError as e:
+        if 'UNIQUE constraint failed' in str(e):
+            response = jsonify({'message': 'User with this email or username already exists'})
+            response.status_code = 409
+            return response
+        else:
+            response = jsonify({'message': f'Error creating new user: {e}'})
+            response.status_code = 500
+            return response
     except Exception as e:
-        if 'ER_DUP_ENTRY' in str(e):
-            return jsonify({'message': 'User has already existed'}), 409
-        return jsonify({'message': 'Errors occur when creating new user'}), 500
+        response = jsonify({'message': f'Error creating new user: {e}'})
+        response.status_code = 500
+        return response
     
 def login():
     data = request.json
