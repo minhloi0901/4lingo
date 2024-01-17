@@ -6,7 +6,11 @@
     android:orientation="vertical"
     android:id="@+id/root"
     android:background="@drawable/background"
+<<<<<<< HEAD
     tools:context=".Controllers.OpenActivity">
+=======
+    tools:context=".OpenActivity">
+>>>>>>> origin/loi
 
    <ImageView
        android:id="@+id/open_bird"

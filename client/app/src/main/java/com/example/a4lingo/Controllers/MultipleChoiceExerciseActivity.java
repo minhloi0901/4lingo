@@ -58,6 +58,9 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
             TextView questionTextView = v.findViewById(R.id.questionSentenceTextView);
             questionTextView.setText(currentQuestion.getQuestionText());
 
+            TextView questionIndexTextView = v.findViewById(R.id.questionIndexTextView);
+            questionIndexTextView.setText(questionIndex + 1 + "/" + questions.size());
+
             // Clear existing choices in the layout
             mulChoiceLayout.removeAllViews();
 
