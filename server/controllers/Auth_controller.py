@@ -7,6 +7,12 @@ from middlewares.Auth_validator import signup_scheme, login_scheme
 
 salt_rounds = 10
 
+from flask import jsonify, request, make_response
+from werkzeug.security import generate_password_hash
+from models.Users_model import User
+from middlewares.Auth_middleware import generate_token
+from sqlalchemy.exc import IntegrityError
+
 def signup():
     data = request.json
     username = data.get('username')
