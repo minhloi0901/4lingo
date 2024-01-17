@@ -5,6 +5,7 @@ from errors.Errors import ALREADY_EXIST, NO_INPUT_400, INVALID_INPUT_422
 from models.Users_model import User
 from database.db import db
 
+
 Session = db['Session']
 session = Session()
 Base = db['Base']
@@ -40,7 +41,34 @@ def get_user_by_id(user_id):
     filter_criteria = User.id == user_id
     user = User.find_one_user_by_filter(filter_criteria)
     if user:
-        return jsonify({'username': user.username})  
+        user_data = {
+            'id': user.id,
+            'username': user.username,
+            # 'password': user.password,  
+            'score': user.score,
+            'rating': user.rating,
+            'role': user.role.value,
+            'phone_number': user.phone_number,
+            'email': user.email
+        }
+        return jsonify(user_data)
+    return jsonify({'message': 'User not found'})
+
+def get_user_by_name(user_name):
+    filter_criteria = User.username == user_name
+    user = User.find_one_user_by_filter(filter_criteria)
+    if user:
+        user_data = {
+            'id': user.id,
+            'username': user.username,
+            # 'password': user.password,  
+            'score': user.score,
+            'rating': user.rating,
+            'role': user.role.value,
+            'phone_number': user.phone_number,
+            'email': user.email
+        }
+        return jsonify(user_data)
     return jsonify({'message': 'User not found'})
 
 def update_user_by_id(user_id, update_data):
@@ -72,6 +100,7 @@ def get_all_users():
         user_list.append(user_data)
 
     return jsonify(user_list)
+
 
 # def add_new_user_test():
 #     # Provide user information to create a new user (for testing purposes)

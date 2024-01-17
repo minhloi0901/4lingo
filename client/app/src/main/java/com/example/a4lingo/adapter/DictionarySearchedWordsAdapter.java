@@ -1,7 +1,5 @@
 package com.example.a4lingo.adapter;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
-import com.example.a4lingo.WordDictionaryActivity;
+import com.example.a4lingo.Controllers.WordDictionaryActivity;
 
 import java.util.List;
 

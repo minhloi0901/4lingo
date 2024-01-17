@@ -31,7 +31,8 @@ class User(Base):
         role = UserRole(role)
         new_user = cls (
             username=username,
-            password=password,
+            # hash password
+            password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),
             role=role,
             email=email,
             phone_number=phone_number

@@ -5,4 +5,5 @@ config = {
     'USER': 'root',
     'PASSWORD': '123456',
     'DB': 'lingo',
+    'SECRET_KEY': 'fdkjshfhjsdfdskfdsfdcbsjdkfdsdf',
 }

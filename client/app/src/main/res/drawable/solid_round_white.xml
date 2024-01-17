@@ -1,0 +1,5 @@
+<!-- res/drawable/orange_rounded_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/white"/> <!-- This is the color orange. -->
+    <corners android:radius="10dp"/> <!-- This is the radius for rounded corners. Adjust as necessary. -->
+</shape>

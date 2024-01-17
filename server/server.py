@@ -1,10 +1,11 @@
 from flask import Flask
 from routes.Users_route import user_router
+from routes.Auth_route import auth_router
 
 app = Flask(__name__)
 
-# Register the Users routes from the Users_route.py file
 app.register_blueprint(user_router, url_prefix='/users')
+app.register_blueprint(auth_router, url_prefix='/auth')
 
 @app.route('/')
 def root():

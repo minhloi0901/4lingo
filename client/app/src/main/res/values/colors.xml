@@ -23,4 +23,10 @@
     <color name="__ng_nh_p__i_n_tho_i_color">#F7F6F6</color>
     <color name="rectangle_6_color">#84949E</color>
     <color name="facebook_color">#1F12BC</color>
+=======
+    <color name="gray">#48A9A9</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="light_yellow">#DCFFEB3B</color>
+    <color name="greenColor">#19D937</color>
+    >>>>>>> origin/tan1
 </resources>

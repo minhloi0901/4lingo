@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/messageFrame"
+    android:layout_margin="10dp"
+    android:background="@drawable/border_gray"
+    android:padding="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/audioButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_audio">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hi! What can I do for you? Can you describe your problem?"
+        android:textSize="26sp"
+        />
+</FrameLayout>

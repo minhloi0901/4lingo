@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".LoginActivity"
+    tools:context=".Controllers.LoginActivity"
     android:padding="25dp"
     android:background="@drawable/background">
 

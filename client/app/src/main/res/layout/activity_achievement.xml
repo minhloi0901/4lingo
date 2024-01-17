@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".AchievementActivity">
+    tools:context=".Controllers.AchievementActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAchievement"
