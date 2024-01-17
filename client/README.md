@@ -12,7 +12,11 @@
 - [x] DictionaryActivity
 - [x] MistakeListActivity
 - [x] NoteActivity
+<<<<<<< HEAD
 - [x] CompleteLessonActivity
+=======
+- [ ] CompleteLessonActivity
+>>>>>>> origin/loi
 - [x] ReviewActivity
 - [x] LeaderBoardActivity
 - [x] ContestActivity

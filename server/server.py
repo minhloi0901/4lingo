@@ -1,19 +1,14 @@
-import flask
-import requests
+from flask import Flask
+from routes.Users_route import user_router
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
-def handle_call():
-    return "Successfully Connected"
+# Register the Users routes from the Users_route.py file
+app.register_blueprint(user_router, url_prefix='/users')
 
-@app.route('/getfact', methods=['GET'])
-def get_fact():
-    return "Hey!! I'm the fact you got!!!"
-
-@app.route('/getname/<name>', methods=['POST'])
-def extract_name(name):
-    return "I got your name " + name;
+@app.route('/')
+def root():
+    return 'this is 4lingo backend server'
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True) 
