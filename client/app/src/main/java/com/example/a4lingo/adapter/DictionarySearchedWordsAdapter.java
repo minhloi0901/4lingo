@@ -62,4 +62,10 @@ public class DictionarySearchedWordsAdapter extends RecyclerView.Adapter<Diction
             forwardToWordPageButton = itemView.findViewById(R.id.forwardToWordPageButton);
         }
     }
+
+    // Add this method to update the list of searched words
+    public void updateSearchedWords(List<String> newSearchedWords) {
+        words = newSearchedWords;
+        notifyDataSetChanged();
+    }
 }

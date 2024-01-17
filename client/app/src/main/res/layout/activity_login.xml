@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-<<<<<<< HEAD
     tools:context=".Controllers.LoginActivity"
-=======
-    tools:context=".LoginActivity"
->>>>>>> origin/loi
     android:padding="25dp"
     android:background="@drawable/background">
 

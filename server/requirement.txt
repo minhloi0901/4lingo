@@ -5,3 +5,4 @@ sqlalchemy
 mysqlclient
 bcrypt
 jwt
+flask_validator

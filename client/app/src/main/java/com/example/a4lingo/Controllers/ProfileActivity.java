@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
@@ -13,11 +15,13 @@ import androidx.appcompat.widget.SwitchCompat;
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.LearningPathService;
 import com.example.a4lingo.Services.ProfileService;
+import com.example.a4lingo.item.ProfileItem;
 
 import java.util.ArrayList;
 
 public class ProfileActivity extends OneTopNavActivity{
-    private ProfileService profileService;
+    private ProfileService profileService = new ProfileService();
+    private ProfileItem profileItem = profileService.getProfileItem("USER ID");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +38,51 @@ public class ProfileActivity extends OneTopNavActivity{
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.activity_profile, root, false);
 
-//        updateUI();
+        updateUI(v);
 
         root.addView(v);
+    }
+
+    private void updateUI(View v) {
+        EditText userNameTextView = v.findViewById(R.id.userName);
+        EditText loginNameTextView = v.findViewById(R.id.loginName);
+        EditText emailTextView = v.findViewById(R.id.email);
+        EditText passwordTextView = v.findViewById(R.id.password);
+        EditText phoneNumberTextView = v.findViewById(R.id.phoneNumber);
+        SwitchCompat sound = v.findViewById(R.id.soundToggle);
+        SwitchCompat darkMode = v.findViewById(R.id.themeModeToggle);
+        SwitchCompat encourageNoti = v.findViewById(R.id.notiToggle);
+        SwitchCompat contact = v.findViewById(R.id.contactsToggle);
+        SwitchCompat facebook = v.findViewById(R.id.facebookToggle);
+        SwitchCompat gmail = v.findViewById(R.id.gmailToggle);
+        SwitchCompat smsNoti = v.findViewById(R.id.smsNotiToggle);
+        SwitchCompat emailNoti = v.findViewById(R.id.emailNotiToggle);
+        TextView notiTime = v.findViewById(R.id.notiTime);
+
+        userNameTextView.setText(profileItem.getUserName());
+        loginNameTextView.setText(profileItem.getLoginName());
+        emailTextView.setText(profileItem.getEmail());
+        passwordTextView.setText(generateAsterisks(profileItem.getPassword().length()));
+        phoneNumberTextView.setText(profileItem.getPhoneNumber());
+
+        sound.setChecked(profileItem.isSound());
+        darkMode.setChecked(profileItem.isDarkMode());
+        encourageNoti.setChecked(profileItem.isEncourageNoti());
+        contact.setChecked(profileItem.isContact());
+        facebook.setChecked(profileItem.isFacebook());
+        gmail.setChecked(profileItem.isGmail());
+        smsNoti.setChecked(profileItem.isSmsNoti());
+        emailNoti.setChecked(profileItem.isEmailNoti());
+        notiTime.setText(profileItem.getNotiTime());
+    }
+
+    // Helper method to generate asterisks for password
+    private String generateAsterisks(int length) {
+        StringBuilder asterisks = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            asterisks.append("*");
+        }
+        return asterisks.toString();
     }
 
     @Override
@@ -55,9 +101,13 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 // Store to database
-
+                if (profileService.saveProfile(profileItem)){
+                    finish();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Save sucessfully", Toast.LENGTH_SHORT).show();
+                }
                 // Finish
-                finish();
             }
         });
 
@@ -68,6 +118,8 @@ public class ProfileActivity extends OneTopNavActivity{
 //                startActivity(intent);
             }
         });
+
+
 
 
         findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {

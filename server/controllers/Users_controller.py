@@ -4,14 +4,19 @@ from flask import jsonify
 from errors.Errors import ALREADY_EXIST, NO_INPUT_400, INVALID_INPUT_422
 from models.Users_model import User
 from database.db import db
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 Session = db['Session']
 session = Session()
 Base = db['Base']
 
+salt_rounds = 10
+
 def create_new_user(username, password, role, email, phone_number=None):
-    # Check if username, email, and phone number are provided
+    # Hash password
+    password = generate_password_hash(password, method='pbkdf2:sha256')
+    
+    # Check if username, email are provided
     if not username or not email:
         return NO_INPUT_400
 
@@ -44,7 +49,7 @@ def get_user_by_id(user_id):
         user_data = {
             'id': user.id,
             'username': user.username,
-            # 'password': user.password,  
+            'password': user.password,  
             'score': user.score,
             'rating': user.rating,
             'role': user.role.value,
@@ -61,7 +66,7 @@ def get_user_by_name(user_name):
         user_data = {
             'id': user.id,
             'username': user.username,
-            # 'password': user.password,  
+            'password': user.password,  
             'score': user.score,
             'rating': user.rating,
             'role': user.role.value,
@@ -82,7 +87,7 @@ def delete_user_by_id(user_id):
     return jsonify({'message': 'User deleted successfully!'})
 
 def get_all_users():
-    filter_criteria = True  # No filter criteria to get all users
+    filter_criteria = True  
     users = User.find_all_users_by_filter(filter_criteria)
     user_list = []
 
@@ -90,7 +95,7 @@ def get_all_users():
         user_data = {
             'id': user.id,
             'username': user.username,
-            # 'password': user.password,  
+            'password': user.password,  
             'score': user.score,
             'rating': user.rating,
             'role': user.role.value,

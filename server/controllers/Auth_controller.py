@@ -1,39 +1,35 @@
 from flask import jsonify, request, make_response
-from models import Users_model
-import bcrypt 
-from werkzeug.security import check_password_hash
+from models.Users_model import User
+from controllers.Users_controller import create_new_user
+from werkzeug.security import check_password_hash, generate_password_hash
 from middlewares.Auth_middleware import generate_token
+from middlewares.Auth_validator import signup_scheme, login_scheme
 
 salt_rounds = 10
 
 def signup():
     data = request.json
+    username = data.get('username')
     password = data.get('password')
-
-    # Hash the password
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    data['password'] = hashed_password
-
-    # Create new user with hashed password
-    try:
-        new_user = Users_model(data)
-        new_user.save()
-        response = make_response(login(request))
-        response.status_code = 201
-        return response
-    except Exception as e:
-        if 'ER_DUP_ENTRY' in str(e):
-            return jsonify({'message': 'User has already existed'}), 409
-        return jsonify({'message': 'Errors occur when creating new user'}), 500
+    role = data.get('role')
+    phone_number = data.get('phone_number')
+    email = data.get('email')
+    
+    new_user = create_new_user(username, password, role, email, phone_number)
+    if new_user:
+        return jsonify({'message': 'User created successfully!'}), 201
     
 def login():
     data = request.json
     username = data.get('username')
     password = data.get('password')
 
-    user = Users_model.find_one_by_username(username)
+    filter_criteria = User.username == username
+    user = User.find_one_user_by_filter(filter_criteria)
 
-    if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
+    hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+
+    if user and check_password_hash(hashed_password, user.password):
         token = generate_token(user['id'])
         return jsonify({'message': 'Login successful', 'token': token}), 200
     else:

@@ -1,5 +1,4 @@
 from flask import request
-from flask_validator import Validate
 
 signup_scheme = {
     "username": {

@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,11 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme._4Lingo"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true">
-        <!--        <activity-->
-        <!--            android:name=".LoginScreen"-->
-        <!--            android:exported="false" />-->
+        tools:targetApi="31">
+<!--                <activity-->
+<!--                    android:name=".LoginScreen"-->
+<!--                    android:exported="false" />-->
         <activity
             android:name=".Controllers.ShareActivity"
             android:exported="true">
@@ -29,22 +26,16 @@
             android:name=".Controllers.OpenActivity"
             android:exported="true">
             <intent-filter>
-                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Controllers.OpenActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Controllers.LoginActivity"
             android:exported="true">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
         <activity

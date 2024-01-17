@@ -2,6 +2,7 @@ from enum import Enum
 from operator import and_
 from sqlalchemy import Integer, Column, String
 from sqlalchemy import Enum as SQLAlchemyEnum
+import bcrypt
 
 from database.db import db
 

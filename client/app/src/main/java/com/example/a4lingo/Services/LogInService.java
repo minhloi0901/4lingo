@@ -1,24 +1,27 @@
 package com.example.a4lingo.Services;
 
-import com.example.a4lingo.data.DataManager;
+import okhttp3.*;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.IOException;
 
 public class LogInService {
-    public void login(String username, String password) {
-        String url = "http://127.0.0.1:5000/login"; // Login endpoint URL
-        try {
-            // Create a JSON object with username and password
-            JSONObject loginData = new JSONObject();
-            loginData.put("username", username);
-            loginData.put("password", password);
+    private final OkHttpClient client = new OkHttpClient();
 
-            // Make a POST request with the JSON data
-            DataManager dataManager = new DataManager();
-            dataManager.postRequest(loginData, url);
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public void login(String username, String password) throws IOException {
+        RequestBody formBody = new FormBody.Builder()
+                .add("username", username)
+                .add("password", password)
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://http://127.0.0.1:5000")
+                .post(formBody)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+            System.out.println(response.body().string());
         }
     }
 }
