@@ -8,9 +8,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.DictionaryService;
+import com.example.a4lingo.Services.WordDictionaryService;
+import com.example.a4lingo.adapter.DictionarySearchedWordsAdapter;
+import com.example.a4lingo.item.WordItem;
+
+import java.util.List;
 
 public class WordDictionaryActivity extends DictionaryActivity{
+    private WordDictionaryService wordDictionaryService = new WordDictionaryService();
+    private DictionaryService dictionaryService = new DictionaryService();
+    private DictionarySearchedWordsAdapter adapter;
+
     @Override
     protected void renderLayout(){
         super.renderLayout();
@@ -36,12 +49,24 @@ public class WordDictionaryActivity extends DictionaryActivity{
             editText.setText(word);
 
             TextView spellingPronunciation = v.findViewById(R.id.spellingPronunciationTextView);
-            spellingPronunciation.setText("/ˈlɪŋɡəʊ/");
+            spellingPronunciation.setText(wordDictionaryService.getSpellingPronunciation(word));
+
+            // Suggest words
+            RecyclerView recyclerView = v.findViewById(R.id.searchedWordsRecyclerView);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
+            List<String> words = dictionaryService.getSuggestWords("UserID", word);
+            adapter = new DictionarySearchedWordsAdapter(this, words);
+            recyclerView.setAdapter(adapter);
+
+
+            // Present meanings and examples
+            List<WordItem> wordItemList = wordDictionaryService.getWordItemList(word);
 
             // Set list of suggest words for WORD in ScrollView
-            renderAnInstance(v, "1. ngoại ngữ", "\u2022" + " If you live abroad it helps to know the local lingo.", "Nếu bạn sống ở nước ngoài, việc biết biệt ngữ địa phương sẽ giúp ích.");
-            renderAnInstance(v, "2. ngoại ngữ", "\u2022" + " If you live abroad it helps to know the local lingo.", "Nếu bạn sống ở nước ngoài, việc biết biệt ngữ địa phương sẽ giúp ích.");
-
+            for (WordItem wordItem: wordItemList) {
+                renderAnInstance(v, wordItem);
+            }
         }
 
         root.addView(v);
@@ -60,7 +85,7 @@ public class WordDictionaryActivity extends DictionaryActivity{
         });
     }
 
-    private void renderAnInstance(View v, String meaning, String engSentence, String vieSentence) {
+    private void renderAnInstance(View v, WordItem wordItem) {
         LinearLayout rootLayout = v.findViewById(R.id.wordMeaningLinearLayout);
 
         // Inflate the dictionary word item layout
@@ -72,9 +97,9 @@ public class WordDictionaryActivity extends DictionaryActivity{
         TextView engSen = dictionaryItem.findViewById(R.id.engSentence);
         TextView vieSen = dictionaryItem.findViewById(R.id.vieSentence);
 
-        vieMeaning.setText(meaning);
-        engSen.setText(engSentence);
-        vieSen.setText(vieSentence);
+        vieMeaning.setText(wordItem.getMeaning());
+        engSen.setText(wordItem.getEngSentence());
+        vieSen.setText(wordItem.getVieSentence());
 
         // Add the inflated view to the root layout
         rootLayout.addView(dictionaryItem);

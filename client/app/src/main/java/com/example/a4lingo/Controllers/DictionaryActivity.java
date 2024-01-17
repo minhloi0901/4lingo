@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.DictionaryService;
 import com.example.a4lingo.adapter.DictionarySearchedWordsAdapter;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class DictionaryActivity extends MainActivity {
     private DictionarySearchedWordsAdapter adapter;
+    private DictionaryService dictionaryService = new DictionaryService();
     @Override
     protected void renderLayout(){
         super.renderLayout();
@@ -35,7 +38,9 @@ public class DictionaryActivity extends MainActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new DictionarySearchedWordsAdapter(this, Arrays.asList("Hello", "Duo", "Lingo"));
+        List<String> words = dictionaryService.getSuggestWords("UserID", "");
+
+        adapter = new DictionarySearchedWordsAdapter(this, words);
         recyclerView.setAdapter(adapter);
     }
 
@@ -65,7 +70,9 @@ public class DictionaryActivity extends MainActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                // Update the adapter with the new list of matching words
+                List<String> matchingWords = dictionaryService.getSuggestWords("UserID", charSequence.toString());
+                adapter.updateSearchedWords(matchingWords);
             }
 
             @Override
