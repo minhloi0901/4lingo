@@ -1,1 +1,7 @@
-pip install -e . 
+mysql-connector-python
+flask
+PyMySQL
+sqlalchemy
+mysqlclient
+bcrypt
+jwt
