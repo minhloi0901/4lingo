@@ -19,12 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a4lingo.R;
+import com.example.a4lingo.Services.LogInService;
 
 public class LoginActivity extends OneTopNavActivity {
     private final String TAG = "LoginActivity";
     private String userName;
     private String password;
     private boolean isPasswordVisible = false;
+    private LogInService logInService = new LogInService();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +100,7 @@ public class LoginActivity extends OneTopNavActivity {
             @Override
             public void onClick(View v) {
                 // check userName and password
-                boolean user_check = check_user_information(userName, password);
+                boolean user_check = logInService.login(userName, password);
                 if (user_check) {
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
