@@ -3,9 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+<<<<<<< refs/remotes/origin/frontend_hoang
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+=======
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <application
+        android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+>>>>>>> Add WordDictionary Api Call
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

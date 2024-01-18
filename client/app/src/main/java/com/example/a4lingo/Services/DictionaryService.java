@@ -21,15 +21,9 @@ public class DictionaryService {
         return Arrays.asList("Hello", "Every", "One");
     }
 
-    public interface DictionaryCallBack {
-        void onSuccess(String response);
-        void onFailure(String error);
-    }
-
     public DictionaryService(Context context) {
         this.context = context;
     }
-
 
 //    public void getSuggestWords(String userID, String searchingText, DictionaryCallBack callback) {
 //        JSONObject jsonPram = new JSONObject();

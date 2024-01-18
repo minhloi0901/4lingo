@@ -44,6 +44,27 @@ def search():
                         translated_example = translate_text(definition["example"])
                         definition["translatedText"] = translated_example
 
-        return jsonify(dict_data)
+        return jsonify(reformat_data(dict_data[0]))
     else:
         return jsonify({"error": "Word not found or error in external API"}), dict_response.status_code
+
+def reformat_data(dict_data):
+    converted_data = {
+    "word": dict_data["word"],
+    "phonetics": [
+        {
+            "audio": phonetic.get("audio", ""),
+            "text": phonetic.get("text", "")
+        } for phonetic in dict_data["phonetics"] if phonetic.get("audio", "") != "" and phonetic.get("text", "") != ""
+    ], 
+    "meanings": [
+        {
+            "definition": definition["definition"],
+            "example": definition.get("example"),
+            "translatedText": definition.get("translatedText")
+        } for meaning in dict_data["meanings"]
+        for definition in meaning["definitions"] if definition.get("translatedText", "") != "" and definition.get("example", "") != ""
+    ]
+    }
+    
+    return converted_data

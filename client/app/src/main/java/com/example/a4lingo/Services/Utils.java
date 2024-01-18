@@ -83,13 +83,16 @@ public class Utils {
             @Override
             public void onSuccess(String response) {
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    try {
-                        JSONObject jsonResponse = new JSONObject(response);
-                        callback.onSuccess(jsonResponse.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(context, "Error parsing JSON", Toast.LENGTH_SHORT).show();
-                    }
+                    callback.onSuccess(response);
+
+//                    try {
+//                        JSONObject jsonResponse = new JSONObject(response);
+//                        callback.onSuccess(jsonResponse.toString());
+//                    } catch (JSONException e) {
+//                        System.out.println("Error parsing JSON in Utils");
+//                        e.printStackTrace();
+//                        Toast.makeText(context, "Error parsing JSON", Toast.LENGTH_SHORT).show();
+//                    }
                 });
             }
 
