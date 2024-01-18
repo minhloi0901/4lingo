@@ -6,3 +6,5 @@ mysqlclient
 bcrypt
 jwt
 flask_validator
+requests
+flask_mail

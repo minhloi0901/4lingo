@@ -4,8 +4,8 @@ from flask import jsonify
 from errors.Errors import ALREADY_EXIST, NO_INPUT_400, INVALID_INPUT_422
 from models.Users_model import User
 from database.db import db
-import re 
-import bcrypt
+from middlewares.Auth_validator import validate_password, validate_username, validate_email, validate_phone_number
+from middlewares.Auth_middleware import hash_password
 
 Session = db['Session']
 session = Session()
@@ -14,69 +14,34 @@ Base = db['Base']
 salt_rounds = 8
 
 def create_new_user(username, password, role, email, phone_number=None):
-    # Check if username, email are provided
-    if not username or not email:
-        return False, 'Username and email are required.'
-
-    # Check for valid email format (add more detailed validation if needed)
-    if '@' not in email or '.' not in email:
-        return False, 'Invalid email format.'
-
-    # Check if phone number is provided and not empty
-    if phone_number and phone_number.strip() != '':
-        filter_by_phone_number = User.phone_number == phone_number
-        existing_phone_user = User.find_one_user_by_filter(filter_by_phone_number)
-        if existing_phone_user:
-            return False, 'Phone number already exists.'
-
-    # Check for existing username
-    filter_by_username = (User.username == username)
-    existing_user = User.find_one_user_by_filter(filter_by_username)
-    if existing_user:
-        return False, 'Username or email already exists.'
     
-    # Check for existing email
-    filter_by_email = (User.email == email)
-    existing_email_user = User.find_one_user_by_filter(filter_by_email)
-    if existing_email_user:
-        return False, 'Email already exists.'
+    # Validate username
+    is_valid_username, error_message_username = validate_username(username)
+    if not is_valid_username:
+        return False, error_message_username
     
-    # Check for existing phone number
-    filter_by_phone_number = (User.phone_number == phone_number)
-    existing_phone_user = User.find_one_user_by_filter(filter_by_phone_number)
-    if existing_phone_user:
-        return False, 'Phone number already exists.'
+    # Validate email
+    is_valid_email, error_message_email = validate_email(email)
+    if not is_valid_email:
+        return False, error_message_email
     
-    # Check username length
-    if len(username) < 4:
-        return False, 'Username must be at least 4 characters long.'
+    # Validate phone number
+    is_valid_phone_number, error_message_phone_number = validate_phone_number(phone_number)
+    if not is_valid_phone_number:
+        return False, error_message_phone_number
     
-    # Check space username
-    if ' ' in username or '\t' in username or '\n' in username:
-        return False, 'Username must not contain any whitespace characters.'
-   
-    # Check password length
-    if not (8 <= len(password) <= 32):
-        print(len(password))
-        return False, 'Password must be between 8 and 32 characters long.'
-    
-    # Check password contains at least one lowercase, uppercase, number, and special character
-    if not (re.search(r'[a-z]', password) and 
-        re.search(r'[A-Z]', password) and 
-        re.search(r'\d', password) and 
-        re.search(r'\W', password)):
-        return False, 'Password must contain at least one lowercase, uppercase, number, and special character.'
-    
-    # Check space password
-    if ' ' in password or '\t' in password or '\n' in password:
-        return False, 'Password must not contain any whitespace characters.'
+    # Validate password
+    is_valid_password, error_message_password = validate_password(password)
+    if not is_valid_password:
+        return False, error_message_password
     
     # Hash password
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    hashed_password = hash_password(password)
     # Create a new user if all checks pass
-    new_user = User.create_new_user(username=username, password=hashed_password, role=role, email=email, phone_number=phone_number)
+    new_user = User.create_new_user(username=username, password=password, role=role, email=email, phone_number=phone_number)
     
     return True, 'User created successfully!'
+
 def get_user_by_id(user_id):
     filter_criteria = User.id == user_id
     user = User.find_one_user_by_filter(filter_criteria)
@@ -141,6 +106,20 @@ def get_all_users():
 
     return jsonify(user_list)
 
+def update_password_by_email(email, password):
+    filter_criteria = User.email == email
+    # Validate password
+    is_valid_password, error_message_password = validate_password(password)
+    if not is_valid_password:
+        return False, error_message_password
+    # Hash password
+    hashed_password = hash_password(password)
+    # Update password
+    update_data = {
+        'password': hashed_password
+    }
+    User.update_user_by_filter(filter_criteria, update_data)
+    return jsonify({'message': 'Password updated successfully!'})
 
 def add_new_user_test():
     # Provide user information to create a new user (for testing purposes)
