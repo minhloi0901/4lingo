@@ -24,9 +24,8 @@ def generate_token(user_id):
     
 def get_id_from_token(token):
     try:
-        decoded_token = jwt.decode(token, app.config.get('SECRET_KEY'), algorithms=['HS256'])
-        user_id = decoded_token.get('sub')
-        return True, user_id
+        payload = jwt.decode(token, config.get('SECRET_KEY'), algorithms=['HS256'])
+        return True, payload['sub']
     except jwt.ExpiredSignatureError:
         return False, jsonify({'message': 'Token expired. Please log in again.'})
     except jwt.InvalidTokenError:

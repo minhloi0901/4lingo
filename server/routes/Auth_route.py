@@ -19,10 +19,6 @@ def signup():
 def reset_password():
    return Auth_controller.reset_password()
 
-@auth_router.route("/reset_password/<token>", methods=["POST", "GET"])
-def reset_password_with_token(token):
-   return Auth_controller.reset_password_with_token(token)
-
 @auth_router.route("/change_password", methods=["POST"])
 def change_password():
    return Auth_controller.change_password()

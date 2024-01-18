@@ -27,7 +27,6 @@ email_password = 'wwgp izbk qpyw rjpm'
 
 def signup():
     data = request.json
-    print(data)
     username = data.get('username')
     password = data.get('password')
     role = data.get('role')

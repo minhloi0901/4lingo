@@ -124,8 +124,9 @@ def update_password_by_email(email, password):
 def get_user_by_token(user_token):
     is_valid_token, error_message = get_id_from_token(user_token)
     if not is_valid_token:
-        return False, error_message
-    user_id = is_valid_token
+        return jsonify({'message': error_message})
+    
+    user_id = error_message
     filter_criteria = User.id == user_id
     user = User.find_one_user_by_filter(filter_criteria)
     if user:
@@ -140,7 +141,8 @@ def get_user_by_token(user_token):
             'email': user.email
         }
         return jsonify(user_data)
-    return jsonify({'message': 'User not found'})
+    else:
+        return jsonify({'message': 'User not found'})
 
 # def add_new_user_test():
 #     # Provide user information to create a new user (for testing purposes)
