@@ -1,5 +1,6 @@
 import datetime
 import jwt
+import bcrypt
 from flask import current_app as app
 
 def generate_token(user_id):
@@ -17,4 +18,6 @@ def generate_token(user_id):
     except Exception as e:
         return e
     
-    
+def hash_password(password):
+    password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    return password

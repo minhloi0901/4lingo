@@ -6,4 +6,5 @@ config = {
     'PASSWORD': '123456',
     'DB': 'lingo',
     'SECRET_KEY': 'fdkjshfhjsdfdskfdsfdcbsjdkfdsdf',
+    'SECRET_SALT': '8'
 }

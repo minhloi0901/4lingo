@@ -24,7 +24,7 @@ class User(Base):
     role = Column(SQLAlchemyEnum(UserRole), nullable=False)
     phone_number = Column(String(15))
     email = Column(String(255), nullable=False, unique=True)
-
+    
     # Class method to create a new user
     @classmethod
     def create_new_user(cls, username, password, role, email, phone_number=None):
