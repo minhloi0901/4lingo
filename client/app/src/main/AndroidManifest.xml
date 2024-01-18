@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme._4Lingo"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Controllers.ChangePasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".Controllers.ShareActivity"
             android:exported="true">
@@ -22,7 +26,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.OpenActivity"
             android:exported="true">
@@ -30,16 +33,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.RegisterActivity"
             android:exported="true">
@@ -47,7 +49,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.GetPasswordActivity"
             android:exported="true">
@@ -55,22 +56,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.CompleteLessonActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"></activity>
         <activity
             android:name=".Controllers.CreateContestActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"></activity>
         <activity
             android:name=".Controllers.ReviewActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"></activity>
         <activity
             android:name=".Controllers.MainActivity"
             android:exported="true">
@@ -78,7 +72,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.HomeActivity"
             android:exported="true">
@@ -86,7 +79,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.LeaderBoardActivity"
             android:exported="true">
@@ -94,7 +86,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.ContestActivity"
             android:exported="true">
@@ -102,7 +93,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.ProfileActivity"
             android:exported="true">
@@ -110,7 +100,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.SearchActivity"
             android:exported="true">
@@ -118,7 +107,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.MistakeActivity"
             android:exported="true">
@@ -126,7 +114,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.NoteActivity"
             android:exported="true">
@@ -134,7 +121,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.DictionaryActivity"
             android:exported="true"
@@ -143,7 +129,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.WordDictionaryActivity"
             android:exported="true"
@@ -152,7 +137,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.AchievementActivity"
             android:exported="true">
@@ -160,7 +144,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.CommunicationActivity"
             android:exported="true">
@@ -168,7 +151,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.CreateCommunicationActivity"
             android:exported="true">
@@ -176,12 +158,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.LearningPathActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"></activity>
         <activity
             android:name=".Controllers.OverallActivity"
             android:exported="true">
@@ -189,7 +168,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.RuleActivity"
             android:exported="true">
@@ -197,7 +175,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.ThanksActivity"
             android:exported="true">
@@ -205,7 +182,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.WordMatchingActivity"
             android:exported="true">
@@ -213,16 +189,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.SentenceTranslationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.ConversationExerciseActivity"
             android:exported="true">
@@ -230,7 +205,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Controllers.MultipleChoiceExerciseActivity"
             android:exported="true">
@@ -239,4 +213,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
