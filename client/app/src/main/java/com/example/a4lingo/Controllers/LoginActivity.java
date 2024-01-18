@@ -28,9 +28,12 @@ import org.json.JSONObject;
 
 public class LoginActivity extends OneTopNavActivity {
     private final String TAG = "LoginActivity";
+    EditText userNameText;
+    EditText passwordText;
     private String userName;
     private String password;
     private boolean isPasswordVisible = false;
+    private LogInService logInService = new LogInService();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +57,9 @@ public class LoginActivity extends OneTopNavActivity {
         TextView getPassword = findViewById(R.id.login_forget_password);
         getPassword.setText(spannableString);
 
-        // Get username
-        EditText userNameText = findViewById(R.id.login_name);
-        userName = userNameText.getText().toString();
 
-        // Get password
-        EditText passwordText = findViewById(R.id.login_password);
-        password = passwordText.getText().toString();
+        userNameText = findViewById(R.id.login_name);
+        passwordText = findViewById(R.id.login_password);
 
         // Set view password
         ImageView visibleButton = findViewById(R.id.login_visibleButton);
