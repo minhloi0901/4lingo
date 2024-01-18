@@ -2,7 +2,6 @@ from enum import Enum
 from operator import and_
 from sqlalchemy import Integer, Column, String
 from sqlalchemy import Enum as SQLAlchemyEnum
-import bcrypt
 
 from database.db import db
 
@@ -11,7 +10,7 @@ session = Session()
 Base = db['Base']
 
 class UserRole(Enum):
-    LEANER = "LEANER"
+    LEANER = "LEARNER"
     TEACHER = "TEACHER"
     ADMIN = "ADMIN"
 
@@ -32,8 +31,7 @@ class User(Base):
         role = UserRole(role)
         new_user = cls (
             username=username,
-            # hash password
-            password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),
+            password=password,
             role=role,
             email=email,
             phone_number=phone_number
