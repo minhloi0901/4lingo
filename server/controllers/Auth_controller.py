@@ -53,9 +53,9 @@ def login():
 
     stored_hashed_password = user.password
     if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):
-        # token = generate_token(user.id)
-        # return jsonify({'message': 'Login success!', 'token': token})
-        return jsonify({'message': 'Login success!'})
+        token = generate_token(user.id)
+        return jsonify({'message': 'Login success!',
+                        'token': token})
     else:
         return jsonify({'message': 'Password incorrect'})
 
@@ -71,10 +71,10 @@ def reset_password():
     if not valid_email:
         return jsonify({'message': 'Email not found'})
     else:
-        token, expiration = send_email(email)
+        verify_code, expiration = send_email(email)
         return jsonify({
             'message': 'Reset password request has been sent to your email',
-            'token': token,
+            'token': verify_code,
             'expiration': expiration.isoformat() if expiration else None
         })
 

@@ -19,4 +19,6 @@ def update_user():
 def delete_user():
     return Users_controller.delete_user_by_id()
 
-
+@user_router.route("/<user_token>", methods=["GET"])
+def get_user_by_token(user_token):
+    return Users_controller.get_user_by_token(user_token)
