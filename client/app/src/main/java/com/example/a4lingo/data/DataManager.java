@@ -2,6 +2,8 @@ package com.example.a4lingo.data;
 
 import androidx.annotation.NonNull;
 
+import com.example.a4lingo.Services.Utils;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -20,16 +22,16 @@ public class DataManager {
     private static final String POST = "POST";    // Made constants 'static final'
     private static final String GET = "GET";
 
-    public interface DataManagerCallback {
-        void onSuccess(String response);
-        void onFailure(String error);
-    }
+//    public interface DataManagerCallback {
+//        void onSuccess(String response);
+//        void onFailure(String error);
+//    }
 
     public DataManager() {
         // Removed context as it's not used
     }
 
-    public void sendRequest(String type, String method, JSONObject jsonParam, DataManagerCallback callback) {
+    public void sendRequest(String type, String method, JSONObject jsonParam, Utils.Callback callback) {
         String fullURL = url + "/" + method; // Ensured no double slashes
 
         OkHttpClient client = new OkHttpClient.Builder()

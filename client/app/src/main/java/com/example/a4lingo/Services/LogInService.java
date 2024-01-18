@@ -13,17 +13,11 @@ import org.json.JSONObject;
 public class LogInService {
     private Context context;
 
-    // Define a callback interface
-    public interface LoginCallback {
-        void onSuccess(String response);
-        void onFailure(String error);
-    }
-
     public LogInService(Context context) {
         this.context = context;
     }
 
-    public void login(String username, String password, LoginCallback callback) {
+    public void login(String username, String password, Utils.Callback callback) {
         JSONObject jsonParam = new JSONObject();
         try {
             jsonParam.put("username", username);
@@ -36,29 +30,7 @@ public class LogInService {
         }
 
         DataManager dataManager = new DataManager();
-        dataManager.sendRequest("POST", "auth/login", jsonParam, new DataManager.DataManagerCallback() {
-            @Override
-            public void onSuccess(String response) {
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    try {
-                        JSONObject jsonResponse = new JSONObject(response);
-                        // Directly use the callback here to communicate the success
-                        callback.onSuccess(jsonResponse.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(context, "Error parsing JSON", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(String error) {
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    // Directly use the callback here to communicate the failure
-                    callback.onFailure(error);
-                });
-            }
-        });
+        dataManager.sendRequest("POST", "auth/login", jsonParam, Utils.createCallback(context, callback));
     }
 }
 

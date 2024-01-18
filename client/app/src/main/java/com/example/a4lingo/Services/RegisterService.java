@@ -42,7 +42,7 @@ public class RegisterService {
         }
 
         DataManager dataManager = new DataManager();
-        dataManager.sendRequest("POST", "auth/signup", jsonParam, new DataManager.DataManagerCallback() {
+        dataManager.sendRequest("POST", "auth/signup", jsonParam, new Utils.Callback() {
             @Override
             public void onSuccess(String response) {
                 new Handler(Looper.getMainLooper()).post(() -> {
@@ -68,7 +68,6 @@ public class RegisterService {
             public void onFailure(String error) {
                 new Handler(Looper.getMainLooper()).post(() ->
                         Toast.makeText(context, "Error: " + error, Toast.LENGTH_SHORT).show());
-                // Additional error handling
             }
         });
     }

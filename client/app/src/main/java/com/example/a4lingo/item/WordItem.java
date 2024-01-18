@@ -2,6 +2,7 @@ package com.example.a4lingo.item;
 
 public class WordItem {
     private String word;
+    private String pronunciation;
     private String meaning;
     private String engSentence;
     private String vieSentence;
@@ -9,7 +10,7 @@ public class WordItem {
         this.word = word;
         this.meaning = meaning;
     }
-    public WordItem(String word, String meaning, String engSentence, String vieSentence){
+    public WordItem(String word, String meaning, String pronunciation, String engSentence, String vieSentence){
         this.word = word;
         this.meaning = meaning;
         this.engSentence = engSentence;
@@ -25,4 +26,5 @@ public class WordItem {
     }
     public String getEngSentence() {return engSentence;}
     public String getVieSentence() {return vieSentence;}
+    public String getPronunciation() {return pronunciation;}
 }

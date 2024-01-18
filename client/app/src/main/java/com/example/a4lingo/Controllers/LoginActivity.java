@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.LogInService;
 import com.example.a4lingo.Services.RegisterService;
+import com.example.a4lingo.Services.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +34,7 @@ public class LoginActivity extends OneTopNavActivity {
     private String userName;
     private String password;
     private boolean isPasswordVisible = false;
-    private LogInService logInService = new LogInService();
+    private LogInService logInService = new LogInService(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,7 +161,7 @@ public class LoginActivity extends OneTopNavActivity {
 
     private void performLogin(String userName, String password) {
         LogInService logInService = new LogInService(LoginActivity.this);
-        logInService.login(userName, password, new LogInService.LoginCallback() {
+        logInService.login(userName, password, new Utils.Callback() {
             @Override
             public void onSuccess(String response) {
                 runOnUiThread(() -> {
@@ -177,7 +178,7 @@ public class LoginActivity extends OneTopNavActivity {
                         } else {
                             // Handle other messages or errors
                             Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                        }
+                        }gi
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(LoginActivity.this, "Error parsing JSON", Toast.LENGTH_SHORT).show();

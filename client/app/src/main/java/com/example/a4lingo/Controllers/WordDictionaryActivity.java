@@ -7,21 +7,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.DictionaryService;
+import com.example.a4lingo.Services.Utils;
 import com.example.a4lingo.Services.WordDictionaryService;
 import com.example.a4lingo.adapter.DictionarySearchedWordsAdapter;
 import com.example.a4lingo.item.WordItem;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class WordDictionaryActivity extends DictionaryActivity{
-    private WordDictionaryService wordDictionaryService = new WordDictionaryService();
-    private DictionaryService dictionaryService = new DictionaryService();
+    private WordDictionaryService wordDictionaryService = new WordDictionaryService(this);
+    private DictionaryService dictionaryService = new DictionaryService(this);
     private DictionarySearchedWordsAdapter adapter;
 
     @Override
@@ -48,9 +53,6 @@ public class WordDictionaryActivity extends DictionaryActivity{
             EditText editText = v.findViewById(R.id.searchWordEditText);
             editText.setText(word);
 
-            TextView spellingPronunciation = v.findViewById(R.id.spellingPronunciationTextView);
-            spellingPronunciation.setText(wordDictionaryService.getSpellingPronunciation(word));
-
             // Suggest words
             RecyclerView recyclerView = v.findViewById(R.id.searchedWordsRecyclerView);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -60,13 +62,29 @@ public class WordDictionaryActivity extends DictionaryActivity{
             recyclerView.setAdapter(adapter);
 
 
-            // Present meanings and examples
-            List<WordItem> wordItemList = wordDictionaryService.getWordItemList(word);
+            // Present pronunciation, meanings and examples
+            TextView spellingPronunciation = v.findViewById(R.id.spellingPronunciationTextView);
 
-            // Set list of suggest words for WORD in ScrollView
-            for (WordItem wordItem: wordItemList) {
-                renderAnInstance(v, wordItem);
-            }
+
+            wordDictionaryService.searchWord(word, new Utils.Callback() {
+                @Override
+                public void onSuccess(String response) {
+                    runOnUiThread( () -> {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(WordDictionaryActivity.this, "Error parsing JSON", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(WordDictionaryActivity.this, "Search failed: " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         root.addView(v);

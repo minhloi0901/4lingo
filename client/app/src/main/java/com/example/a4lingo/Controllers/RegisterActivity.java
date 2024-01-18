@@ -34,11 +34,6 @@ public class RegisterActivity extends OneTopNavActivity {
 
     private String phoneNumber;
 
-    public interface RegistrationCallback {
-        void onRegistrationSuccess(String message);
-        void onRegistrationFailure(String error);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,7 +187,7 @@ public class RegisterActivity extends OneTopNavActivity {
                     return;
                 }
 
-                // CAL API HERE, AND TOAST THE RESPONSE
+                // CALL API HERE, AND TOAST THE RESPONSE
                 // BEGIN
                 RegisterService registerService = new RegisterService(RegisterActivity.this);
                 registerService.registerUser(userName, password1, phoneNumber, email);

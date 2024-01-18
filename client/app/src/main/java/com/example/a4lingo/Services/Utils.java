@@ -2,15 +2,21 @@ package com.example.a4lingo.Services;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.a4lingo.Controllers.CompleteLessonActivity;
 import com.example.a4lingo.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -64,5 +70,35 @@ public class Utils {
             // Handle invalid indices if needed
             System.out.println("Invalid indices");
         }
+    }
+
+
+    public interface Callback {
+        void onSuccess(String response);
+        void onFailure(String error);
+    }
+
+    public static Callback createCallback(Context context, Callback callback) {
+        return new Callback() {
+            @Override
+            public void onSuccess(String response) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        callback.onSuccess(jsonResponse.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Error parsing JSON", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String error) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    callback.onFailure(error);
+                });
+            }
+        };
     }
 }

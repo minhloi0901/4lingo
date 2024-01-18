@@ -20,7 +20,7 @@ import java.util.List;
 
 public class DictionaryActivity extends MainActivity {
     private DictionarySearchedWordsAdapter adapter;
-    private DictionaryService dictionaryService = new DictionaryService();
+    private DictionaryService dictionaryService = new DictionaryService(this);
     @Override
     protected void renderLayout(){
         super.renderLayout();
