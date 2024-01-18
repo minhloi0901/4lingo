@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +19,10 @@ import android.widget.Toast;
 
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.RegisterService;
+import com.example.a4lingo.data.DataManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterActivity extends OneTopNavActivity {
     private RegisterService registerService = new RegisterService();
@@ -27,6 +32,8 @@ public class RegisterActivity extends OneTopNavActivity {
     private String email;
     private String password1;
     private String password2;
+
+    private String phoneNumber;
 
     public interface RegistrationCallback {
         void onRegistrationSuccess(String message);
@@ -171,9 +178,11 @@ public class RegisterActivity extends OneTopNavActivity {
                 email = emailEditText.getText().toString().trim();
                 password1 = passwordText1.getText().toString().trim();
                 password2 = passwordText2.getText().toString().trim();
+                EditText phoneNumberText = findViewById(R.id.phoneNumber);
+                phoneNumber = phoneNumberText.getText().toString().trim();
 
                 // Validate empty fields
-                if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password1) || TextUtils.isEmpty(password2)) {
+                if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password1) || TextUtils.isEmpty(password2) || TextUtils.isEmpty(phoneNumber)) {
                     Toast.makeText(getApplicationContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -186,6 +195,44 @@ public class RegisterActivity extends OneTopNavActivity {
 
                 // CAL API HERE, AND TOAST THE RESPONSE
                 // BEGIN
+
+                // Now, prepare the JSON object
+                JSONObject jsonParam = new JSONObject();
+                try {
+                    jsonParam.put("username", userName);
+                    jsonParam.put("password", password1);
+                    jsonParam.put("score", 0); // Assuming default value
+                    jsonParam.put("rating", 0); // Assuming default value
+                    jsonParam.put("role", "LEANER"); // Assuming default value or you can get it from the user
+                    jsonParam.put("phone_number", phoneNumber); // Assuming default value or collect from user
+                    jsonParam.put("email", email);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Error creating JSON", Toast.LENGTH_SHORT).show());
+                    return;
+                }
+
+                // Proceed with the rest of your code for the DataManager
+                DataManager dataManager = new DataManager();
+                dataManager.sendRequest("POST", "auth/signup", jsonParam, new DataManager.DataManagerCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(RegisterActivity.this, "Success: " + response, Toast.LENGTH_SHORT).show();
+                            // Handle successful registration, maybe navigate to another activity
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(RegisterActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                            // Handle failure
+                            Log.e("Error", error);
+                        });
+                    }
+                });
+
 
                 // END
 

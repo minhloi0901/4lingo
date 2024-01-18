@@ -1,55 +1,70 @@
 package com.example.a4lingo.data;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import okhttp3.*;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class DataManager {
-    private static DataManager instance;
-    private OkHttpClient okHttpClient;
+    private String url = "http://10.0.2.2:5000"; // Removed the last slash
+    private static final String POST = "POST";    // Made constants 'static final'
+    private static final String GET = "GET";
 
-    private DataManager() {
-        okHttpClient = new OkHttpClient();
+    public interface DataManagerCallback {
+        void onSuccess(String response);
+        void onFailure(String error);
     }
 
-    public static synchronized DataManager getInstance() {
-        if (instance == null) {
-            instance = new DataManager();
+    public DataManager() {
+        // Removed context as it's not used
+    }
+
+    public void sendRequest(String type, String method, JSONObject jsonParam, DataManagerCallback callback) {
+        String fullURL = url + "/" + method; // Ensured no double slashes
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS).build();
+
+        Request request;
+        if (type.equals(POST)) {
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            RequestBody body = RequestBody.create(jsonParam.toString(), JSON);
+            request = new Request.Builder()
+                    .url(fullURL)
+                    .post(body)
+                    .build();
+        } else {
+            request = new Request.Builder()
+                    .url(fullURL)
+                    .build();
         }
-        return instance;
-    }
 
-    public void postRequest(JSONObject jsonData, String endpoint, DataManagerCallback callback) {
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(jsonData.toString(), mediaType);
-        Request request = new Request.Builder()
-                .post(requestBody)
-                .url(endpoint)
-                .build();
-
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                callback.onFailure("Something went wrong: " + e.getMessage());
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFailure(e.getMessage());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String responseData = response.body().string();
-                    callback.onResponse(responseData);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    callback.onFailure("Error while processing the response.");
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body().string());
+                } else {
+                    callback.onFailure("Response Code: " + response.code());
                 }
             }
         });
-    }
-
-    public interface DataManagerCallback {
-        void onResponse(String response);
-        void onFailure(String error);
     }
 }
