@@ -1,11 +1,12 @@
 from flask import jsonify, request
 import requests
+from config.config import config
 
 def translate_text(text, source_lang="en", target_lang="vi"):
     url = "https://google-api31.p.rapidapi.com/translate"
     headers = {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "776026c167msh8aebcf0db7082acp192fcejsn149cde93dd69",
+        "X-RapidAPI-Key": config['GG_API_KEY'],
         "X-RapidAPI-Host": "google-api31.p.rapidapi.com"
     }
     payload = {

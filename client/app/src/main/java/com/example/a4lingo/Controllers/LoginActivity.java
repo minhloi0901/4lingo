@@ -33,7 +33,6 @@ public class LoginActivity extends OneTopNavActivity {
     private String userName;
     private String password;
     private boolean isPasswordVisible = false;
-    private LogInService logInService = new LogInService();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
