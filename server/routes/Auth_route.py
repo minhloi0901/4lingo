@@ -15,9 +15,17 @@ def login():
 def signup():
     return Auth_controller.signup()
 
-@auth_router.route("/get_password", methods=["POST", "GET"])
-def get_password():
-   return Auth_controller.get_password()
+@auth_router.route("/reset_password", methods=["POST", "GET"])
+def reset_password():
+   return Auth_controller.reset_password()
+
+@auth_router.route("/reset_password/<token>", methods=["POST", "GET"])
+def reset_password_with_token(token):
+   return Auth_controller.reset_password_with_token(token)
+
+@auth_router.route("/change_password", methods=["POST"])
+def change_password():
+   return Auth_controller.change_password()
 
 @auth_router.route("/logout", methods=["POST"])
 def logout():

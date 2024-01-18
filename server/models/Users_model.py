@@ -2,7 +2,6 @@ from enum import Enum
 from operator import and_
 from sqlalchemy import Integer, Column, String
 from sqlalchemy import Enum as SQLAlchemyEnum
-import bcrypt
 
 from database.db import db
 
@@ -25,14 +24,14 @@ class User(Base):
     role = Column(SQLAlchemyEnum(UserRole), nullable=False)
     phone_number = Column(String(15))
     email = Column(String(255), nullable=False, unique=True)
-
+    
     # Class method to create a new user
     @classmethod
     def create_new_user(cls, username, password, role, email, phone_number=None):
         role = UserRole(role)
         new_user = cls (
             username=username,
-            password = password,
+            password=password,
             role=role,
             email=email,
             phone_number=phone_number
