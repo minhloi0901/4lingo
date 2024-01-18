@@ -25,7 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends OneTopNavActivity {
-    private RegisterService registerService = new RegisterService();
     private boolean isHidden = true;
     private boolean isHidden1 = true;
     private String userName;
@@ -195,45 +194,8 @@ public class RegisterActivity extends OneTopNavActivity {
 
                 // CAL API HERE, AND TOAST THE RESPONSE
                 // BEGIN
-
-                // Now, prepare the JSON object
-                JSONObject jsonParam = new JSONObject();
-                try {
-                    jsonParam.put("username", userName);
-                    jsonParam.put("password", password1);
-                    jsonParam.put("score", 0); // Assuming default value
-                    jsonParam.put("rating", 0); // Assuming default value
-                    jsonParam.put("role", "LEANER"); // Assuming default value or you can get it from the user
-                    jsonParam.put("phone_number", phoneNumber); // Assuming default value or collect from user
-                    jsonParam.put("email", email);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Error creating JSON", Toast.LENGTH_SHORT).show());
-                    return;
-                }
-
-                // Proceed with the rest of your code for the DataManager
-                DataManager dataManager = new DataManager();
-                dataManager.sendRequest("POST", "auth/signup", jsonParam, new DataManager.DataManagerCallback() {
-                    @Override
-                    public void onSuccess(String response) {
-                        runOnUiThread(() -> {
-                            Toast.makeText(RegisterActivity.this, "Success: " + response, Toast.LENGTH_SHORT).show();
-                            // Handle successful registration, maybe navigate to another activity
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-                        runOnUiThread(() -> {
-                            Toast.makeText(RegisterActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
-                            // Handle failure
-                            Log.e("Error", error);
-                        });
-                    }
-                });
-
-
+                RegisterService registerService = new RegisterService(RegisterActivity.this);
+                registerService.registerUser(userName, password1, phoneNumber, email);
                 // END
 
 //                if (success == 0){

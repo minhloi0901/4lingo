@@ -1,16 +1,17 @@
+# Users.controller.py
 from flask import jsonify
 
 from errors.Errors import ALREADY_EXIST, NO_INPUT_400, INVALID_INPUT_422
 from models.Users_model import User
 from database.db import db
-from werkzeug.security import generate_password_hash, check_password_hash
 import re 
+import bcrypt
 
 Session = db['Session']
 session = Session()
 Base = db['Base']
 
-salt_rounds = 10
+salt_rounds = 8
 
 def create_new_user(username, password, role, email, phone_number=None):
     # Check if username, email are provided
@@ -71,9 +72,9 @@ def create_new_user(username, password, role, email, phone_number=None):
         return False, 'Password must not contain any whitespace characters.'
     
     # Hash password
-    password = generate_password_hash(password, method='pbkdf2:sha256')
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     # Create a new user if all checks pass
-    new_user = User.create_new_user(username=username, password=password, role=role, email=email, phone_number=phone_number)
+    new_user = User.create_new_user(username=username, password=hashed_password, role=role, email=email, phone_number=phone_number)
     
     return True, 'User created successfully!'
 def get_user_by_id(user_id):
