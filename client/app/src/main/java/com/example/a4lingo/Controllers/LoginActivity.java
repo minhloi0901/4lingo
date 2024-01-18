@@ -1,6 +1,7 @@
 package com.example.a4lingo.Controllers;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -167,6 +168,12 @@ public class LoginActivity extends OneTopNavActivity {
                     try {
                         JSONObject jsonResponse = new JSONObject(response);
                         String message = jsonResponse.optString("message", "");
+                        String token = jsonResponse.optString("token", "");
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userToken", token);
+                        editor.apply();
 
                         if ("Login success!".equals(message)) {
                             // Navigate to HomeActivity if login is successful
