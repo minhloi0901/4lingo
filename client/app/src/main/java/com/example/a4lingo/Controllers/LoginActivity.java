@@ -178,7 +178,7 @@ public class LoginActivity extends OneTopNavActivity {
                         } else {
                             // Handle other messages or errors
                             Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                        }gi
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(LoginActivity.this, "Error parsing JSON", Toast.LENGTH_SHORT).show();
