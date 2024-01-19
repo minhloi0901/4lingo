@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS lesson (
 	lesson_type VARCHAR(1024) NOT NULL,
 	score INT DEFAULT 0,
 	popularity_score INT DEFAULT 0, 
-	difficulty INT DEFAULT 0,
+	lesson_level INT,
     number_of_questions INT DEFAULT 0,
 	PRIMARY KEY (id),
 	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE

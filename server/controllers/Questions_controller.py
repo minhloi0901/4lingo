@@ -11,7 +11,7 @@ def add_new_question(lesson_id, score, content, answer, explanation, choice=None
         return jsonify({'message': 'Question content already exists'})
     
     # check lesson_id
-    filter_criteria = Question.lesson_id == lesson_id
+    filter_criteria = Lesson.id == lesson_id
     lesson = Lesson.find_one_lesson_by_filter(filter_criteria)
     if not lesson:
         return jsonify({'message': 'Lesson not found'})

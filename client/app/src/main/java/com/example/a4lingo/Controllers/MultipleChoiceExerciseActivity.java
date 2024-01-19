@@ -65,7 +65,7 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
 
             String token = Utils.getToken(getApplicationContext());
             if (token != null){
-                multipleChoiceService.getMultipleChoiceQuestions(null, 1, new Utils.Callback() {
+                multipleChoiceService.getMultipleChoiceQuestions(token, 1, new Utils.Callback() {
                     @Override
                     public void onSuccess(String response) {
                         runOnUiThread( () -> {

@@ -45,7 +45,7 @@ public class MultipleChoiceService {
             JSONObject jsonObject = jsonResponse.getJSONObject(i);
 
             List<String> choices = new ArrayList<>();
-            String[] choiceArray = jsonObject.getString("choice").split("/ ");
+            String[] choiceArray = jsonObject.getString("choice").split("/");
             for (String choice : choiceArray) {
                 choices.add(choice.trim());
             }

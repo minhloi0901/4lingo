@@ -81,14 +81,14 @@ def find_all_lessons():
 def find_lesson(token, lesson_type):
     is_valid_token, error_message = get_id_from_token(token)
     if not is_valid_token:
-        return jsonify({'message': 'Invalid token'})
+        return jsonify({'message': 'Invalid token'}), 400
 
     user_id = error_message
     # get user by id
     filter_criteria = User.id == user_id
     user = User.find_one_user_by_filter(filter_criteria)
     if not user:
-        return jsonify({'message': 'User not found'})
+        return jsonify({'message': 'User not found'}), 401
     
     # get lesson_level by lesson_type
     lesson_property_name = 'lesson_type_' + str(lesson_type)
@@ -98,12 +98,12 @@ def find_lesson(token, lesson_type):
     filter_criteria = Lesson.lesson_level == lesson_level
     found_lesson = Lesson.find_one_lesson_by_filter(filter_criteria)
     if not found_lesson:
-        return jsonify({'message': 'Lesson not found'})
+        return jsonify({'message': 'Lesson not found'}), 402
     
     lesson_id = found_lesson.id
 
     # get all questions by lesson_id
-    filter_criteria = Question.lesson_id == lesson_id
+    filter_criteria = Lesson.id == lesson_id
     questions = Question.find_all_questions_by_filter(filter_criteria)
     question_list = []
     for question in questions:
@@ -120,4 +120,4 @@ def find_lesson(token, lesson_type):
     
     response = jsonify(question_list)
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
-    return response
+    return response, 200

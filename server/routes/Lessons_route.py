@@ -22,7 +22,7 @@ def delete_lesson_by_id(lesson_id):
     lesson_id = data.get('lesson_id')
     return Lessons_controller.delete_lesson_by_id(lesson_id)
 
-@lessons_router.route("/find", methods=["GET"])
+@lessons_router.route("/find", methods=["POST"])
 def find_lesson():
     data = request.json
     token = data.get('token')

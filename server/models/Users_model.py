@@ -25,7 +25,7 @@ class User(Base):
     role = Column(SQLAlchemyEnum(UserRole), nullable=False)
     phone_number = Column(String(15))
     email = Column(String(255), nullable=False, unique=True)
-    lesson_type_1 = Column(String(128))
+    lesson_type_1 = Column(Integer, default=1)
     lesson_type_2 = Column(Integer, default=1)
     lesson_type_3 = Column(Integer, default=1)
     lesson_type_4 = Column(Integer, default=1)
