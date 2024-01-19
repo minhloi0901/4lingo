@@ -17,9 +17,10 @@ def generate_token(user_id):
             config.get('SECRET_KEY'),
             algorithm='HS256'
         )
-
+        print("_________________________________ TOKEN: ", token)
         return token  
     except Exception as e:
+        print("________________________________ E: ", e)
         return e 
     
 def get_id_from_token(token):

@@ -4,8 +4,7 @@ PyMySQL
 sqlalchemy
 mysqlclient
 bcrypt
-jwt
+PyJWT
 flask_validator
 requests
 flask_mail
-PyJWT
