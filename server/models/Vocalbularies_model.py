@@ -19,18 +19,26 @@ class Vocabulary(Base):
     # Class method to create a new vocabulary entry
     @classmethod
     def create_new_vocabulary(cls, user_id, text, meaning, pronun_es_us=None, pronun_en_uk=None):
-        new_vocabulary = cls (
-            user_id=user_id,
-            text=text,
-            meaning=meaning,
-            pronun_es_us=pronun_es_us,
-            pronun_en_uk=pronun_en_uk
-        )
-
-        session.add(new_vocabulary)
-        session.commit()
-        print("New vocabulary entry created.")
-        return new_vocabulary
+        # Check if a vocabulary entry with the same text already exists
+        existing_entry = session.query(cls).filter(cls.text == text).first()
+        
+        if existing_entry:
+            # If an entry exists, print a message and do not add a new one
+            print(f"Vocabulary entry with text '{text}' already exists.")
+            return None
+        else:
+            # If no entry exists, proceed to add a new one
+            new_vocabulary = cls(
+                user_id=user_id,
+                text=text,
+                meaning=meaning,
+                pronun_es_us=pronun_es_us,
+                pronun_en_uk=pronun_en_uk
+            )
+            session.add(new_vocabulary)
+            session.commit()
+            print("New vocabulary entry created.")
+            return new_vocabulary
     
     # Class method to delete vocabulary entries by filter 
     @classmethod
