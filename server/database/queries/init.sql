@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS question (
 	id INT AUTO_INCREMENT,
 	score INT,
 	content NVARCHAR(1024),
+    choice NVARCHAR(1024),
 	answer VARCHAR(128),
 	explanation NVARCHAR(1024), 
 	PRIMARY KEY (id)
