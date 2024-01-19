@@ -41,12 +41,7 @@ class Question(Base):
     def delete_questions_by_filter(cls, filter_criteria):
         deleted_count = session.query(cls).filter(filter_criteria).delete()
         session.commit()
-        if deleted_count == 0:
-            print("No question deleted.")
-        elif deleted_count == 1:
-            print("1 question deleted.")
-        else:
-            print(f"{deleted_count} questions deleted.")
+        return deleted_count
 
     # Class method to find questions by filter
     @classmethod
