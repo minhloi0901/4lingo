@@ -1,11 +1,8 @@
-# Users.controller.py
-from flask import jsonify
-
 from errors.Errors import ALREADY_EXIST, NO_INPUT_400, INVALID_INPUT_422
 from models.Achievements_model import Achievement
 from database.db import db
-from middlewares.Auth_validator import validate_password, validate_username, validate_email, validate_phone_number
-from middlewares.Auth_middleware import hash_password
+from flask import jsonify, request
+from database.db import db
 
 Session = db['Session']
 session = Session()
@@ -13,54 +10,76 @@ Base = db['Base']
 
 salt_rounds = 8
 
-def create_new_achievement(achievement_id, achievement_name, criteria=None):
-    # Check if achievement_id and achievement_name are provided
-    if not achievement_id or not achievement_name:
-        return NO_INPUT_400
+
+def create_new_achievement():
+    try:
+        data = request.json
+        name = data.get("name")
+        content = data.get("content")
+        criteria = data.get("criteria")
+    except ValueError:
+        return jsonify({'message': 'Invalid JSON data in the request body'}), 400
+
+    if not name or not content or not criteria:
+        return jsonify({'message': NO_INPUT_400}), 400
     
-    # Check for duplicate achievement_id
-    existing_achievement = session.query(Achievement).filter(Achievement.achievement_id == achievement_id).first()
-    if existing_achievement:
-        return ALREADY_EXIST
+    new_achievement = Achievement.create_new_achievement(name, content, criteria)
+    if not new_achievement:
+        return jsonify({'message': ALREADY_EXIST}), 400
+
+    return jsonify({'message': 'New achievement created successfully!'}), 201
     
-    # Create a new achievement if all checks pass
-    new_achievement = Achievement.create_new_achievement(achievement_id, achievement_name, criteria)
-    return jsonify({'message': 'New achievement created.'})
-    
-    
-def get_achievement_by_id(achievement_id):
-    filter_criteria = Achievement.achievement_id == achievement_id
-    achievement = Achievement.find_one_achievement_by_filter(filter_criteria)
-    if not achievement:
-        return jsonify({'message': 'Achievement does not exist.'})
-    return jsonify(achievement.serialize())
 
+def delete_achievement_by_id():
+    try:
+        data = request.json
+        id = data.get("id")
+    except ValueError:
+        return jsonify({'message': 'Invalid JSON data in the request body'}), 400
 
-def get_achievement_by_name(achievement_name):
-    filter_criteria = Achievement.achievement_name == achievement_name
-    achievement = Achievement.find_one_achievement_by_filter(filter_criteria)
-    if not achievement:
-        return jsonify({'message': 'Achievement does not exist.'})
-    return jsonify(achievement.serialize())
+    if not id:
+        return jsonify({'message': NO_INPUT_400}), 400
 
-
-def update_achievement_by_id(achievement_id, update_data):
-    filter_criteria = Achievement.achievement_id == achievement_id
-    updated_count = Achievement.update_achievement_by_filter(filter_criteria, update_data)
-    if not updated_count:
-        return jsonify({'message': 'Achievement does not exist.'})
-    return jsonify({'message': f'Updated {updated_count} achievements.'})
-
-
-def delete_achievement_by_id(achievement_id):
-    filter_criteria = Achievement.achievement_id == achievement_id
+    filter_criteria = (Achievement.id == id)
     deleted_count = Achievement.delete_achievements_by_filter(filter_criteria)
-    if not deleted_count:
-        return jsonify({'message': 'Achievement does not exist.'})
-    return jsonify({'message': 'Achievement deleted successfully.'})
+    
+    # Return result
+    if deleted_count == 0:
+        return jsonify({'message': 'Achievement not found.'}), 404
+    else:
+        return jsonify({'message': 'Achievement deleted successfully!'}), 200
+    
+    
+def delete_achievement_by_name():
+    try:
+        data = request.json
+        name = data.get("name")
+    except ValueError:
+        return jsonify({'message': 'Invalid JSON data in the request body'}), 400
+    
+    if not name:
+        return jsonify({'message': NO_INPUT_400}), 400
 
-
+    filter_criteria = (Achievement.name == name)
+    deleted_count = Achievement.delete_achievements_by_filter(filter_criteria)
+    # Return result
+    if deleted_count == 0:
+        return jsonify({'message': 'Achievement not found.'}), 404
+    else:
+        return jsonify({'message': 'Achievement deleted successfully!'}), 200
+    
+    
 def get_all_achievements():
-    achievements = Achievement.find_all_achievements_by_filter(True)
-    return jsonify(achievements.serialize())
+    filter_criteria = True
+    achievements = Achievement.find_all_achievements_by_filter(filter_criteria)
+    achievements_list = []
+    for achievement in achievements:
+        achievement_dict = {
+            'id': achievement.id,
+            'name': achievement.name,
+            'content': achievement.content,
+            'criteria': achievement.criteria
+        }
+        achievements_list.append(achievement_dict)
+    return jsonify(achievements_list), 200
 

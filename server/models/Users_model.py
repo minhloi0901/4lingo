@@ -47,12 +47,7 @@ class User(Base):
     def delete_users_by_filter(cls, filter_criteria):
         deleted_count = session.query(cls).filter(filter_criteria).delete()
         session.commit()
-        if deleted_count == 0:
-            print("No user deleted.")
-        elif deleted_count == 1:
-            print("1 user deleted.")
-        else:
-            print(f"{deleted_count} users deleted.")
+        return deleted_count
 
     # Class method to find users by filter
     @classmethod
@@ -69,12 +64,7 @@ class User(Base):
     def update_user_by_filter(cls, filter_criteria, update_data):
         updated_count = session.query(cls).filter(filter_criteria).update(update_data)
         session.commit()
-        if updated_count == 0:
-            print("No user updated.")
-        elif updated_count == 1:
-            print("1 user updated.")
-        else:
-            print(f"{updated_count} users updated.")
+        return updated_count
         
 
 # test create_new_user function
