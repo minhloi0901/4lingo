@@ -10,11 +10,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from database.db import db
 from sqlalchemy.ext.declarative import declarative_base
 
-from Users_model import User, UserRole
+from models.Users_model import User, UserRole
 
 Session = db['Session']
 session = Session()
-Base = declarative_base()
+Base = db['Base']
 
 
 
@@ -83,7 +83,3 @@ class Community(Base):
         print(f"Updated {updated_count} communities.")
         return updated_count
     
-
-# User create
-#User.create_new_user('quoctrung', 'pass', UserRole.TEACHER, 'email', '09123')
-Community.create_new_community('community', 7, 'desc')
