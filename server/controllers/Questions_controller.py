@@ -13,10 +13,12 @@ def add_new_question(lesson_id, score, content, answer, explanation, choice=None
     # check lesson_id
     filter_criteria = Lesson.id == lesson_id
     lesson = Lesson.find_one_lesson_by_filter(filter_criteria)
+
     if not lesson:
         return jsonify({'message': 'Lesson not found'})
     
     new_question = Question.create_new_question(lesson_id, score, content, answer, explanation, choice)
+
     return jsonify({'message': 'New question created successfully!'})
 
 def delete_question_by_id(question_id):
