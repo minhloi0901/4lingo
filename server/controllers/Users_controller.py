@@ -143,7 +143,7 @@ def update_user(user_token, update_data):
     # Validate the user token and get the user ID
     is_valid_token, user_id = get_id_from_token(user_token)
     if not is_valid_token:
-        return jsonify({'message': user_id})
+        return jsonify({'message': user_id}), 400
 
     # Extract the fields from the update data
     new_email = update_data.get('email', None)
@@ -154,19 +154,19 @@ def update_user(user_token, update_data):
     if new_email:
         existing_email_user = User.find_one_user_by_filter(User.email == new_email)
         if existing_email_user and existing_email_user.id != user_id:
-            return jsonify({'message': 'Email already exists'})
+            return jsonify({'message': 'Email already exists'}), 401
 
     # Check if the new phone number already exists
     if new_phone_number:
         existing_phone_user = User.find_one_user_by_filter(User.phone_number == new_phone_number)
         if existing_phone_user and existing_phone_user.id != user_id:
-            return jsonify({'message': 'Phone number already exists'})
+            return jsonify({'message': 'Phone number already exists'}), 402
 
     # Check if the new username already exists
     if new_username:
         existing_username_user = User.find_one_user_by_filter(User.username == new_username)
         if existing_username_user and existing_username_user.id != user_id:
-            return jsonify({'message': 'Username already exists'})
+            return jsonify({'message': 'Username already exists'}), 403
 
     # Update the user information
     update_data = {
@@ -178,7 +178,7 @@ def update_user(user_token, update_data):
     filter_criteria = User.id == user_id
     User.update_user_by_filter(filter_criteria, update_data)
 
-    return jsonify({'message': 'User updated successfully!'})
+    return jsonify({'message': 'User updated successfully!'}), 200
 
 def update_password(user_token, update_data):
     # Extract data from the update_data dictionary
@@ -188,12 +188,12 @@ def update_password(user_token, update_data):
     # Validate the new password
     is_valid_password, error_message_password = validate_password(new_password)
     if not is_valid_password:
-        return jsonify({'message': error_message_password})
+        return jsonify({'message': error_message_password}), 400
 
     # Get user_id from the token
     is_valid_token, user_id = get_id_from_token(user_token)
     if not is_valid_token:
-        return jsonify({'message': user_id})  # user_id contains the error message
+        return jsonify({'message': user_id}), 401  # user_id contains the error message
 
     # Find the user by user_id
     filter_criteria = User.id == user_id
@@ -209,11 +209,11 @@ def update_password(user_token, update_data):
             update_data = {'password': hashed_new_password}
             User.update_user_by_filter(filter_criteria, update_data)
 
-            return jsonify({'message': 'Password updated successfully!'})
+            return jsonify({'message': 'Password updated successfully!'}), 200
         else:
-            return jsonify({'message': 'Old password is incorrect.'})
+            return jsonify({'message': 'Old password is incorrect.'}), 402
     else:
-        return jsonify({'message': 'User not found'})
+        return jsonify({'message': 'User not found'}), 403
 
 
 

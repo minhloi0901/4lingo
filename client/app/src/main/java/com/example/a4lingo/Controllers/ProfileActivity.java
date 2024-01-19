@@ -143,9 +143,15 @@ public class ProfileActivity extends OneTopNavActivity{
                 ProfileService profileService = new ProfileService(getApplicationContext());
                 String token = Utils.getToken(getApplicationContext());
                 if(token != null){
+//                    EditText userName = findViewById(R.id.userName);
+                    EditText email = findViewById(R.id.email);
+                    EditText phone_number = findViewById(R.id.phoneNumber);
+                    profileItem.setEmail(email.getText().toString());
+                    profileItem.setPhoneNumber(phone_number.getText().toString());
                     profileService.saveProfile(token, profileItem, new Utils.Callback() {
                         @Override
                         public void onSuccess(String response) {
+//                            System.out.println(response);
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
                             finish();
@@ -373,26 +379,9 @@ public class ProfileActivity extends OneTopNavActivity{
 
         //-------------------------------------------------------------
 
-        EditText userName = findViewById(R.id.userName);
-
-
-        EditText email = findViewById(R.id.email);
-        email.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                profileItem.setEmail(editable.toString());
-            }
-        });
+//        EditText userName = findViewById(R.id.userName);
+//        EditText email = findViewById(R.id.email);
+//        EditText phone_number = findViewById(R.id.phoneNumber);
 
         TextView password = findViewById(R.id.password);
         password.setOnClickListener(new View.OnClickListener() {
@@ -403,22 +392,5 @@ public class ProfileActivity extends OneTopNavActivity{
             }
         });
 
-        EditText phone_number = findViewById(R.id.phoneNumber);
-        phone_number.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                profileItem.setPhoneNumber(editable.toString());
-            }
-        });
     }
 }

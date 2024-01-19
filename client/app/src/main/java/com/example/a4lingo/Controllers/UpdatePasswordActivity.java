@@ -75,6 +75,7 @@ public class UpdatePasswordActivity extends OneTopNavActivity{
                     updatePasswordService.updatePassword(token, old, new1, new Utils.Callback() {
                         @Override
                         public void onSuccess(String response) {
+                            System.out.println(response);
                             Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                             startActivity(intent);
                             finish();
