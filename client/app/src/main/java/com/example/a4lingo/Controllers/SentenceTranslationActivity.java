@@ -45,6 +45,8 @@ public class SentenceTranslationActivity extends MainActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         v = layoutInflater.inflate(R.layout.activity_sentence_translation, root, false);
 
+
+
         renderAnInstance(v);
 
         root.addView(v);

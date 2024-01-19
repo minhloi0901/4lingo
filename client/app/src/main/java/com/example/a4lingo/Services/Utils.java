@@ -50,9 +50,8 @@ public class Utils {
             intent.putExtra("SCORE", total_score);
             intent.putExtra("TIME", elapsedTimeSeconds);
             intent.putExtra("ACCURACY", correctCount  * 100.0f / questions.size());
-            intent.putExtra("LESSON_ID", 001);
+//            intent.putExtra("LESSON_ID", 001);
             context.startActivity(intent);
-            // All questions are completed
 
             return true;
         }
