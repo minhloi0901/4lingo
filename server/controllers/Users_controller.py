@@ -5,6 +5,7 @@ from errors.Errors import ALREADY_EXIST, NO_INPUT_400, INVALID_INPUT_422
 from models.Users_model import User
 from middlewares.Auth_validator import validate_password, validate_username, validate_email, validate_phone_number
 from middlewares.Auth_middleware import hash_password, get_id_from_token
+import bcrypt
 
 salt_rounds = 8
 
@@ -146,7 +147,6 @@ def update_user(user_token, update_data):
 
     # Extract the fields from the update data
     new_email = update_data.get('email', None)
-    new_password = update_data.get('password', None)
     new_phone_number = update_data.get('phone_number', None)
     new_username = update_data.get('username', None)
 
@@ -171,7 +171,6 @@ def update_user(user_token, update_data):
     # Update the user information
     update_data = {
         'email': new_email,
-        'password': hash_password(new_password) if new_password else None,
         'phone_number': new_phone_number,
         'username': new_username
     }
@@ -180,6 +179,43 @@ def update_user(user_token, update_data):
     User.update_user_by_filter(filter_criteria, update_data)
 
     return jsonify({'message': 'User updated successfully!'})
+
+def update_password(user_token, update_data):
+    # Extract data from the update_data dictionary
+    old_password = update_data.get('old_password')
+    new_password = update_data.get('new_password')
+
+    # Validate the new password
+    is_valid_password, error_message_password = validate_password(new_password)
+    if not is_valid_password:
+        return jsonify({'message': error_message_password})
+
+    # Get user_id from the token
+    is_valid_token, user_id = get_id_from_token(user_token)
+    if not is_valid_token:
+        return jsonify({'message': user_id})  # user_id contains the error message
+
+    # Find the user by user_id
+    filter_criteria = User.id == user_id
+    user = User.find_one_user_by_filter(filter_criteria)
+
+    if user:
+        # Check if the old password matches the stored password
+        if bcrypt.checkpw(old_password.encode('utf-8'), user.password.encode('utf-8')):
+            # Hash the new password
+            hashed_new_password = hash_password(new_password)
+
+            # Update the user's password
+            update_data = {'password': hashed_new_password}
+            User.update_user_by_filter(filter_criteria, update_data)
+
+            return jsonify({'message': 'Password updated successfully!'})
+        else:
+            return jsonify({'message': 'Old password is incorrect.'})
+    else:
+        return jsonify({'message': 'User not found'})
+
+
 
 
 # def add_new_user_test():

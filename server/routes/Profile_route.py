@@ -15,4 +15,8 @@ def update_user():
     token = data.get('token')
     return Users_controller.update_user(token, data)
 
-
+@profile_router.route("update_password", methods=["POST"])
+def update_password():
+    data = request.json
+    token = data.get('token')
+    return Users_controller.update_password(token, data)
