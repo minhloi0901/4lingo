@@ -2,6 +2,8 @@ package com.example.a4lingo.Controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -11,17 +13,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.LearningPathService;
 import com.example.a4lingo.Services.ProfileService;
+import com.example.a4lingo.Services.Utils;
+import com.example.a4lingo.adapter.NoteAdapter;
 import com.example.a4lingo.item.ProfileItem;
+import com.example.a4lingo.item.WordItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileActivity extends OneTopNavActivity{
-    private ProfileService profileService = new ProfileService();
-    private ProfileItem profileItem = profileService.getProfileItem("USER ID");
+    private ProfileItem profileItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,20 +45,46 @@ public class ProfileActivity extends OneTopNavActivity{
         super.renderLayout(pageTittle, rightButtonText);
 
         LinearLayout root = (LinearLayout) findViewById(R.id.content);
-
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.activity_profile, root, false);
 
-        updateUI(v);
+        ProfileService profileService = new ProfileService(getApplicationContext());
+        String token = Utils.getToken(getApplicationContext());
+        if (token != null){
+            profileService.getProfileItem(token, new Utils.Callback() {
+                @Override
+                public void onSuccess(String response) {
+                    runOnUiThread( () -> {
+                        try {
+                            System.out.println(response);
+                            JSONObject jsonResponse = new JSONObject(response);
+                            profileItem = profileService.parseJsonReponse(jsonResponse);
+                            updateUI(v);
+
+                        } catch (JSONException e) {
+                            System.out.println("Error parsing JSON in NoteActivity");
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error parsing JSON in NoteActivity", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
 
         root.addView(v);
     }
 
     private void updateUI(View v) {
         EditText userNameTextView = v.findViewById(R.id.userName);
-        EditText loginNameTextView = v.findViewById(R.id.loginName);
+        TextView loginNameTextView = v.findViewById(R.id.loginName);
         EditText emailTextView = v.findViewById(R.id.email);
-        EditText passwordTextView = v.findViewById(R.id.password);
+        TextView passwordTextView = v.findViewById(R.id.password);
         EditText phoneNumberTextView = v.findViewById(R.id.phoneNumber);
         SwitchCompat sound = v.findViewById(R.id.soundToggle);
         SwitchCompat darkMode = v.findViewById(R.id.themeModeToggle);
@@ -62,7 +99,9 @@ public class ProfileActivity extends OneTopNavActivity{
         userNameTextView.setText(profileItem.getUserName());
         loginNameTextView.setText(profileItem.getLoginName());
         emailTextView.setText(profileItem.getEmail());
-        passwordTextView.setText(generateAsterisks(profileItem.getPassword().length()));
+
+        int pass_len = profileItem.getPassword().length();
+        passwordTextView.setText(generateAsterisks(Math.min(pass_len, 10)));
         phoneNumberTextView.setText(profileItem.getPhoneNumber());
 
         sound.setChecked(profileItem.isSound());
@@ -101,11 +140,23 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 // Store to database
-                if (profileService.saveProfile(profileItem)){
-                    finish();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Save sucessfully", Toast.LENGTH_SHORT).show();
+                ProfileService profileService = new ProfileService(getApplicationContext());
+                String token = Utils.getToken(getApplicationContext());
+                if(token != null){
+                    profileService.saveProfile(token, profileItem, new Utils.Callback() {
+                        @Override
+                        public void onSuccess(String response) {
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(String error) {
+                            Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
                 // Finish
             }
@@ -168,10 +219,10 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     // if isChecked
-                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -182,10 +233,10 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     // if isChecked
-                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -196,10 +247,10 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     // if isChecked
-                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -210,10 +261,10 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     // if isChecked
-                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -224,10 +275,10 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     // if isChecked
-                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -239,10 +290,10 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     // if isChecked
-                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -253,10 +304,10 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     // if isChecked
-                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -268,10 +319,10 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     // if isChecked
-                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch On", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -316,6 +367,57 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ThanksActivity.class);
                 startActivity(intent);
+            }
+        });
+
+
+        //-------------------------------------------------------------
+
+        EditText userName = findViewById(R.id.userName);
+
+
+        EditText email = findViewById(R.id.email);
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                profileItem.setEmail(editable.toString());
+            }
+        });
+
+        TextView password = findViewById(R.id.password);
+        password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), UpdatePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        EditText phone_number = findViewById(R.id.phoneNumber);
+        phone_number.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                profileItem.setPhoneNumber(editable.toString());
             }
         });
     }
