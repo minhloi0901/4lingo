@@ -101,7 +101,7 @@ def find_lesson(token, lesson_type):
         return jsonify({'message': 'Lesson not found'}), 402
     
     lesson_id = found_lesson.id
-
+    print(lesson_id)
     # get all questions have lesson_id
     filter_criteria = Question.lesson_id == lesson_id
     questions = Question.find_all_questions_by_filter(filter_criteria)

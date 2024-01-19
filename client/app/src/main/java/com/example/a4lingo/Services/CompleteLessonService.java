@@ -18,12 +18,12 @@ public class CompleteLessonService {
         this.context = context;
     }
 
-    public void updateLessonResult(String token, int total_score, boolean passed, Utils.Callback callback) {
+    public void updateLessonResult(String token, int total_score, int type, Utils.Callback callback) {
         JSONObject jsonParam = new JSONObject();
         try {
             jsonParam.put("token", token);
             jsonParam.put("total_score", total_score);
-            jsonParam.put("passed", passed);
+            jsonParam.put("type", type);
         } catch (JSONException e) {
             e.printStackTrace();
             System.out.println("Error creating JSON in WordDictionaryService.");

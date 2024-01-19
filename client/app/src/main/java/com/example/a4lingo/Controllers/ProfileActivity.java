@@ -184,6 +184,7 @@ public class ProfileActivity extends OneTopNavActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

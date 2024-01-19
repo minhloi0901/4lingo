@@ -44,11 +44,8 @@ public class MultipleChoiceService {
         for (int i = 0; i < jsonResponse.length(); i++) {
             JSONObject jsonObject = jsonResponse.getJSONObject(i);
 
-            List<String> choices = new ArrayList<>();
             String[] choiceArray = jsonObject.getString("choice").split("/");
-            for (String choice : choiceArray) {
-                choices.add(choice.trim());
-            }
+            List<String> choices = new ArrayList<>(Arrays.asList(choiceArray));
 
             MultipleChoiceQuestion question = new MultipleChoiceQuestion(
                     jsonObject.getString("content"),

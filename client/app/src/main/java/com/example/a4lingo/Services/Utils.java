@@ -40,7 +40,7 @@ public class Utils {
     }
 
 
-    public static <T> boolean checkCompletion(int questionIndex, List<T> questions, long startTimeMillis, Context context, int correctCount, int total_score) {
+    public static <T> boolean checkCompletion(int questionIndex, List<T> questions, long startTimeMillis, Context context, int correctCount, int total_score, int type) {
         if (questionIndex == questions.size()) {
             long endTimeMillis = SystemClock.elapsedRealtime();  // Record the end time
             long elapsedTimeSeconds = (endTimeMillis - startTimeMillis) / 1000;
@@ -50,6 +50,7 @@ public class Utils {
             intent.putExtra("SCORE", total_score);
             intent.putExtra("TIME", elapsedTimeSeconds);
             intent.putExtra("ACCURACY", correctCount  * 100.0f / questions.size());
+            intent.putExtra("TYPE", type);
 //            intent.putExtra("LESSON_ID", 001);
             context.startActivity(intent);
 

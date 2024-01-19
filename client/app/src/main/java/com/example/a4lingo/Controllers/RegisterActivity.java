@@ -43,6 +43,9 @@ public class RegisterActivity extends OneTopNavActivity {
 
     protected void renderLayout(String pageTittle, String rightButtonText) {
         super.renderLayout(pageTittle, rightButtonText);
+
+        ImageView leftBtn = findViewById(R.id.leftButton);
+
         LinearLayout root = (LinearLayout) findViewById(R.id.content);
 
         LayoutInflater layoutInflater = LayoutInflater.from(this);

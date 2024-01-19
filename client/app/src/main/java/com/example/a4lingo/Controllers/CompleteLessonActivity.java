@@ -24,9 +24,10 @@ public class CompleteLessonActivity extends OneTopNavActivity {
     float theTime = 0;
     float theAccuracy = 0;
 
-    String lessonName = "";
-    int lesson_id = 0;
-    int user_id = 0;
+    private String lessonName = "";
+    private int lesson_id = 0;
+    private int user_id = 0;
+    private int type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class CompleteLessonActivity extends OneTopNavActivity {
 
         // Check if the Intent has the extra keys for score, time, accuracy, and name
         if (!intent.hasExtra("SCORE") || !intent.hasExtra("TIME") ||
-                !intent.hasExtra("ACCURACY")) {
+                !intent.hasExtra("ACCURACY") || !intent.hasExtra("TYPE")) {
             // If any of the keys are missing, show a long Toast message
             Toast.makeText(this, "Lack of results", Toast.LENGTH_LONG).show();
         } else {
@@ -68,6 +69,7 @@ public class CompleteLessonActivity extends OneTopNavActivity {
             totalScore = intent.getIntExtra("SCORE", 0); // Retrieve the score value
             theTime = intent.getFloatExtra("TIME", 0f); // Retrieve the time value
             theAccuracy = intent.getFloatExtra("ACCURACY", 0.0f); // Retrieve the accuracy value
+            type = intent.getIntExtra("TYPE", 1);
 //            lessonName = intent.getStringExtra("LESSON_NAME"); // Retrieve the name string
 //            lesson_id = intent.getIntExtra("LESSON_ID", 0);
             // Use the score, time, accuracy, and name as needed in your activity
@@ -126,8 +128,6 @@ public class CompleteLessonActivity extends OneTopNavActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateResult();
-
                 Intent intent = new Intent(CompleteLessonActivity.this, ReviewActivity.class);
                 intent.putExtra("LESSON_NAME", lessonName);
                 intent.putExtra("LESSON_ID", lesson_id);
@@ -138,19 +138,29 @@ public class CompleteLessonActivity extends OneTopNavActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateResult();
-
-                Intent intent = new Intent(CompleteLessonActivity.this, ShareActivity.class);
-                startActivity(intent);
+                if (updateResult()){
+                    Intent intent = new Intent(CompleteLessonActivity.this, ShareActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(CompleteLessonActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
 
-    private void updateResult() {
+    private boolean updateResult() {
+        if (theAccuracy < 50){
+            Toast.makeText(getApplicationContext(), "Not passed!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         CompleteLessonService completeLessonService = new CompleteLessonService(getApplicationContext());
         String token = Utils.getToken(getApplicationContext());
         if (token != null){
-            completeLessonService.updateLessonResult(token, totalScore, theAccuracy > 50, new Utils.Callback() {
+            completeLessonService.updateLessonResult(token, totalScore, type, new Utils.Callback() {
                 public void onSuccess(String response) {
                     runOnUiThread( () -> {
                         try {
@@ -172,6 +182,9 @@ public class CompleteLessonActivity extends OneTopNavActivity {
                     Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
                 }
             });
+            return true;
         }
+
+        return false;
     }
 }

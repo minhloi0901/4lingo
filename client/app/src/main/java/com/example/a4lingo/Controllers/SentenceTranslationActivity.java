@@ -43,8 +43,6 @@ public class SentenceTranslationActivity extends MainActivity {
         super.renderLayout();
         startTimeMillis = SystemClock.elapsedRealtime();
 
-
-
         root = (LinearLayout) findViewById(R.id.content);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         v = layoutInflater.inflate(R.layout.activity_sentence_translation, root, false);
@@ -73,13 +71,9 @@ public class SentenceTranslationActivity extends MainActivity {
 
                     @Override
                     public void onFailure(String error) {
-
+                        Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-
-                renderAnInstance(v);
             }
         }else{
             setQuestion(questions.get(questionIndex));
@@ -111,11 +105,14 @@ public class SentenceTranslationActivity extends MainActivity {
                     String message = "Tuyệt vời!";
                     bottomSheetDialog = Utils.showBottomSheet(SentenceTranslationActivity.this, true, message);
                     correctCount++;
+                    total_score += questions.get(questionIndex).getScore();
                 }
                 else {
                     String message = "Cố gắng hơn nữa nhé!";
                     bottomSheetDialog = Utils.showBottomSheet(SentenceTranslationActivity.this, false, message);
                 }
+                if (!isFinishing())
+                    bottomSheetDialog.show();
 
                 TextView continueBtn = bottomSheetDialog.findViewById(R.id.continueButton);
                 assert continueBtn != null;
@@ -123,7 +120,7 @@ public class SentenceTranslationActivity extends MainActivity {
                     @Override
                     public void onClick(View view) {
                         questionIndex++;
-                        boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, SentenceTranslationActivity.this, correctCount, total_score);
+                        boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, SentenceTranslationActivity.this, correctCount, total_score, 2);
                         if (completed){
                             finish();
                         }else {

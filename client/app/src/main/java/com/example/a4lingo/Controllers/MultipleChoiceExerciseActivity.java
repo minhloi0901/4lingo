@@ -11,15 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.MultipleChoiceService;
 import com.example.a4lingo.Services.Utils;
-import com.example.a4lingo.adapter.NoteAdapter;
 import com.example.a4lingo.item.MultipleChoiceQuestion;
-import com.example.a4lingo.item.WordItem;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.json.JSONArray;
@@ -185,7 +181,7 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
             @Override
             public void onClick(View view) {
                 questionIndex++;
-                boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, MultipleChoiceExerciseActivity.this, correctCount, total_score);
+                boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, MultipleChoiceExerciseActivity.this, correctCount, total_score, 1);
                 if (completed){
                     finish();
                 }else {

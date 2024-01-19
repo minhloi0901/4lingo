@@ -45,6 +45,9 @@ public class LoginActivity extends OneTopNavActivity {
         super.renderLayout(pageTittle, rightButtonText);
         LinearLayout root = (LinearLayout) findViewById(R.id.content);
 
+        ImageView leftBtn = findViewById(R.id.leftButton);
+        leftBtn.setOnClickListener(null);
+
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.activity_login, root, false);
 

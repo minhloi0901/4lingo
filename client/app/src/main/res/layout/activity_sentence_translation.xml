@@ -92,16 +92,21 @@
         android:layout_height="1dp"
         android:background="#494646"/>
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="16dp">
     <!-- Destination Container -->
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/destinationContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="16dp"
+        android:layout_height="match_parent"
         app:flexWrap="wrap">
 
     </com.google.android.flexbox.FlexboxLayout>
+    </ScrollView>
 
     <TextView
         android:layout_width="match_parent"
@@ -109,15 +114,21 @@
         android:background="#494646"/>
 
     <!-- Source Container -->
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/sourceContainer"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp"
-        app:flexWrap="wrap">
+        android:layout_margin="16dp"
+        >
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/sourceContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:flexWrap="wrap">
+        </com.google.android.flexbox.FlexboxLayout>
 
-    </com.google.android.flexbox.FlexboxLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/continueButton"

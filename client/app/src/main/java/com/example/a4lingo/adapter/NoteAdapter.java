@@ -1,6 +1,7 @@
 package com.example.a4lingo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a4lingo.Controllers.WordDictionaryActivity;
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.NoteService;
 import com.example.a4lingo.Services.Utils;
@@ -46,6 +48,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.WordViewHolder
 
         // Set data to views
         holder.textViewWord.setText(wordItem.getWord());
+        holder.textViewWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, WordDictionaryActivity.class);
+                intent.putExtra("WORD", wordItem.getWord());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+//                context.finish();
+            }
+        });
         holder.textViewVietnameseMeaning.setText(wordItem.getMeaning());
 
         // Set click listener for the ImageView

@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SentenceTranslationService {
@@ -47,16 +48,15 @@ public class SentenceTranslationService {
         for (int i = 0; i < jsonResponse.length(); i++) {
             JSONObject jsonObject = jsonResponse.getJSONObject(i);
 
-            List<String> choices = new ArrayList<>();
             String[] choiceArray = jsonObject.getString("choice").split("/");
-            for (String choice : choiceArray) {
-                choices.add(choice.trim());
-            }
+            List<String> choices = new ArrayList<>(Arrays.asList(choiceArray));
+            Collections.shuffle(choices);
 
             TranslationQuestion question = new TranslationQuestion(
                     jsonObject.getString("content"),
                     jsonObject.getString("answer"),
-                    choices
+                    choices,
+                    jsonObject.getInt("score")
             );
 
             questions.add(question);
