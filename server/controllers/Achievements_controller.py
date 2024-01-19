@@ -21,11 +21,15 @@ def create_new_achievement():
         return jsonify({'message': 'Invalid JSON data in the request body'}), 400
 
     if not name or not content or not criteria:
-        return jsonify({'message': NO_INPUT_400}), 400
+        return jsonify({'message': "No input provided"}), 400
+    
+    existing_name = session.query(Achievement).filter(Achievement.name == name).first()
+    if existing_name:
+        return jsonify({'message': "Achievement name already exists"}), 400
     
     new_achievement = Achievement.create_new_achievement(name, content, criteria)
     if not new_achievement:
-        return jsonify({'message': ALREADY_EXIST}), 400
+        return jsonify({'message': "Error creating achievement"}), 400
 
     return jsonify({'message': 'New achievement created successfully!'}), 201
     
