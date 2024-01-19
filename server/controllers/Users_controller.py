@@ -138,6 +138,50 @@ def get_user_by_token(user_token):
     else:
         return jsonify({'message': 'User not found'})
 
+def update_user(user_token, update_data):
+    # Validate the user token and get the user ID
+    is_valid_token, user_id = get_id_from_token(user_token)
+    if not is_valid_token:
+        return jsonify({'message': user_id})
+
+    # Extract the fields from the update data
+    new_email = update_data.get('email', None)
+    new_password = update_data.get('password', None)
+    new_phone_number = update_data.get('phone_number', None)
+    new_username = update_data.get('username', None)
+
+    # Check if the new email already exists
+    if new_email:
+        existing_email_user = User.find_one_user_by_filter(User.email == new_email)
+        if existing_email_user and existing_email_user.id != user_id:
+            return jsonify({'message': 'Email already exists'})
+
+    # Check if the new phone number already exists
+    if new_phone_number:
+        existing_phone_user = User.find_one_user_by_filter(User.phone_number == new_phone_number)
+        if existing_phone_user and existing_phone_user.id != user_id:
+            return jsonify({'message': 'Phone number already exists'})
+
+    # Check if the new username already exists
+    if new_username:
+        existing_username_user = User.find_one_user_by_filter(User.username == new_username)
+        if existing_username_user and existing_username_user.id != user_id:
+            return jsonify({'message': 'Username already exists'})
+
+    # Update the user information
+    update_data = {
+        'email': new_email,
+        'password': hash_password(new_password) if new_password else None,
+        'phone_number': new_phone_number,
+        'username': new_username
+    }
+
+    filter_criteria = User.id == user_id
+    User.update_user_by_filter(filter_criteria, update_data)
+
+    return jsonify({'message': 'User updated successfully!'})
+
+
 # def add_new_user_test():
 #     # Provide user information to create a new user (for testing purposes)
 #     test_username = "TestUser"
@@ -153,3 +197,4 @@ def get_user_by_token(user_token):
 #     print(response)
 
 # add_new_user_test()
+    
