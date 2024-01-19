@@ -56,7 +56,7 @@ public class CompleteLessonActivity extends OneTopNavActivity {
 
         // Check if the Intent has the extra keys for score, time, accuracy, and name
         if (!intent.hasExtra("SCORE") || !intent.hasExtra("TIME") ||
-                !intent.hasExtra("ACCURACY") || !intent.hasExtra("LESSON_ID")) {
+                !intent.hasExtra("ACCURACY")) {
             // If any of the keys are missing, show a long Toast message
             Toast.makeText(this, "Lack of results", Toast.LENGTH_LONG).show();
         } else {
@@ -65,7 +65,7 @@ public class CompleteLessonActivity extends OneTopNavActivity {
             theTime = intent.getFloatExtra("TIME", 0f); // Retrieve the time value
             theAccuracy = intent.getFloatExtra("ACCURACY", 0.0f); // Retrieve the accuracy value
 //            lessonName = intent.getStringExtra("LESSON_NAME"); // Retrieve the name string
-            lesson_id = intent.getIntExtra("LESSON_ID", 0);
+//            lesson_id = intent.getIntExtra("LESSON_ID", 0);
             // Use the score, time, accuracy, and name as needed in your activity
         }
         if (intent.hasExtra("USER_ID")) {
@@ -102,6 +102,19 @@ public class CompleteLessonActivity extends OneTopNavActivity {
     @Override
     protected void renderNavigation() {
         super.renderNavigation();
+
+        ImageView goBackButton = findViewById(R.id.leftButton);
+        if (goBackButton != null){
+            goBackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+
 
         Button btn1 = findViewById(R.id.resultReviewButton);
         Button btn2 = findViewById(R.id.resultContinueButton);

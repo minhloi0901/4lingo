@@ -94,4 +94,23 @@ public class WordDictionaryService {
     private String getFirstPhoneticAudioUrl(JSONArray phoneticsArray) throws JSONException {
         return phoneticsArray.getJSONObject(0).getString("audio");
     }
+
+    public void addNote(String token, String word, String meaning, Utils.Callback callback) {
+        JSONObject jsonParam = new JSONObject();
+        try {
+            jsonParam.put("token", token);
+            jsonParam.put("text", word);
+            jsonParam.put("meaning", meaning);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("Error creating JSON in WordDictionaryService.");
+            new Handler(Looper.getMainLooper()).post(() ->
+                    Toast.makeText(context, "Error creating JSON in WordDictionaryService.", Toast.LENGTH_SHORT).show());
+            return;
+        }
+
+        DataManager dataManager = new DataManager();
+        dataManager.sendRequest("POST", "vocabularies/add", jsonParam, Utils.createCallback(context, callback));
+    }
 }

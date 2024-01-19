@@ -2,6 +2,7 @@ from enum import Enum
 from operator import and_
 from sqlalchemy import Integer, Column, String
 from sqlalchemy import Enum as SQLAlchemyEnum
+from sqlalchemy.orm import relationship
 
 from database.db import db
 
@@ -24,17 +25,28 @@ class User(Base):
     role = Column(SQLAlchemyEnum(UserRole), nullable=False)
     phone_number = Column(String(15))
     email = Column(String(255), nullable=False, unique=True)
+    lesson_type_1 = Column(String(128))
+    lesson_type_2 = Column(Integer, default=1)
+    lesson_type_3 = Column(Integer, default=1)
+    lesson_type_4 = Column(Integer, default=1)
+
+    # Define the relationship
+    lesson_author = relationship('Lesson', back_populates='author_link')
     
     # Class method to create a new user
     @classmethod
-    def create_new_user(cls, username, password, role, email, phone_number=None):
+    def create_new_user(cls, username, password, role, email, phone_number=None, lesson_type_1=None, lesson_type_2=None, lesson_type_3=None, lesson_type_4=None):
         role = UserRole(role)
         new_user = cls (
             username=username,
             password=password,
             role=role,
             email=email,
-            phone_number=phone_number
+            phone_number=phone_number,
+            lesson_type_1=lesson_type_1,
+            lesson_type_2=lesson_type_2,
+            lesson_type_3=lesson_type_3,
+            lesson_type_4=lesson_type_4
         )
 
         session.add(new_user)
@@ -83,10 +95,12 @@ class User(Base):
 # test find_one_user_by_filter function
 # filter_criteria = and_(User.role == UserRole.LEANER, User.phone_number == None) 
 # user = User.find_one_user_by_filter(filter_criteria)
-# print(user.username)
-        
+# if user:
+#     print("User found")
+# else:
+#     print("User not found")
 # test find_all_users_by_filter function
-# filter_criteria = User.role == UserRole.LEANER
+# filter_criteria = User.role == UserRole.TEACHER
 # users = User.find_all_users_by_filter(filter_criteria)
 # for user in users:
 #     print(user.username)

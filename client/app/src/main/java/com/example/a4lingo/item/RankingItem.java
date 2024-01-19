@@ -1,7 +1,7 @@
 package com.example.a4lingo.item;
 
 public class RankingItem {
-    private int rank;
+    public int rank;
     private int avatarResId;
     private String name;
     private int score;

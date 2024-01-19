@@ -19,6 +19,7 @@ public class ProfileItem {
     // Default constructor
     public ProfileItem() {
         // Default values for boolean fields
+        this.userName = "";
         this.sound = true;
         this.darkMode = false;
         this.encourageNoti = true;

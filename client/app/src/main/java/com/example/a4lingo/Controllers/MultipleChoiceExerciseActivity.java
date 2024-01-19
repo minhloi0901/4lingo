@@ -8,27 +8,35 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.MultipleChoiceService;
 import com.example.a4lingo.Services.Utils;
+import com.example.a4lingo.adapter.NoteAdapter;
 import com.example.a4lingo.item.MultipleChoiceQuestion;
+import com.example.a4lingo.item.WordItem;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.List;
 
 public class MultipleChoiceExerciseActivity extends MainActivity{
     private View v = null;
     private long startTimeMillis;
-    private final MultipleChoiceService multipleChoiceService = new MultipleChoiceService();
     private LinearLayout mulChoiceLayout;
-    private final List<MultipleChoiceQuestion> questions = multipleChoiceService.getMultipleChoiceQuestions(null);
     private int questionIndex = 0;
     private int correctCount = 0;
+    private int total_score = 0;
     private BottomSheetDialog bottomSheetDialog;
-
+    private MultipleChoiceService multipleChoiceService;
+    private List<MultipleChoiceQuestion> questions;
     @Override
     protected void renderLayout() {
         super.renderLayout();
@@ -40,12 +48,59 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
         v = layoutInflater.inflate(R.layout.activity_multiple_choice_exercise, root, false);
         mulChoiceLayout = v.findViewById(R.id.vertical_mul_choices_layout);
 
-        renderAnInstance(v);
+//        getIntentData();
+
+        if (questions == null) {
+            multipleChoiceService = new MultipleChoiceService(getApplicationContext());
+            try {
+                String response = "[{\"id\": 1, \"score\": 10, \"content\": \"Africa is hotter _ Europe.\", \"answer\": \"than\", \"explanation\": \"compare sentence\", \"choice\": \"than/ then/ that\"}]";
+                JSONArray jsonResponse = new JSONArray(response);
+
+                questions = multipleChoiceService.parseJsonResponse(jsonResponse);
+                renderAnInstance(v);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+
+//            String token = Utils.getToken(getApplicationContext());
+//            if (token != null){
+//                multipleChoiceService.getMultipleChoiceQuestions(null, 1, new Utils.Callback() {
+//                    @Override
+//                    public void onSuccess(String response) {
+//                        runOnUiThread( () -> {
+//                            try {
+//                                System.out.println(response);
+//                                JSONArray jsonResponse = new JSONArray(response);
+//
+//                                questions = multipleChoiceService.parseJsonResponse(jsonResponse);
+//                                renderAnInstance(v);
+//                            } catch (JSONException e) {
+//                                System.out.println("Error parsing JSON in MultipleChoiceExerciseActivity");
+//                                e.printStackTrace();
+//                                Toast.makeText(getApplicationContext(), "Error parsing JSON in MultipleChoiceExerciseActivity", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String error) {
+//                        Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+        }
 
         root.addView(v);
     }
 
+//    private void getIntentData() {
+//    }
+
     private void renderAnInstance(View v) {
+        assert multipleChoiceService != null;
+        assert questions != null;
+
         mulChoiceLayout.removeAllViews();
 
         TextView continueBtn = v.findViewById(R.id.continueButton);
@@ -99,10 +154,14 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
                             String message = "Tuyệt vời!";
                             bottomSheetDialog = Utils.showBottomSheet(MultipleChoiceExerciseActivity.this, true, message);
                             correctCount++;
+                            total_score += questions.get(questionIndex).getScore();
                         } else {
                             String message = "Cố gắng hơn nữa nhé!";
                             bottomSheetDialog = Utils.showBottomSheet(MultipleChoiceExerciseActivity.this, false, message);
                         }
+
+                        if (!isFinishing())
+                            bottomSheetDialog.show();
 
                         setClickToMoveToNextQuestion(bottomSheetDialog);
                     }
@@ -126,7 +185,7 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
             @Override
             public void onClick(View view) {
                 questionIndex++;
-                boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, MultipleChoiceExerciseActivity.this, correctCount);
+                boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, MultipleChoiceExerciseActivity.this, correctCount, total_score);
                 if (completed){
                     finish();
                 }else {

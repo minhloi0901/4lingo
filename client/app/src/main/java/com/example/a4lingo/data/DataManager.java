@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.a4lingo.Services.Utils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import okhttp3.RequestBody;
 public class DataManager {
     private String url = "http://10.0.2.2:5000"; // Removed the last slash
     private static final String POST = "POST";    // Made constants 'static final'
-    private static final String GET = "GET";
+    public static final String GET = "GET";
 
 //    public interface DataManagerCallback {
 //        void onSuccess(String response);
@@ -64,7 +65,15 @@ public class DataManager {
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.body().string());
                 } else {
-                    callback.onFailure("Response Code: " + response.code());
+                    try {
+                        assert response.body() != null;
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String error_message = jsonObject.getString("message");
+                        callback.onFailure(error_message);
+                    } catch (JSONException e) {
+                        callback.onFailure(response.message());
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.example.a4lingo.Controllers;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -34,63 +35,75 @@ public class DictionaryActivity extends MainActivity {
     }
 
     private void renderAnInstance(View v) {
-        RecyclerView recyclerView = v.findViewById(R.id.searchedWordsRecyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        List<String> words = dictionaryService.getSuggestWords("UserID", "");
-
-        adapter = new DictionarySearchedWordsAdapter(this, words);
-        recyclerView.setAdapter(adapter);
+//        RecyclerView recyclerView = v.findViewById(R.id.searchedWordsRecyclerView);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(layoutManager);
+//
+//        List<String> words = dictionaryService.getSuggestWords("UserID", "");
+//
+//        adapter = new DictionarySearchedWordsAdapter(this, words);
+//        recyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void renderNavigation(){
         super.renderNavigation();
 
-        EditText editText = findViewById(R.id.searchWordEditText);
-        editText.setOnClickListener(new View.OnClickListener() {
+//        EditText editText = findViewById(R.id.searchWordEditText);
+//        editText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ImageView imageView = findViewById(R.id.cancelSearchButton);
+//                imageView.setVisibility(View.VISIBLE);
+//
+//                RecyclerView recyclerView = findViewById(R.id.searchedWordsRecyclerView);
+//                if (adapter.getItemCount() > 0){
+//                    recyclerView.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                // Update the adapter with the new list of matching words
+//                List<String> matchingWords = dictionaryService.getSuggestWords("UserID", charSequence.toString());
+//                adapter.updateSearchedWords(matchingWords);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+
+
+        findViewById(R.id.forceSearchButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageView imageView = findViewById(R.id.cancelSearchButton);
-                imageView.setVisibility(View.VISIBLE);
+                  EditText editText = findViewById(R.id.searchWordEditText);
+                  if (editText.getText().toString().equals("")){
+                      editText.setError("Please enter text to search");
+                  }
+                  else{
+                      Intent intent = new Intent(DictionaryActivity.this, WordDictionaryActivity.class);
+                      intent.putExtra("WORD", editText.getText().toString());
+                      startActivity(intent);
+                      finish();
+                  }
 
-                RecyclerView recyclerView = findViewById(R.id.searchedWordsRecyclerView);
-                if (adapter.getItemCount() > 0){
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+//                view.setVisibility(View.GONE);
+//
+//                RecyclerView recyclerView = findViewById(R.id.searchedWordsRecyclerView);
+//                recyclerView.setVisibility(View.GONE);
+//
+//                editText.setText("");
 
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // Update the adapter with the new list of matching words
-                List<String> matchingWords = dictionaryService.getSuggestWords("UserID", charSequence.toString());
-                adapter.updateSearchedWords(matchingWords);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-
-        findViewById(R.id.cancelSearchButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.setVisibility(View.GONE);
-
-                RecyclerView recyclerView = findViewById(R.id.searchedWordsRecyclerView);
-                recyclerView.setVisibility(View.GONE);
-
-                editText.setText("");
             }
         });
 
