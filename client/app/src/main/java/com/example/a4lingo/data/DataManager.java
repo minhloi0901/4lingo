@@ -72,7 +72,6 @@ public class DataManager {
                         callback.onFailure(error_message);
                     } catch (JSONException e) {
                         callback.onFailure(response.message());
-                        throw new RuntimeException(e);
                     }
                 }
             }

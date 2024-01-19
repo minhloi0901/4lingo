@@ -52,43 +52,43 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
 
         if (questions == null) {
             multipleChoiceService = new MultipleChoiceService(getApplicationContext());
-            try {
-                String response = "[{\"id\": 1, \"score\": 10, \"content\": \"Africa is hotter _ Europe.\", \"answer\": \"than\", \"explanation\": \"compare sentence\", \"choice\": \"than/ then/ that\"}]";
-                JSONArray jsonResponse = new JSONArray(response);
-
-                questions = multipleChoiceService.parseJsonResponse(jsonResponse);
-                renderAnInstance(v);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-
-
-//            String token = Utils.getToken(getApplicationContext());
-//            if (token != null){
-//                multipleChoiceService.getMultipleChoiceQuestions(null, 1, new Utils.Callback() {
-//                    @Override
-//                    public void onSuccess(String response) {
-//                        runOnUiThread( () -> {
-//                            try {
-//                                System.out.println(response);
-//                                JSONArray jsonResponse = new JSONArray(response);
+//            try {
+//                String response = "[{\"id\": 1, \"score\": 10, \"content\": \"Africa is hotter _ Europe.\", \"answer\": \"than\", \"explanation\": \"compare sentence\", \"choice\": \"than/ then/ that\"}]";
+//                JSONArray jsonResponse = new JSONArray(response);
 //
-//                                questions = multipleChoiceService.parseJsonResponse(jsonResponse);
-//                                renderAnInstance(v);
-//                            } catch (JSONException e) {
-//                                System.out.println("Error parsing JSON in MultipleChoiceExerciseActivity");
-//                                e.printStackTrace();
-//                                Toast.makeText(getApplicationContext(), "Error parsing JSON in MultipleChoiceExerciseActivity", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String error) {
-//                        Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+//                questions = multipleChoiceService.parseJsonResponse(jsonResponse);
+//                renderAnInstance(v);
+//            } catch (JSONException e) {
+//                throw new RuntimeException(e);
 //            }
+
+
+            String token = Utils.getToken(getApplicationContext());
+            if (token != null){
+                multipleChoiceService.getMultipleChoiceQuestions(null, 1, new Utils.Callback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        runOnUiThread( () -> {
+                            try {
+                                System.out.println(response);
+                                JSONArray jsonResponse = new JSONArray(response);
+
+                                questions = multipleChoiceService.parseJsonResponse(jsonResponse);
+                                renderAnInstance(v);
+                            } catch (JSONException e) {
+                                System.out.println("Error parsing JSON in MultipleChoiceExerciseActivity");
+                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "Error parsing JSON in MultipleChoiceExerciseActivity", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
 
         root.addView(v);
