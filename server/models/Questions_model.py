@@ -9,7 +9,7 @@ Base = db['Base']
 class Question(Base):
     __tablename__ = 'question'
     id = Column(Integer, primary_key=True)
-    score = Column(Integer)
+    score = Column(Integer, )
     content = Column(NVARCHAR(1024))
     answer = Column(String(128))
     explanation = Column(NVARCHAR(1024))
@@ -54,5 +54,3 @@ class Question(Base):
         updated_count = session.query(cls).filter(filter_criteria).update(update_data)
         session.commit()
         return updated_count
-# test create new question
-# new_question = Question.create_new_question(10, 'Africa is hotter _ Europe.', 'than', 'Châu Phi nóng hơn Châu Âu.', 'than, then, that')
