@@ -69,7 +69,8 @@ public class MultipleChoiceService {
             MultipleChoiceQuestion question = new MultipleChoiceQuestion(
                     jsonObject.getString("content"),
                     choices,
-                    choices.indexOf(jsonObject.getString("answer"))
+                    choices.indexOf(jsonObject.getString("answer")),
+                    jsonObject.getInt("score")
             );
 
             questions.add(question);

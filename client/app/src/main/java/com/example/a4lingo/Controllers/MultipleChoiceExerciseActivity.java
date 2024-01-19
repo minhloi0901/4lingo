@@ -33,6 +33,7 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
     private LinearLayout mulChoiceLayout;
     private int questionIndex = 0;
     private int correctCount = 0;
+    private int total_score = 0;
     private BottomSheetDialog bottomSheetDialog;
     private MultipleChoiceService multipleChoiceService;
     private List<MultipleChoiceQuestion> questions;
@@ -153,6 +154,7 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
                             String message = "Tuyệt vời!";
                             bottomSheetDialog = Utils.showBottomSheet(MultipleChoiceExerciseActivity.this, true, message);
                             correctCount++;
+                            total_score += questions.get(questionIndex).getScore();
                         } else {
                             String message = "Cố gắng hơn nữa nhé!";
                             bottomSheetDialog = Utils.showBottomSheet(MultipleChoiceExerciseActivity.this, false, message);
@@ -183,7 +185,7 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
             @Override
             public void onClick(View view) {
                 questionIndex++;
-                boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, MultipleChoiceExerciseActivity.this, correctCount);
+                boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, MultipleChoiceExerciseActivity.this, correctCount, total_score);
                 if (completed){
                     finish();
                 }else {

@@ -1,6 +1,5 @@
 package com.example.a4lingo.Controllers;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
@@ -26,7 +25,7 @@ public class SentenceTranslationActivity extends MainActivity {
     private final SentenceTranslationService sentenceTranslationService = new SentenceTranslationService();
     private final List<TranslationQuestion> questions = sentenceTranslationService.getTranslationQuestions();
     private int questionIndex = 0;
-
+    private int total_score = 0;
     private FlexboxLayout sourceContainer;
     private FlexboxLayout destinationContainer;
     private long startTimeMillis;
@@ -85,7 +84,7 @@ public class SentenceTranslationActivity extends MainActivity {
                     @Override
                     public void onClick(View view) {
                         questionIndex++;
-                        boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, SentenceTranslationActivity.this, correctCount);
+                        boolean completed = Utils.checkCompletion(questionIndex, questions, startTimeMillis, SentenceTranslationActivity.this, correctCount, total_score);
                         if (completed){
                             finish();
                         }else {

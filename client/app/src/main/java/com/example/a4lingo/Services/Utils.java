@@ -12,14 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.a4lingo.Controllers.CompleteLessonActivity;
 import com.example.a4lingo.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -44,14 +40,14 @@ public class Utils {
     }
 
 
-    public static <T> boolean checkCompletion(int questionIndex, List<T> questions, long startTimeMillis, Context context, int correctCount) {
+    public static <T> boolean checkCompletion(int questionIndex, List<T> questions, long startTimeMillis, Context context, int correctCount, int total_score) {
         if (questionIndex == questions.size()) {
             long endTimeMillis = SystemClock.elapsedRealtime();  // Record the end time
             long elapsedTimeSeconds = (endTimeMillis - startTimeMillis) / 1000;
 
             Intent intent = new Intent(context, CompleteLessonActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("SCORE", 100);
+            intent.putExtra("SCORE", total_score);
             intent.putExtra("TIME", elapsedTimeSeconds);
             intent.putExtra("ACCURACY", correctCount  * 100.0f / questions.size());
             intent.putExtra("LESSON_ID", 001);

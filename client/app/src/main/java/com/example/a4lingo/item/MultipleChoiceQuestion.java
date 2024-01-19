@@ -6,11 +6,13 @@ public class MultipleChoiceQuestion {
     private final String questionText;
     private final List<String> choices;
     private final int correctChoiceIndex;
+    private int score;
 
-    public MultipleChoiceQuestion(String questionText, List<String> choices, int correctChoiceIndex) {
+    public MultipleChoiceQuestion(String questionText, List<String> choices, int correctChoiceIndex, int score) {
         this.questionText = questionText;
         this.choices = choices;
         this.correctChoiceIndex = correctChoiceIndex;
+        this.score = score;
     }
 
     public String getQuestionText() {
@@ -23,5 +25,9 @@ public class MultipleChoiceQuestion {
 
     public int getCorrectChoiceIndex() {
         return correctChoiceIndex;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
