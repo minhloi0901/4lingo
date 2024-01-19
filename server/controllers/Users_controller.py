@@ -3,18 +3,12 @@ from flask import jsonify
 
 from errors.Errors import ALREADY_EXIST, NO_INPUT_400, INVALID_INPUT_422
 from models.Users_model import User
-from database.db import db
 from middlewares.Auth_validator import validate_password, validate_username, validate_email, validate_phone_number
 from middlewares.Auth_middleware import hash_password, get_id_from_token
-
-Session = db['Session']
-session = Session()
-Base = db['Base']
 
 salt_rounds = 8
 
 def create_new_user(username, password, role, email, phone_number=None):
-    
     # Validate username
     is_valid_username, error_message_username = validate_username(username)
     if not is_valid_username:
