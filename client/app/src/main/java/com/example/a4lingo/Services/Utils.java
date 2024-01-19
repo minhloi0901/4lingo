@@ -39,7 +39,6 @@ public class Utils {
         // Create and show the bottom sheet dialog
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
 
         return bottomSheetDialog;
     }

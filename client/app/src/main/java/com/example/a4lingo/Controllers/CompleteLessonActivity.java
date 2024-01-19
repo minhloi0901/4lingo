@@ -103,6 +103,19 @@ public class CompleteLessonActivity extends OneTopNavActivity {
     protected void renderNavigation() {
         super.renderNavigation();
 
+        ImageView goBackButton = findViewById(R.id.leftButton);
+        if (goBackButton != null){
+            goBackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+
+
         Button btn1 = findViewById(R.id.resultReviewButton);
         Button btn2 = findViewById(R.id.resultContinueButton);
 
