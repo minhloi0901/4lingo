@@ -18,7 +18,7 @@ def add_new_vocabulary():
 
     is_valid_token, error_message = get_id_from_token(user_token)
     if not is_valid_token:
-        return jsonify({'message': error_message}), 401
+        return error_message, 401
 
     user_id = error_message
     new_vocabulary = Vocabulary.create_new_vocabulary(user_id, text, meaning)
@@ -35,7 +35,7 @@ def delete_vocabulary_by_text():
 
     is_valid_token, error_message = get_id_from_token(user_token)
     if not is_valid_token:
-        return jsonify({'message': error_message}), 401
+        return error_message, 401
 
     user_id = error_message
     filter_criteria = (Vocabulary.text == text) & (Vocabulary.user_id == user_id)
@@ -55,7 +55,7 @@ def get_all_vocabulary():
 
     is_valid_token, error_message = get_id_from_token(user_token)
     if not is_valid_token:
-        return jsonify({'message': error_message}), 401
+        return error_message, 401
 
     user_id = error_message
     filter_criteria = Vocabulary.user_id == user_id

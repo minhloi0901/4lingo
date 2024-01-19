@@ -56,13 +56,13 @@ CREATE TABLE IF NOT EXISTS comment (
 );
 
 CREATE TABLE IF NOT EXISTS vocabulary (
-	id INT NOT NULL,
+	id INT AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	text VARCHAR(128) NOT NULL,
 	meaning NVARCHAR(1024) NOT NULL,
 	pronun_es_us BLOB,
 	pronun_en_uk BLOB,
-	PRIMARY KEY (user_id, id),
+	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

@@ -1,7 +1,10 @@
 package com.example.a4lingo.Services;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -70,6 +73,13 @@ public class Utils {
             // Handle invalid indices if needed
             System.out.println("Invalid indices");
         }
+    }
+
+    public static String getToken(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        // Retrieve the token using the key
+        String storedToken = sharedPreferences.getString("userToken", null);
+        return storedToken;
     }
 
 

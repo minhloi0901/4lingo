@@ -1,6 +1,7 @@
 package com.example.a4lingo.Controllers;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -37,7 +38,8 @@ public class WordDictionaryActivity extends MainActivity{
     private String pronunciation;
     private String audio_url;
     private View v = null;
-
+    private String word;
+    private List<WordItem> wordItemList;
     @Override
     protected void renderLayout(){
         super.renderLayout();
@@ -50,25 +52,13 @@ public class WordDictionaryActivity extends MainActivity{
         // Retrieve data from the intent
         Intent intent = getIntent();
         if (intent != null) {
-            String word = intent.getStringExtra("WORD");
+            word = intent.getStringExtra("WORD");
 
-            if (word == null){
-                return;
-            }
-
-            ImageView imageView = v.findViewById(R.id.cancelSearchButton);
-            imageView.setVisibility(View.VISIBLE);
-
-            EditText editText = v.findViewById(R.id.worddict_searchWordEditText);
+            EditText editText = v.findViewById(R.id.searchWordEditText);
             editText.setText(word);
 
             // Suggest words
-            RecyclerView recyclerView = v.findViewById(R.id.searchedWordsRecyclerView);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
-            List<String> words = dictionaryService.getSuggestWords("UserID", word);
-            adapter = new DictionarySearchedWordsAdapter(this, words);
-            recyclerView.setAdapter(adapter);
+            root.addView(v);
 
             wordDictionaryService.searchWord(word, new Utils.Callback() {
                 @Override
@@ -77,7 +67,7 @@ public class WordDictionaryActivity extends MainActivity{
                         try {
 //                            System.out.println(response);
                             JSONObject jsonResponse = new JSONObject(response);
-                            List<WordItem> wordItemList = wordDictionaryService.parseJsonResponse(jsonResponse);
+                            wordItemList = wordDictionaryService.parseJsonResponse(jsonResponse);
                             if (wordItemList.size() == 0)
                             {
                                 Toast.makeText(WordDictionaryActivity.this, "Search failed", Toast.LENGTH_SHORT).show();
@@ -93,6 +83,7 @@ public class WordDictionaryActivity extends MainActivity{
                                 renderAnInstance(v, wordItem);
 
 //                            spellingPronunciation.setText();
+                            root.removeAllViews();
                             root.addView(v);
                         } catch (JSONException e) {
                             System.out.println("Error parsing JSON in WordDictionaryActivity");
@@ -115,49 +106,19 @@ public class WordDictionaryActivity extends MainActivity{
     protected void renderNavigation(){
         super.renderNavigation();
 
-        EditText editText = v.findViewById(R.id.worddict_searchWordEditText);
-        editText.setOnClickListener(new View.OnClickListener() {
+        EditText editText = v.findViewById(R.id.searchWordEditText);
+        v.findViewById(R.id.forceSearchButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageView imageView = findViewById(R.id.cancelSearchButton);
-                imageView.setVisibility(View.VISIBLE);
-
-                RecyclerView recyclerView = findViewById(R.id.searchedWordsRecyclerView);
-                if (adapter.getItemCount() > 0){
-                    recyclerView.setVisibility(View.VISIBLE);
+                if (editText.getText().toString().equals("")){
+                    editText.setError("Please enter text to search");
                 }
-            }
-        });
-
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // Update the adapter with the new list of matching words
-                List<String> matchingWords = dictionaryService.getSuggestWords("UserID", charSequence.toString());
-                adapter.updateSearchedWords(matchingWords);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-
-        v.findViewById(R.id.cancelSearchButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.setVisibility(View.GONE);
-
-                RecyclerView recyclerView = findViewById(R.id.searchedWordsRecyclerView);
-                recyclerView.setVisibility(View.GONE);
-
-                editText.setText("");
+                else{
+                    Intent intent = new Intent(getApplicationContext(), WordDictionaryActivity.class);
+                    intent.putExtra("WORD", editText.getText().toString());
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -170,41 +131,76 @@ public class WordDictionaryActivity extends MainActivity{
                         .build()
         );
 
-        audio.setOnClickListener(new View.OnClickListener() {
+//        audio.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Make sound
+//                try {
+//                    mediaPlayer.setDataSource("https://api.dictionaryapi.dev/media/pronunciations/en/hello-uk.mp3");
+//                    // below line is use to prepare
+//                    // and start our media player.
+//                    System.out.println("1");
+//                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                        @Override
+//                        public void onPrepared(MediaPlayer mp) {
+//                            // Media player is prepared, start playback
+//                            mediaPlayer.start();
+//                        }
+//                    });
+//
+//                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                        @Override
+//                        public void onCompletion(MediaPlayer mp) {
+//                            // Release resources when playback is completed
+//                            mediaPlayer.release();
+//                        }
+//                    });
+//
+//                    mediaPlayer.prepareAsync(); // Use asynchronous prepare to avoid blocking the UI thread
+//
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
+        ImageView addNote = v.findViewById(R.id.add_note);
+        addNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Make sound
-                try {
-                    mediaPlayer.setDataSource("https://api.dictionaryapi.dev/media/pronunciations/en/hello-uk.mp3");
-                    // below line is use to prepare
-                    // and start our media player.
-                    System.out.println("1");
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                String storedToken = Utils.getToken(getApplicationContext());
+
+                if (storedToken != null) {
+                    wordDictionaryService.addNote(storedToken, word, wordItemList.get(0).getMeaning(), new Utils.Callback() {
                         @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            // Media player is prepared, start playback
-                            mediaPlayer.start();
+                        public void onSuccess(String response) {
+                            runOnUiThread( () -> {
+                                try {
+//                                    System.out.println(response);
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    String message = jsonResponse.getString("message");
+
+                                    addNote.setOnClickListener(null);
+                                    addNote.setImageResource(R.drawable.ic_checkmark);
+
+                                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    System.out.println("Error parsing JSON in WordDictionaryActivity");
+                                    e.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), "Error parsing JSON in WordDictionaryActivity", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String error) {
+                            Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
                         }
                     });
-
-                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            // Release resources when playback is completed
-                            mediaPlayer.release();
-                        }
-                    });
-
-                    mediaPlayer.prepareAsync(); // Use asynchronous prepare to avoid blocking the UI thread
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         });
-
-
     }
 
 

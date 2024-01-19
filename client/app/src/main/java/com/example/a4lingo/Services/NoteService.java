@@ -1,63 +1,81 @@
 package com.example.a4lingo.Services;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
+
+import com.example.a4lingo.data.DataManager;
 import com.example.a4lingo.item.WordItem;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NoteService {
-    String theJsonString = "["
-            + "{"
-            + "\"word\": \"Apple\","
-            + "\"meaning\": \"A fruit with red, green, or yellow skin and a sweet taste\""
-            + "},"
-            + "{"
-            + "\"word\": \"Book\","
-            + "\"meaning\": \"A set of pages that are bound together and written on\""
-            + "},"
-            + "{"
-            + "\"word\": \"Cat\","
-            + "\"meaning\": \"A small domesticated carnivorous mammal with soft fur\""
-            + "},"
-            + "{"
-            + "\"word\": \"Dog\","
-            + "\"meaning\": \"A domesticated carnivorous mammal that typically has a long snout\""
-            + "}"
-            + "]";
+    private final Context context;
 
-    public List<WordItem> getListWord(int user_id) {
-
-        // send user_id to server to get list words in json
-
-        return  getWordItemsFromJson(theJsonString);
+    public NoteService(Context context) {
+        this.context = context;
     }
 
-    public void deleteWord(int user_id, String word) {
-        // send user_id and word to server to delete in database
+    public void getAllWords(String token, Utils.Callback callback) {
+        JSONObject jsonParam = new JSONObject();
+        try {
+            jsonParam.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("Error creating JSON in WordDictionaryService.");
+            new Handler(Looper.getMainLooper()).post(() ->
+                    Toast.makeText(context, "Error creating JSON in NoteService.", Toast.LENGTH_SHORT).show());
+            return;
+        }
+
+        DataManager dataManager = new DataManager();
+        dataManager.sendRequest("POST", "vocabularies/get_all_vocab", jsonParam, Utils.createCallback(context, callback));
     }
 
-    public List<WordItem> getWordItemsFromJson(String jsonString) {
+    public List<WordItem> parseJsonResponse(JSONArray jsonResponse) {
         List<WordItem> wordItemList = new ArrayList<>();
 
         try {
-            JSONArray jsonArray = new JSONArray(jsonString);
+            // Assuming that the words are contained in a JSON array with a specific key
+            for (int i = 0; i < jsonResponse.length(); i++) {
+                JSONObject wordObject = jsonResponse.getJSONObject(i);
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                // Extracting values from the JSON object
+                int id = wordObject.getInt("id");
+                String meaning = wordObject.getString("meaning");
+                String text = wordObject.getString("text");
 
-                String word = jsonObject.getString("word");
-                String meaning = jsonObject.getString("meaning");
-
-                WordItem item = new WordItem(word, meaning);
-                wordItemList.add(item);
+                // Creating a WordItem object and adding it to the list
+                WordItem wordItem = new WordItem(text, meaning);
+                wordItemList.add(wordItem);
             }
-        } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception appropriately
+        } catch (JSONException e) {
+            e.printStackTrace(); // Handle JSON parsing exception here
         }
 
         return wordItemList;
+    }
+
+    public void deleteAWord(String token, String word, Utils.Callback callback) {
+        JSONObject jsonParam = new JSONObject();
+        try {
+            jsonParam.put("token", token);
+            jsonParam.put("text", word);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("Error creating JSON in WordDictionaryService.");
+            new Handler(Looper.getMainLooper()).post(() ->
+                    Toast.makeText(context, "Error creating JSON in NoteService.", Toast.LENGTH_SHORT).show());
+            return;
+        }
+
+        DataManager dataManager = new DataManager();
+        dataManager.sendRequest("POST", "vocabularies/delete", jsonParam, Utils.createCallback(context, callback));
     }
 }
