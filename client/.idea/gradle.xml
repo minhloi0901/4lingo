@@ -4,7 +4,6 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-<<<<<<< refs/remotes/origin/frontend_hoang
         <option name="gradleJvm" value="jbr-17" />
         <option name="modules">
           <set>
@@ -13,8 +12,6 @@
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
-=======
->>>>>>> Add WordDictionary Api Call
       </GradleProjectSettings>
     </option>
   </component>
