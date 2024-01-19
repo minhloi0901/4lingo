@@ -26,6 +26,41 @@ def create_new_user_achievement():
     
     new_user_achievement = Users_Achievements.create_new_user_achievement(user_id, achievement_id, date_achieved)
     if not new_user_achievement:
-        return jsonify({'message': ALREADY_EXIST}), 400
+        return jsonify({'message': 'error'}), 400
 
     return jsonify({'message': 'New user_achievement created successfully!'}), 201
+
+
+def get_user_achievement_by_id():
+    try:
+        data = request.json
+        id = data.get("user_id")
+        token = data.get("token")
+    except ValueError:
+        return jsonify({'message': 'Invalid JSON data in the request body'}), 400
+    
+    if not id:
+        return jsonify({'message': NO_INPUT_400}), 400
+
+    filter_criteria = (Users_Achievements.user_id == id)
+    user_achievement = Users_Achievements.find_one_user_achievement_by_filter(filter_criteria)
+    
+    result_dict = []
+    for i in user_achievement:
+        new_dict = i.__dict__
+        result_dict.append(new_dict)
+    
+    # Return result
+    return jsonify(result_dict), 200
+    
+    
+def get_all_users_achievements():
+    user_achievement = Users_Achievements.find_all_users_achievements_by_filter(True)
+    
+    result_dict = []
+    for i in user_achievement:
+        new_dict = i.__dict__
+        result_dict.append(new_dict)
+    
+    # Return result
+    return jsonify(result_dict), 200

@@ -35,6 +35,21 @@ class Users_Achievements(Base):
     # Class method to create a new user_achievement
     @classmethod
     def create_new_user_achievement(cls, user_id, achievement_id, date_achieved):
+        existing_user = session.query(User).filter(User.id == user_id).first()
+        if not existing_user:
+            print(f"User with id '{user_id}' does not exist.")
+            return None, "User does not exist."
+
+        existing_achievement = session.query(Achievement).filter(Achievement.id == achievement_id).first()
+        if not existing_achievement:
+            print(f"Achievement with id '{achievement_id}' does not exist.")
+            return None, "Achievement does not exist."
+        
+        existing_user_achievement = session.query(cls).filter(and_(cls.user_id == user_id, cls.achievement_id == achievement_id)).first()
+        if existing_user_achievement:
+            print(f"User with id '{user_id}' already has achievement with id '{achievement_id}'.")
+            return None, "User already has achievement."
+        
         new_user_achievement = cls (
             user_id=user_id,
             achievement_id=achievement_id,
@@ -43,8 +58,8 @@ class Users_Achievements(Base):
 
         session.add(new_user_achievement)
         session.commit()
-        print("New user_achievement created.")
-        return new_user_achievement 
+        print("New user_achievement created successfully!")
+        return new_user_achievement, "New user_achievement created successfully!"
     
     # Class method to delete users_achievements by filter
     @classmethod
@@ -70,7 +85,4 @@ class Users_Achievements(Base):
     
 
 
-
-
-    
 

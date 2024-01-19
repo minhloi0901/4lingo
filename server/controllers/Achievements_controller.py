@@ -67,7 +67,54 @@ def delete_achievement_by_name():
         return jsonify({'message': 'Achievement not found.'}), 404
     else:
         return jsonify({'message': 'Achievement deleted successfully!'}), 200
+
+
+def get_achievement_by_id():
+    try:
+        data = request.json
+        id = data.get("id")
+    except ValueError:
+        return jsonify({'message': 'Invalid JSON data in the request body'}), 400
     
+    if not id:
+        return jsonify({'message': NO_INPUT_400}), 400
+
+    filter_criteria = (Achievement.id == id)
+    achievement = Achievement.find_one_achievement_by_filter(filter_criteria)
+    if not achievement:
+        return jsonify({'message': 'Achievement not found.'}), 404
+    else:
+        achievement_dict = {
+            'id': achievement.id,
+            'name': achievement.name,
+            'content': achievement.content,
+            'criteria': achievement.criteria
+        }
+        return jsonify(achievement_dict), 200   
+    
+    
+def get_achievement_by_name():
+    try:
+        data = request.json
+        name = data.get("name")
+    except ValueError:
+        return jsonify({'message': 'Invalid JSON data in the request body'}), 400
+    
+    if not name:
+        return jsonify({'message': NO_INPUT_400}), 400
+
+    filter_criteria = (Achievement.name == name)
+    achievement = Achievement.find_one_achievement_by_filter(filter_criteria)
+    if not achievement:
+        return jsonify({'message': 'Achievement not found.'}), 404
+    else:
+        achievement_dict = {
+            'id': achievement.id,
+            'name': achievement.name,
+            'content': achievement.content,
+            'criteria': achievement.criteria
+        }
+        return jsonify(achievement_dict), 200
     
 def get_all_achievements():
     filter_criteria = True
