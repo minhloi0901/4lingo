@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.SentenceTranslationService;
@@ -16,14 +17,16 @@ import com.example.a4lingo.item.TranslationQuestion;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SentenceTranslationActivity extends MainActivity {
     LinearLayout root;
     View v;
-    private final SentenceTranslationService sentenceTranslationService = new SentenceTranslationService();
-    private final List<TranslationQuestion> questions = sentenceTranslationService.getTranslationQuestions();
+
     private int questionIndex = 0;
     private int total_score = 0;
     private FlexboxLayout sourceContainer;
@@ -35,19 +38,53 @@ public class SentenceTranslationActivity extends MainActivity {
     private BottomSheetDialog bottomSheetDialog;
     private int correctCount = 0;
 
+    private List<TranslationQuestion> questions = null;
     protected void renderLayout() {
         super.renderLayout();
         startTimeMillis = SystemClock.elapsedRealtime();
 
-        setQuestion(questions.get(questionIndex));
+
 
         root = (LinearLayout) findViewById(R.id.content);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         v = layoutInflater.inflate(R.layout.activity_sentence_translation, root, false);
 
+        if(questions == null){
+            SentenceTranslationService sentenceTranslationService = new SentenceTranslationService(getApplicationContext());
+            String token = Utils.getToken(getApplicationContext());
+            if (token != null){
+                sentenceTranslationService.getTranslationQuestions(token, 2, new Utils.Callback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        try {
+                            System.out.println(response);
+                            JSONArray jsonResponse = new JSONArray(response);
+
+                            questions = sentenceTranslationService.parseJsonResponse(jsonResponse);
+                            setQuestion(questions.get(questionIndex));
+
+                            renderAnInstance(v);
+                        } catch (JSONException e) {
+                            System.out.println("Error parsing JSON in SentenceTranslationActivity");
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error parsing JSON in SentenceTranslationActivity", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                    }
+                });
 
 
-        renderAnInstance(v);
+
+                renderAnInstance(v);
+            }
+        }else{
+            setQuestion(questions.get(questionIndex));
+        }
+
 
         root.addView(v);
     }

@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import com.example.a4lingo.R;
 import com.example.a4lingo.Services.CompleteLessonService;
+import com.example.a4lingo.Services.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CompleteLessonActivity extends OneTopNavActivity {
     int totalScore = 0;
@@ -143,7 +147,31 @@ public class CompleteLessonActivity extends OneTopNavActivity {
     }
 
     private void updateResult() {
-        CompleteLessonService completeLessonService = new CompleteLessonService();
-        completeLessonService.updateLessonResult(user_id, lesson_id, totalScore);
+        CompleteLessonService completeLessonService = new CompleteLessonService(getApplicationContext());
+        String token = Utils.getToken(getApplicationContext());
+        if (token != null){
+            completeLessonService.updateLessonResult(token, totalScore, theAccuracy > 50, new Utils.Callback() {
+                public void onSuccess(String response) {
+                    runOnUiThread( () -> {
+                        try {
+                            System.out.println(response);
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String message = jsonResponse.getString("message");
+
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            System.out.println("Error parsing JSON in CompleteLessonActivity");
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error parsing JSON in CompleteLessonActivity", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
