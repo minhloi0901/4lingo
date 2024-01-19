@@ -13,12 +13,13 @@ def root():
 def add_new_question():
     # data = request.json
     data = json.loads(request.data.decode('utf-8', errors='ignore'))
+    lesson_id = data.get('lesson_id')
     score = data.get('score')
     content = data.get('content')
     answer = data.get('answer')
     explanation = data.get('explanation')
     choice = data.get('choice')
-    return Questions_controller.add_new_question(score, content, answer, explanation, choice)
+    return Questions_controller.add_new_question(lesson_id, score, content, answer, explanation, choice)
    
 @question_router.route("/delete", methods=["DELETE"])
 def delete_question_by_id():

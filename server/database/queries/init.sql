@@ -10,50 +10,53 @@ CREATE TABLE IF NOT EXISTS user (
 	role ENUM("LEANER", "TEACHER", "ADMIN") NOT NULL,
 	phone_number VARCHAR(15),
 	email VARCHAR(255) NOT NULL UNIQUE,
+	lesson_type_1 INT DEFAULT 1,
+    lesson_type_2 INT DEFAULT 1,
+    lesson_type_3 INT DEFAULT 1,
+    lesson_type_4 INT DEFAULT 1,
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS community (
-	id INT AUTO_INCREMENT,
-	name VARCHAR(128) NOT NULL UNIQUE,
-	manager INT NOT NULL, 
-	description NVARCHAR(128),
-	number_of_users INT DEFAULT 0,
-	date_create DATETIME,
-	PRIMARY KEY (id),
-	FOREIGN KEY (manager) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS community (
+-- 	id INT AUTO_INCREMENT,
+-- 	name VARCHAR(128) NOT NULL UNIQUE,
+-- 	manager INT NOT NULL, 
+-- 	description NVARCHAR(128),
+-- 	number_of_users INT DEFAULT 0,
+-- 	date_create DATETIME,
+-- 	PRIMARY KEY (id),
+-- 	FOREIGN KEY (manager) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
 
-CREATE TABLE IF NOT EXISTS post (
-	community_id INT NOT NULL, 
-	id INT NOT NULL,
-	author INT NOT NULL,
-	content VARCHAR(1024) NOT NULL,
-	date_posted TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	number_of_likes INT DEFAULT 0,
-	number_of_dislikes INT DEFAULT 0,
-	number_of_views INT DEFAULT 0,
-    PRIMARY KEY (community_id, id),
-	FOREIGN KEY (community_id) REFERENCES community(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS post (
+-- 	community_id INT NOT NULL, 
+-- 	id INT NOT NULL,
+-- 	author INT NOT NULL,
+-- 	content VARCHAR(1024) NOT NULL,
+-- 	date_posted TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+-- 	number_of_likes INT DEFAULT 0,
+-- 	number_of_dislikes INT DEFAULT 0,
+-- 	number_of_views INT DEFAULT 0,
+--     PRIMARY KEY (community_id, id),
+-- 	FOREIGN KEY (community_id) REFERENCES community(id) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
 
-CREATE TABLE IF NOT EXISTS comment (
-	community_id INT NOT NULL,
-	post_id INT NOT NULL,
-	id INT NOT NULL,
-	author INT NOT NULL,
-	parent INT NOT NULL DEFAULT 0,
-	time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	content NVARCHAR(1024),
-	likes INT DEFAULT 0,
-	dislikes INT DEFAULT 0,
-	PRIMARY KEY (community_id, post_id, id),
-	FOREIGN KEY (community_id) REFERENCES post(community_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (parent) REFERENCES comment(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS comment (
+-- 	community_id INT NOT NULL,
+-- 	post_id INT NOT NULL,
+-- 	id INT NOT NULL,
+-- 	author INT NOT NULL,
+-- 	parent INT NOT NULL DEFAULT 0,
+-- 	time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+-- 	content NVARCHAR(1024),
+-- 	likes INT DEFAULT 0,
+-- 	dislikes INT DEFAULT 0,
+-- 	PRIMARY KEY (community_id, post_id, id),
+-- 	FOREIGN KEY (community_id, post_id) REFERENCES post(community_id, id) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (parent) REFERENCES comment(id) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
 
 CREATE TABLE IF NOT EXISTS vocabulary (
 	id INT NOT NULL,
@@ -66,14 +69,30 @@ CREATE TABLE IF NOT EXISTS vocabulary (
 	FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS lesson (
+	id INT AUTO_INCREMENT,
+	lesson_name VARCHAR(128) NOT NULL UNIQUE,
+	author INT NOT NULL,
+	time_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	lesson_type VARCHAR(1024) NOT NULL,
+	score INT DEFAULT 0,
+	popularity_score INT DEFAULT 0, 
+	difficulty INT DEFAULT 0,
+    number_of_questions INT DEFAULT 0,
+	PRIMARY KEY (id),
+	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS question (
 	id INT AUTO_INCREMENT,
+    lesson_id INT NOT NULL,
 	score INT,
 	content NVARCHAR(1024),
     choice NVARCHAR(1024),
 	answer VARCHAR(128),
 	explanation NVARCHAR(1024), 
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+    FOREIGN KEY (lesson_id) REFERENCES lesson(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS answer (
@@ -93,19 +112,6 @@ CREATE TABLE IF NOT EXISTS mistake (
 	time_stamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (user_id, question_id, id),
 	FOREIGN KEY (user_id, question_id) REFERENCES answer(user_id, question_id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS lesson (
-	id INT AUTO_INCREMENT,
-	lesson_name VARCHAR(128) NOT NULL UNIQUE,
-	author INT NOT NULL,
-	time_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	type VARCHAR(1024) NOT NULL,
-	score INT DEFAULT 0,
-	popularity_score INT DEFAULT 0, 
-	difficulty INT DEFAULT 0,
-	PRIMARY KEY (id),
-	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS review (
@@ -142,14 +148,6 @@ CREATE TABLE IF NOT EXISTS lesson_completion (
 	PRIMARY KEY (lesson_id, user_id),
 	FOREIGN KEY (lesson_id) REFERENCES lesson(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE 
-);
-
-CREATE TABLE IF NOT EXISTS lesson_question (
-	lesson_id INT NOT NULL,
-	question_id INT NOT NULL,
-	PRIMARY KEY (lesson_id, question_id),
-	FOREIGN KEY (lesson_id) REFERENCES lesson(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
 CREATE TABLE IF NOT EXISTS contest_question (
@@ -198,12 +196,12 @@ CREATE TABLE IF NOT EXISTS notification (
 	FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS community_membership (
-	community_id INT NOT NULL,
-	user_id INT NOT NULL,
-	date_joined TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	role ENUM("Admin", "Member"),
-	PRIMARY KEY (community_id, user_id),
-	FOREIGN KEY (community_id) REFERENCES community(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (user_id) REFERENCES user(id ) ON DELETE CASCADE ON UPDATE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS community_membership (
+-- 	community_id INT NOT NULL,
+-- 	user_id INT NOT NULL,
+-- 	date_joined TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+-- 	role ENUM("Admin", "Member"),
+-- 	PRIMARY KEY (community_id, user_id),
+-- 	FOREIGN KEY (community_id) REFERENCES community(id) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (user_id) REFERENCES user(id ) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
