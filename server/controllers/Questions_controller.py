@@ -49,7 +49,7 @@ def find_one_question_by_id():
         data = request.json
         question_id = data.get('question_id')
     except ValueError:
-        return jsonify({'message': 'Invalid JSON data in the request body'}), 400s
+        return jsonify({'message': 'Invalid JSON data in the request body'}), 400
     
     filter_criteria = Question.id == question_id
     question = Question.find_one_question_by_filter(filter_criteria)
