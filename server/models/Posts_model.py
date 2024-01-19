@@ -3,9 +3,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 import os, sys
-current_directory = os.path.dirname(os.path.abspath(__file__))
-server_directory = os.path.abspath(os.path.join(current_directory, '..'))
-sys.path.append(server_directory)
 from database.db import db
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -40,16 +37,6 @@ class Post(Base):
 	number_of_likes = Column(Integer, default=0)
 	number_of_dislikes = Column(Integer, default=0)
 	number_of_views = Column(Integer, default=0)
- 
-	# relationships
-	community = relationship("Community", back_populates="post")
-	user = relationship("User", back_populates="post")
- 
-	
-	# Constraints
-	__table_args__ = (
-		PrimaryKeyConstraint('community_id', 'id'),
-	)
  
 	
 	@classmethod

@@ -36,12 +36,7 @@ class Question(Base):
     def delete_questions_by_filter(cls, filter_criteria):
         deleted_count = session.query(cls).filter(filter_criteria).delete()
         session.commit()
-        if deleted_count == 0:
-            print("No question deleted.")
-        elif deleted_count == 1:
-            print("1 question deleted.")
-        else:
-            print(f"{deleted_count} questions deleted.")
+        return deleted_count
 
     # Class method to find questions by filter
     @classmethod
@@ -58,12 +53,6 @@ class Question(Base):
     def update_questions_by_filter(cls, filter_criteria, update_data):
         updated_count = session.query(cls).filter(filter_criteria).update(update_data)
         session.commit()
-        if updated_count == 0:
-            print("No question updated.")
-        elif updated_count == 1:
-            print("1 question updated.")
-        else:
-            print(f"{updated_count} questions updated.")
-    
+        return updated_count
 # test create new question
 # new_question = Question.create_new_question(10, 'Africa is hotter _ Europe.', 'than', 'Châu Phi nóng hơn Châu Âu.', 'than, then, that')

@@ -34,12 +34,14 @@ class Community(Base):
     __tablename__ = 'community'
     id = Column(Integer, primary_key=True)
     name = Column(String(128), nullable=False, unique=True)
-    manager = Column(Integer, ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
+    manager = Column(Integer, 
+                     ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE'), 
+                     nullable=False)
     description = Column(String(128))
     number_of_users = Column(Integer, default=0)
     date_create = Column(DateTime)
     
-    user = relationship(User, back_populates="community")
+
    
     
     @classmethod
