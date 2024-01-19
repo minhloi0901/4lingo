@@ -5,6 +5,7 @@ from routes.Dictionary_route import dict_router
 from routes.Profile_route import profile_router
 from routes.Questions_route import question_router
 from routes.Vocabularies_route import vocabulary_router
+from routes.Lessons_route import lessons_router
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ app.register_blueprint(dict_router, url_prefix='/dictionary')
 app.register_blueprint(profile_router, url_prefix='/profile')
 app.register_blueprint(question_router, url_prefix='/questions')
 app.register_blueprint(vocabulary_router, url_prefix='/vocabularies')
+app.register_blueprint(lessons_router, url_prefix='/lessons')
 
 @app.route('/')
 def root():

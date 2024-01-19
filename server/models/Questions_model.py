@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, NVARCHAR
-
+from sqlalchemy import Column, Integer, String, NVARCHAR, TIMESTAMP, ForeignKey
+from sqlalchemy.orm import relationship
 from database.db import db
 
 Session = db['Session']
@@ -9,16 +9,21 @@ Base = db['Base']
 class Question(Base):
     __tablename__ = 'question'
     id = Column(Integer, primary_key=True)
+    lesson_id = Column(Integer, ForeignKey('lesson.id'), nullable=False)
     score = Column(Integer)
     content = Column(NVARCHAR(1024))
     answer = Column(String(128))
     explanation = Column(NVARCHAR(1024))
     choice = Column(NVARCHAR(1024))
 
+    # Define the relationship
+    lesson = relationship('Lesson', back_populates='questions')
+
     # Class method to create a new question
     @classmethod 
-    def create_new_question(cls, score, content, answer, explanation, choice=None):
+    def create_new_question(cls, lesson_id, score, content, answer, explanation, choice=None):
         new_question = cls (
+            lesson_id=lesson_id,
             score=score,
             content=content,
             answer=answer,
@@ -64,6 +69,3 @@ class Question(Base):
             print("1 question updated.")
         else:
             print(f"{updated_count} questions updated.")
-    
-# test create new question
-# new_question = Question.create_new_question(10, 'Africa is hotter _ Europe.', 'than', 'Châu Phi nóng hơn Châu Âu.', 'than, then, that')

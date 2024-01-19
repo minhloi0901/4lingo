@@ -95,7 +95,11 @@ def get_all_users():
             'rating': user.rating,
             'role': user.role.value,
             'phone_number': user.phone_number,
-            'email': user.email
+            'email': user.email,
+            'lesson_type_1': user.lesson_type_1,
+            'lesson_type_2': user.lesson_type_2,
+            'lesson_type_3': user.lesson_type_3,
+            'lesson_type_4': user.lesson_type_4
         }
         user_list.append(user_data)
 
@@ -133,7 +137,11 @@ def get_user_by_token(user_token):
             'rating': user.rating,
             'role': user.role.value,
             'phone_number': user.phone_number,
-            'email': user.email
+            'email': user.email,
+            'lesson_type_1': user.lesson_type_1,
+            'lesson_type_2': user.lesson_type_2,
+            'lesson_type_3': user.lesson_type_3,
+            'lesson_type_4': user.lesson_type_4
         }
         return jsonify(user_data)
     else:

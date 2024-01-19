@@ -1,9 +1,22 @@
 from flask import jsonify, Response
 from models.Questions_model import Question
+from models.Lessons_model import Lesson
 import json
 
-def add_new_question(score, content, answer, explanation, choice=None):
-    new_question = Question.create_new_question(score, content, answer, explanation, choice)
+def add_new_question(lesson_id, score, content, answer, explanation, choice=None):
+    # check content
+    filter_criteria = Question.content == content
+    question = Question.find_one_question_by_filter(filter_criteria)
+    if question:
+        return jsonify({'message': 'Question content already exists'})
+    
+    # check lesson_id
+    filter_criteria = Question.lesson_id == lesson_id
+    lesson = Lesson.find_one_lesson_by_filter(filter_criteria)
+    if not lesson:
+        return jsonify({'message': 'Lesson not found'})
+    
+    new_question = Question.create_new_question(lesson_id, score, content, answer, explanation, choice)
     return jsonify({'message': 'New question created successfully!'})
 
 def delete_question_by_id(question_id):
@@ -27,6 +40,7 @@ def find_one_question_by_id(question_id):
     if question:
         question_data = {
             'id': question.id,
+            'lesson_id': question.lesson_id,
             'score': question.score,
             'content': question.content,
             'answer': question.answer,
@@ -45,6 +59,7 @@ def find_all_questions_by_filter(filter_criteria):
     for question in questions:
         question_data = {
             'id': question.id,
+            'lesson_id': question.lesson_id,
             'score': question.score,
             'content': question.content,
             'answer': question.answer,
