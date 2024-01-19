@@ -24,7 +24,6 @@ def create_new_post():
     return Posts_controller.create_new_post(data)
 
 
-def 
 
 
 
