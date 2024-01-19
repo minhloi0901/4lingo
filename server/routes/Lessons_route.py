@@ -29,7 +29,7 @@ def find_lesson():
     lesson_type = data.get('lesson_type')
     return Lessons_controller.find_lesson(token, lesson_type)
 
-@lessons_router.route("/find_by_id", methods=["GET"])
+@lessons_router.route("/find_by_id", methods=["POST"])
 def find_lesson_by_id():
     data = request.json
     lesson_id = data.get('lesson_id')

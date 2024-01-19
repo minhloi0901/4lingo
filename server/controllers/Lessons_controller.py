@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, Response, json
 from models.Lessons_model import Lesson
 from models.Users_model import User
 from models.Questions_model import Question
@@ -94,16 +94,16 @@ def find_lesson(token, lesson_type):
     lesson_property_name = 'lesson_type_' + str(lesson_type)
     lesson_level = user.__getattribute__(lesson_property_name)
     
-    # get lesson by lesson_level
-    filter_criteria = Lesson.lesson_level == lesson_level
+    # get lesson by lesson_level and lesson_type
+    filter_criteria = and_(Lesson.lesson_type == lesson_type, Lesson.lesson_level == lesson_level)
     found_lesson = Lesson.find_one_lesson_by_filter(filter_criteria)
     if not found_lesson:
         return jsonify({'message': 'Lesson not found'}), 402
     
     lesson_id = found_lesson.id
 
-    # get all questions by lesson_id
-    filter_criteria = Lesson.id == lesson_id
+    # get all questions have lesson_id
+    filter_criteria = Question.lesson_id == lesson_id
     questions = Question.find_all_questions_by_filter(filter_criteria)
     question_list = []
     for question in questions:
@@ -118,6 +118,5 @@ def find_lesson(token, lesson_type):
         }
         question_list.append(question_data)
     
-    response = jsonify(question_list)
-    response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    response = Response(json.dumps(question_list, ensure_ascii=False), content_type="application/json; charset=utf-8")
     return response, 200
