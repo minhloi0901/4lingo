@@ -1,0 +1,10 @@
+mysql-connector-python
+flask
+PyMySQL
+sqlalchemy
+mysqlclient
+bcrypt
+PyJWT
+flask_validator
+requests
+flask_mail

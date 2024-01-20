@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#D9EAE2"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            >
+            <TextView
+                android:id="@+id/textViewWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Word"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/textViewVietnameseMeaning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Word's Meaning"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageCheckMark"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_checkmark"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#19D937"/>
+
+</LinearLayout>
+

@@ -4,10 +4,12 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".HomeActivity"
+    tools:context=".Controllers.HomeActivity"
     android:gravity="center"
     android:layout_marginTop="@dimen/navbar_margin"
-    android:layout_marginBottom="@dimen/navbar_margin">
+    android:layout_marginBottom="@dimen/navbar_margin"
+    android:background="@drawable/background"
+    >
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -36,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="WORD MATCHING"
                 android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
                 android:textStyle="bold"/>
         </LinearLayout>
 
@@ -60,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="COMPLETE SENTENCE"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -85,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MULTIPLE CHOICE"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
 
@@ -111,6 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CONVERSATION"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
 

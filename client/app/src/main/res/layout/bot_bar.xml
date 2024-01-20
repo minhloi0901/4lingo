@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/navbar_margin"
+    android:orientation="horizontal"
+    android:background="@color/nav"
+    android:id="@+id/botNavBar">
+
+    <FrameLayout
+        android:layout_width="@dimen/big_icon_size"
+        android:layout_height="@dimen/big_icon_size"
+        android:id="@+id/home"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp">
+        <ImageView
+            android:layout_width="@dimen/fit_icon_size"
+            android:layout_height="@dimen/fit_icon_size"
+            android:src="@drawable/home_icon"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="@dimen/big_icon_size"
+        android:layout_height="@dimen/big_icon_size"
+        android:id="@+id/search"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="@dimen/fit_icon_size"
+            android:layout_height="@dimen/fit_icon_size"
+            android:src="@drawable/search_icon"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/mistake"
+        android:layout_width="@dimen/big_icon_size"
+        android:layout_height="@dimen/big_icon_size"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="@dimen/fit_icon_size"
+            android:layout_height="@dimen/fit_icon_size"
+            android:layout_gravity="center"
+            android:src="@drawable/mistake_icon" />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="@dimen/big_icon_size"
+        android:layout_height="@dimen/big_icon_size"
+        android:id="@+id/note"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:layout_marginRight="10dp">
+        <ImageView
+            android:layout_width="@dimen/fit_icon_size"
+            android:layout_height="@dimen/fit_icon_size"
+            android:src="@drawable/note_icon"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
+</LinearLayout>

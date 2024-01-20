@@ -6,4 +6,27 @@
     <color name="green">#00FF00</color>
     <color name="cyan">#00FFFF</color>
     <color name="blue">#0000FF</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="_bg__login_screen_ek2_color">#FFFFFF</color>
+    <color name="_bg__group_12_ek1_color">#000000</color>
+    <color name="rectangle_3_color">#19D937</color>
+    <color name="__ng_nh_p_color">#FFFBFB</color>
+    <color name="qu_n_m_t_kh_u_color">#00B2FF</color>
+    <color name="rectangle_4_color">#83949D</color>
+    <color name="__ng_nh_p__i_n_tho_i_color">#F7F6F6</color>
+    <color name="rectangle_6_color">#84949E</color>
+    <color name="facebook_color">#1F12BC</color>
+=======
+    <color name="gray">#48A9A9</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="light_yellow">#DCFFEB3B</color>
+    <color name="greenColor">#19D937</color>
+    >>>>>>> origin/tan1
 </resources>

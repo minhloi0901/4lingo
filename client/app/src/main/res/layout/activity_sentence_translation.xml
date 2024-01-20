@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/ignoreButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/back_icon" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_question"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:id="@+id/progressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5/20"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Translate this sentence"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+    >
+        <ImageView
+            android:id="@+id/questionCharacterImage"
+            android:layout_width="80dp"
+            android:layout_height="120dp"
+            android:src="@drawable/profile_icon"
+            />
+
+        <TextView
+            android:id="@+id/originalSentence"
+            android:layout_marginLeft="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textSize="26sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/border_gray"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#494646"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="16dp">
+    <!-- Destination Container -->
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/destinationContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:flexWrap="wrap">
+
+    </com.google.android.flexbox.FlexboxLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#494646"/>
+
+    <!-- Source Container -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="16dp"
+        >
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/sourceContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:flexWrap="wrap">
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/continueButton"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="KIỂM TRA"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/big_radius_border_green"
+        android:padding="16dp"
+        android:backgroundTint="#19D937"
+        />
+
+</LinearLayout>
