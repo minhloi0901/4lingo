@@ -44,7 +44,7 @@ def search():
                         translated_example = translate_text(definition["example"])
                         definition["translatedText"] = translated_example
 
-        return jsonify(reformat_data(dict_data[0]))
+        return jsonify(reformat_data(dict_data[0])), 200
     else:
         return jsonify({"error": "Word not found or error in external API"}), dict_response.status_code
 

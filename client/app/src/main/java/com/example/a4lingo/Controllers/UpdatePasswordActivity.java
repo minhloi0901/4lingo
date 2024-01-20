@@ -77,6 +77,7 @@ public class UpdatePasswordActivity extends OneTopNavActivity{
                         public void onSuccess(String response) {
                             System.out.println(response);
                             Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                             finish();
                         }

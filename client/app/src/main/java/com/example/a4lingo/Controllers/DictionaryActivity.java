@@ -20,8 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DictionaryActivity extends MainActivity {
-    private DictionarySearchedWordsAdapter adapter;
-    private DictionaryService dictionaryService = new DictionaryService(this);
     @Override
     protected void renderLayout(){
         super.renderLayout();
@@ -92,6 +90,7 @@ public class DictionaryActivity extends MainActivity {
                   }
                   else{
                       Intent intent = new Intent(DictionaryActivity.this, WordDictionaryActivity.class);
+                      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                       intent.putExtra("WORD", editText.getText().toString());
                       startActivity(intent);
                       finish();

@@ -6,6 +6,6 @@ config = {
     'PASSWORD': '123456',
     'DB': 'lingo',
     'SECRET_KEY': 'fdkjshfhjsdfdskfdsfdcbsjdkfdsdf',
-    'GG_API_KEY': '776026c167msh8aebcf0db7082acp192fcejsn149cde93dd69',
+    'GG_API_KEY': 'b60421c69emshd7597ec72c00400p1b2a5cjsn1f0177154c63',
     'SECRET_SALT': '8'
 }

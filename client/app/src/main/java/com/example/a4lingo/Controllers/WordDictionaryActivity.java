@@ -115,6 +115,7 @@ public class WordDictionaryActivity extends MainActivity{
                 }
                 else{
                     Intent intent = new Intent(getApplicationContext(), WordDictionaryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("WORD", editText.getText().toString());
                     startActivity(intent);
                     finish();

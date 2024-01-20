@@ -35,18 +35,18 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
         RankingItem item = rankingItemList.get(position);
 
         holder.rankTextView.setText(String.valueOf(item.getRank()));
-//        if (item.getAvatarResId() != 0) {
-//            holder.avatarImageView.setImageResource(item.getAvatarResId());
-//        } else {
-//            // Set a default image
-//            holder.avatarImageView.setImageResource(R.drawable.profile_icon); // Replace 'default_avatar' with your default image name
-//        }
-        try {
+        if (item.getAvatarResId() != 0) {
             holder.avatarImageView.setImageResource(item.getAvatarResId());
-        } catch (Exception e) {
-            // If there's an error, set a default image
-            holder.avatarImageView.setImageResource(R.drawable.profile_icon); // Replace 'default_image' with your default image name
+        } else {
+            // Set a default image
+            holder.avatarImageView.setImageResource(R.drawable.profile_icon); // Replace 'default_avatar' with your default image name
         }
+//        try {
+//            holder.avatarImageView.setImageResource(item.getAvatarResId());
+//        } catch (Exception e) {
+//            // If there's an error, set a default image
+//            holder.avatarImageView.setImageResource(R.drawable.profile_icon); // Replace 'default_image' with your default image name
+//        }
 
 //        holder.avatarImageView.setImageResource(item.getAvatarResId());
         holder.nameTextView.setText(item.getName());
