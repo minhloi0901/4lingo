@@ -11,7 +11,7 @@ from Users_model import User
 
 Session = db['Session']
 session = Session()
-Base = declarative_base()
+Base = db['Base']
 
 
 class Post(Base):
