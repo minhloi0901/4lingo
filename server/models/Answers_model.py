@@ -5,7 +5,7 @@ from sqlalchemy import Enum as SQLAlchemyEnum
 from models.Users_model import User
 from models.Questions_model import Question
 from database.db import db
-from middlewares.Auth_middleware import get_id_from_token
+
 
 Session = db['Session']
 session = Session()

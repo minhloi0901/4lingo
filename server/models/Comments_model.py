@@ -9,14 +9,14 @@ sys.path.append(server_directory)
 from database.db import db
 from sqlalchemy.ext.declarative import declarative_base
 
-from Communities_model import Community
-from Users_model import User
-from Posts_model import Post
+from models.Communities_model import Community
+from models.Users_model import User
+from models.Posts_model import Post
 
 
 Session = db['Session']
 session = Session()
-Base = declarative_base()
+Base = db['Base']
 
 class Comment(Base):
 #     CREATE TABLE IF NOT EXISTS comment (
@@ -45,43 +45,11 @@ class Comment(Base):
     content = Column(String(1024))
     likes = Column(Integer, default=0)
     
-    # Primary key
-    __table_args__ = (
-        PrimaryKeyConstraint('community_id', 'post_id', 'id'),
-    )
     
-    # Relationships
-    post = relationship('Post', back_populates='comments')
-    user = relationship('User', back_populates='comments')
-    comment = relationship('Comment', back_populates='comment')
     
     
     @classmethod
     def create_comment(cls, community_id, post_id, author, parent, content):
-        # Check if community exists
-        existing_community = session.query(Community).filter(Community.id == community_id).first()
-        if not existing_community:
-            print(f"Community does not exist with id: {community_id}")
-            return None
-        
-        # Check if post exists
-        existing_post = session.query(Post).filter(Post.id == post_id).first()
-        if not existing_post:
-            print(f"Post does not exist with id: {post_id}")
-            return None
-        
-        # Check if user exists
-        existing_user = session.query(User).filter(User.id == author).first()
-        if not existing_user:
-            print(f"User does not exist with id: {author}")
-            return None
-        
-        # Check if parent comment exists
-        existing_parent_comment = session.query(cls).filter(cls.id == parent).first()
-        if not existing_parent_comment:
-            print(f"Parent comment does not exist with id: {parent}")
-            return None
-        
         new_comment = cls (
             community_id=community_id,
             post_id=post_id,
@@ -99,12 +67,7 @@ class Comment(Base):
     def delete_comments_by_filter(cls, filter_criteria):
         deleted_count = session.query(cls).filter(filter_criteria).delete()
         session.commit()
-        if deleted_count == 0:
-            print("No comment deleted.")
-        elif deleted_count == 1:
-            print("1 comment deleted.")
-        else:
-            print(f"{deleted_count} comments deleted.")
+        return deleted_count
     
     
     @classmethod
@@ -119,12 +82,7 @@ class Comment(Base):
     def update_comment(cls, filter_criteria, update_data):
         updated_count = session.query(cls).filter(filter_criteria).update(update_data)
         session.commit()
-        if updated_count == 0:
-            print("No comment updated.")
-        elif updated_count == 1:
-            print("1 comment updated.")
-        else:
-            print(f"{updated_count} comments updated.")
+        return updated_count
     
     
     
