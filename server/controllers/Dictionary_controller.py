@@ -21,6 +21,18 @@ def translate_text(text, source_lang="en", target_lang="vi"):
     else:
         return text
 
+def translate_example_sentences(example_sentences):
+    # Concatenate example sentences with '/'
+    sentences_to_translate = '/'.join(example_sentences)
+
+    # Call the translation API
+    translated_text = translate_text(sentences_to_translate)
+
+    # Split the translated text by lines
+    translated_sentences = translated_text.split('/')
+
+    return translated_sentences
+
 def search():
     word = request.args.get('word', '')
 
@@ -35,14 +47,29 @@ def search():
 
         # Translate the word itself
         translated_word = translate_text(word)
+
+        # Collect example sentences
+        example_sentences = []
+        for entry in dict_data:
+            for meaning in entry.get("meanings", []):
+                for definition in meaning.get("definitions", []):
+                    if "example" in definition:
+                        example_sentences.append(definition["example"])
+
+        # Translate all example sentences in a single API call
+        translated_sentences = translate_example_sentences(example_sentences)
+
+        # Update the dictionary data with translations
+        example_index = 0
         for entry in dict_data:
             entry['translated'] = translated_word  # Add translated word at the same level
 
             for meaning in entry.get("meanings", []):
                 for definition in meaning.get("definitions", []):
                     if "example" in definition:
-                        translated_example = translate_text(definition["example"])
-                        definition["translatedText"] = translated_example
+                        # Update the translatedText for each example
+                        definition["translatedText"] = translated_sentences[example_index]
+                        example_index += 1
 
         return jsonify(reformat_data(dict_data[0])), 200
     else:
