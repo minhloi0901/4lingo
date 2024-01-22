@@ -1,0 +1,47 @@
+# Ignore Android Studio files and folders
+/client/.gradle
+/client/.idea
+/client/build/
+/client/captures/
+/client/local.properties
+/client/release/
+/client/app/build/
+/client/app/release/
+
+# Ignore Python Flask files and folders
+/server/__pycache__/
+/server/*.pyc
+/server/*.pyo
+/server/*.pyd
+/server/*.db
+/server/instance/
+/server/venv/
+
+# Ignore JetBrains IDE files
+*.iml
+/.idea
+/.idea_modules
+
+# Ignore common IDE files
+*.swp
+*.swo
+*.class
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.log
+*.bak
+*.backup
+*.tmp
+*.swp
+
+# Ignore compiled files
+*.dll
+*.exe
