@@ -8,7 +8,6 @@ from routes.Vocabularies_route import vocabulary_router
 from routes.Lessons_route import lessons_router
 from routes.Achievements_route import achievement_router
 from routes.Users_Achievements_route import user_achievement_router
-from routes.Communities_route import community_router
 
 app = Flask(__name__)
 
@@ -21,7 +20,6 @@ app.register_blueprint(vocabulary_router, url_prefix='/vocabularies')
 app.register_blueprint(lessons_router, url_prefix='/lessons')
 app.register_blueprint(achievement_router, url_prefix='/achievements')
 app.register_blueprint(user_achievement_router, url_prefix='/users_achievements')
-app.register_blueprint(community_router, url_prefix='/communities')
 
 @app.route('/')
 def root():
