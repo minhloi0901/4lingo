@@ -2,7 +2,6 @@ from flask import jsonify, request
 from models.Users_model import User
 from controllers.Users_controller import create_new_user, update_password_by_email
 from werkzeug.security import generate_password_hash
-from models.Users_model import User
 from middlewares.Auth_middleware import generate_token
 from sqlalchemy.exc import IntegrityError
 import bcrypt

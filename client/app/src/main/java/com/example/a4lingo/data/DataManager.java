@@ -20,7 +20,7 @@ import okhttp3.RequestBody;
 
 public class DataManager {
     private String url = "http://10.0.2.2:5000"; // Removed the last slash
-    private static final String POST = "POST";    // Made constants 'static final'
+    public static final String POST = "POST";    // Made constants 'static final'
     public static final String GET = "GET";
 
 //    public interface DataManagerCallback {
