@@ -26,13 +26,13 @@ public class CompleteLessonService {
             jsonParam.put("type", type);
         } catch (JSONException e) {
             e.printStackTrace();
-            System.out.println("Error creating JSON in WordDictionaryService.");
+            System.out.println("Error creating JSON in CompleteLessonService.");
             new Handler(Looper.getMainLooper()).post(() ->
-                    Toast.makeText(context, "Error creating JSON in NoteService.", Toast.LENGTH_SHORT).show());
+                    Toast.makeText(context, "Error creating JSON in CompleteLessonService.", Toast.LENGTH_SHORT).show());
             return;
         }
 
         DataManager dataManager = new DataManager();
-        dataManager.sendRequest("POST", "vocabularies/delete", jsonParam, Utils.createCallback(context, callback));
+        dataManager.sendRequest("POST", "users/complete_lesson", jsonParam, Utils.createCallback(context, callback));
     }
 }
