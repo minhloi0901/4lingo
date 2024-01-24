@@ -20,7 +20,7 @@ class Vocabulary(Base):
     @classmethod
     def create_new_vocabulary(cls, user_id, text, meaning, pronun_es_us=None, pronun_en_uk=None):
         # Check if a vocabulary entry with the same text already exists
-        existing_entry = session.query(cls).filter(cls.text == text).first()
+        existing_entry = session.query(cls).filter(cls.text == text, cls.user_id == user_id).first()
         
         if existing_entry:
             # If an entry exists, print a message and do not add a new one
