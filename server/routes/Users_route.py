@@ -18,3 +18,7 @@ def update_user():
 @user_router.route("/", methods=["DELETE"])
 def delete_user():
     return Users_controller.delete_user_by_id()
+
+@user_router.route("/complete_lesson", methods=["POST"])
+def complete_lesson():
+    return Users_controller.update_user_lesson()
