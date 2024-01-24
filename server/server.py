@@ -6,6 +6,7 @@ from routes.Profile_route import profile_router
 from routes.Questions_route import question_router
 from routes.Vocabularies_route import vocabulary_router
 from routes.Achievements_route import achievement_router
+from routes.Lessons_route import lessons_router
 
 app = Flask(__name__)
 
@@ -16,6 +17,7 @@ app.register_blueprint(profile_router, url_prefix='/profile')
 app.register_blueprint(question_router, url_prefix='/questions')
 app.register_blueprint(vocabulary_router, url_prefix='/vocabularies')
 app.register_blueprint(achievement_router, url_prefix='/achievements')
+app.register_blueprint(lessons_router, url_prefix='/lessons')
 
 @app.route('/')
 def root():
