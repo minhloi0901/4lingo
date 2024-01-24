@@ -61,8 +61,8 @@ public class AchievementService {
                 // Extract values from JSON and assign default values
                 String name = achievementObject.optString("name", "Default Name");
                 String content = achievementObject.optString("content", "Default Description");
-                int progress = 1;
-                int total = 3;
+                int progress = 0;
+                int total = 5;
                 int imageResourceId = R.drawable.ic_achievement_instance; // Replace with the actual resource ID
 
                 AchievementItem achievementItem = new AchievementItem(name, content, progress, total, imageResourceId);

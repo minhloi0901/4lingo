@@ -19,16 +19,14 @@ def get_user_achievements_by_token():
     
     is_valid_token, error_message = get_id_from_token(user_token)
     if not is_valid_token:
-        return error_message, 401
+        return jsonify({'message': error_message}), 401
 
-    user_id = error_message
-
-    # Query the achievements for the specific user_id
-    user_achievements = Achievement.find_all_achievements_by_filter(Achievement.criteria.like(f'%user_id={user_id}%'))
+    # Query all achievements from the table
+    all_achievements = Achievement.find_all_achievements_by_filter(True)
 
     # Convert the achievements to a list of dictionaries
     achievements_list = []
-    for achievement in user_achievements:
+    for achievement in all_achievements:
         achievements_list.append({
             'id': achievement.id,
             'name': achievement.name,
