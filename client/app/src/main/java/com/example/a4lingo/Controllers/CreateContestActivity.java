@@ -142,6 +142,7 @@ public class CreateContestActivity extends OneTopNavActivity {
                 // END
 
                 Intent intent = new Intent(CreateContestActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("USER_ID", user_id);
                 startActivity(intent);
             }

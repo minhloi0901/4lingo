@@ -59,6 +59,7 @@ public class GetPasswordActivity extends OneTopNavActivity {
                     Toast.makeText(GetPasswordActivity.this, "Token has expired.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(GetPasswordActivity.this, ChangePasswordActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("email", theEmail);
                     startActivity(intent);
                 }

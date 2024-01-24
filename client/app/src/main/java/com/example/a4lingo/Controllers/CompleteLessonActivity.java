@@ -115,6 +115,7 @@ public class CompleteLessonActivity extends OneTopNavActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
                 }
@@ -129,6 +130,7 @@ public class CompleteLessonActivity extends OneTopNavActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CompleteLessonActivity.this, ReviewActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("LESSON_NAME", lessonName);
                 intent.putExtra("LESSON_ID", lesson_id);
                 startActivity(intent);
@@ -140,10 +142,12 @@ public class CompleteLessonActivity extends OneTopNavActivity {
             public void onClick(View v) {
                 if (updateResult()){
                     Intent intent = new Intent(CompleteLessonActivity.this, ShareActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
                 else{
                     Intent intent = new Intent(CompleteLessonActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
                 }

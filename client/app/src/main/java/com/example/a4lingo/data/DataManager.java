@@ -20,7 +20,7 @@ import okhttp3.RequestBody;
 
 public class DataManager {
     private String url = "http://10.0.2.2:5000"; // Removed the last slash
-    private static final String POST = "POST";    // Made constants 'static final'
+    public static final String POST = "POST";    // Made constants 'static final'
     public static final String GET = "GET";
 
 //    public interface DataManagerCallback {
@@ -36,9 +36,9 @@ public class DataManager {
         String fullURL = url + "/" + method; // Ensured no double slashes
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS).build();
+                .connectTimeout(180, TimeUnit.SECONDS)
+                .readTimeout(180, TimeUnit.SECONDS)
+                .writeTimeout(180, TimeUnit.SECONDS).build();
 
         Request request;
         if (type.equals(POST)) {

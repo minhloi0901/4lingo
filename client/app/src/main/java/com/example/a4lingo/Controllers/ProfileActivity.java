@@ -183,6 +183,7 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -193,6 +194,7 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), OverallActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -208,6 +210,7 @@ public class ProfileActivity extends OneTopNavActivity{
                 intent.putExtra("ANSWER", learningPathService.getLearningPathAnswers());
                 ArrayList<Integer> selected_answer = new ArrayList<>();
                 intent.putIntegerArrayListExtra("SELECTED", selected_answer);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -216,6 +219,7 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AchievementActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -349,6 +353,7 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CommunicationActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -357,6 +362,7 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CreateCommunicationActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -365,6 +371,7 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), RuleActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -373,6 +380,7 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ThanksActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -389,6 +397,7 @@ public class ProfileActivity extends OneTopNavActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), UpdatePasswordActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });

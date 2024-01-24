@@ -48,7 +48,7 @@ public class LeaderBoardActivity extends MainActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(LeaderBoardActivity.this, response, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(LeaderBoardActivity.this, response, Toast.LENGTH_SHORT).show();
                         rankingItemList[0] = leaderBoardService.parseUserList(response);
                         RankingAdapter adapter = new RankingAdapter(rankingItemList[0], getApplicationContext());
                         recyclerView.setAdapter(adapter);

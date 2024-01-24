@@ -55,7 +55,7 @@ public class LeaderBoardService {
                 JSONObject userObject = jsonArray.getJSONObject(i);
                 RankingItem user = new RankingItem(
                         0, // We'll update this later after sorting
-                        userObject.getInt("id"),
+                        0,
                         userObject.getString("username"), // Corrected field name
                         userObject.getInt("score")
                 );

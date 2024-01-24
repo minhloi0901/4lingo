@@ -54,18 +54,18 @@ public class ShareActivity extends AppCompatActivity {
         Intent intent = getIntent(); // Get the Intent that started this activity
 
         // Check for and retrieve the "name" string
-        if (intent.hasExtra("name")) {
-            achieveName = intent.getStringExtra("name");
-        } else {
-            Toast.makeText(this, "Lack of achievement name", Toast.LENGTH_LONG).show();
-        }
+//        if (intent.hasExtra("name")) {
+//            achieveName = intent.getStringExtra("name");
+//        } else {
+//            Toast.makeText(this, "Lack of achievement name", Toast.LENGTH_LONG).show();
+//        }
 
-        // Check for and retrieve the "description" string
-        if (intent.hasExtra("description")) {
-            theDescription = intent.getStringExtra("description");
-        } else {
-            Toast.makeText(this, "Lack of achievement description", Toast.LENGTH_LONG).show();
-        }
+//        // Check for and retrieve the "description" string
+//        if (intent.hasExtra("description")) {
+//            theDescription = intent.getStringExtra("description");
+//        } else {
+//            Toast.makeText(this, "Lack of achievement description", Toast.LENGTH_LONG).show();
+//        }
     }
 
 

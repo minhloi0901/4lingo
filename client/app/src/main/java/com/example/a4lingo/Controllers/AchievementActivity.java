@@ -1,18 +1,21 @@
 package com.example.a4lingo.Controllers;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4lingo.R;
-import com.example.a4lingo.Services.AchivementService;
+import com.example.a4lingo.Services.AchievementService;
+import com.example.a4lingo.Services.Utils;
 import com.example.a4lingo.adapter.AchievementAdapter;
+import com.example.a4lingo.adapter.RankingAdapter;
 import com.example.a4lingo.item.AchievementItem;
 
 import java.util.ArrayList;
@@ -58,20 +61,37 @@ public class AchievementActivity extends OneTopNavActivity{
     }
 
     private void renderAnInstance(View v) {
-        List<AchievementItem> achievementList = new ArrayList<>();
+        final List<AchievementItem>[] achievementList = new List[]{new ArrayList<>()};
 //        achievementList.add(new AchievementItem("Chúa tể nhiệm vụ", "Hoàn thành 10 nhiệm vụ", 5, 10, R.drawable.ic_achievement_instance));
 //        achievementList.add(new AchievementItem("Thợ săn đêm", "Hoàn thành 3 bài học sau 10 giờ tối", 1, 3, R.drawable.ic_achievement_instance));
-        AchivementService achivementService = new AchivementService();
-        achievementList = achivementService.getAchivements(user_id);
 
         RecyclerView recyclerView = v.findViewById(R.id.recyclerViewAchievement);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        String storedToken = sharedPreferences.getString("userToken", null);
 
-        // Instantiate the adapter and set it to your RecyclerView
-        AchievementAdapter adapter = new AchievementAdapter(this, achievementList);
-        recyclerView.setAdapter(adapter);
+        AchievementService achievementService = new AchievementService(getApplicationContext());
+        achievementService.getAchievements(new Utils.Callback() {
+            @Override
+            public void onSuccess(String response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                        achievementList[0] = achievementService.parseAchievementItemsFromJson(response);
+                        AchievementAdapter adapter = new AchievementAdapter(getApplicationContext(), achievementList[0]);
+                        recyclerView.setAdapter(adapter);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        }, storedToken);
     }
 
     @Override

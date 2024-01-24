@@ -1,11 +1,12 @@
 # Users.controller.py
-from flask import jsonify
+from flask import jsonify, request
 
 from errors.Errors import ALREADY_EXIST, NO_INPUT_400, INVALID_INPUT_422
 from models.Users_model import User
 from middlewares.Auth_validator import validate_password, validate_username, validate_email, validate_phone_number
 from middlewares.Auth_middleware import hash_password, get_id_from_token
 import bcrypt
+
 
 salt_rounds = 8
 
@@ -215,22 +216,41 @@ def update_password(user_token, update_data):
     else:
         return jsonify({'message': 'User not found'}), 403
 
+def update_user_lesson(): 
+    try:
+        data = request.json
+        user_token = data.get("token")
+        additional_score = data.get("total_score")
+        lesson_type = data.get("type")
+    except ValueError:
+        return jsonify({'message': 'Invalid JSON data in the request body'}), 400
 
+    is_valid_token, user_id_or_error = get_id_from_token(user_token)
+    if not is_valid_token:
+        return jsonify({'message': user_id_or_error}), 401
+    
+    # Find the user by user_id
+    filter_criteria = User.id == user_id_or_error
+    user = User.find_one_user_by_filter(filter_criteria)
 
+    if user:
+        # Update the user's score and lesson type count
+        new_score = user.score + additional_score
+        lesson_type_field = f'lesson_type_{lesson_type}'
+        if hasattr(user, lesson_type_field):
+            current_count = getattr(user, lesson_type_field)
+            setattr(user, lesson_type_field, current_count + 1)
+        else:
+            return jsonify({'message': f'Invalid lesson type: {lesson_type}'}), 400
 
-# def add_new_user_test():
-#     # Provide user information to create a new user (for testing purposes)
-#     test_username = "TestUser"
-#     test_password = "TestPassword" 
-#     test_role = "TEACHER"
-#     test_email = "testuser@example.com"
-#     test_phone_number = "123456290"  # Optional, can be None or empty string
+        update_data = {
+            'score': new_score,
+            # Update the specific lesson type field
+            lesson_type_field: getattr(user, lesson_type_field)
+        }
+        User.update_user_by_filter(filter_criteria, update_data)
 
-#     # Call create_user function to add a new user
-#     response = create_new_user(test_username, test_password, test_role, test_email, test_phone_number)
-
-#     # Print or handle the response
-#     print(response)
-
-# add_new_user_test()
+        return jsonify({'message': 'User lesson and score updated successfully!'}), 200
+    else:
+        return jsonify({'message': 'User not found'}), 403
     

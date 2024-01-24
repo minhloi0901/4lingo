@@ -23,7 +23,21 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/back_icon" />
 
+        <TextView
+            android:id="@+id/lesson_level"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_toStartOf="@id/questionIndexLayout"
+            android:layout_toEndOf="@+id/ignoreButton"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Level 0"
+            android:textStyle="bold"
+            android:textSize="26sp"
+            />
+
         <LinearLayout
+            android:id="@+id/questionIndexLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

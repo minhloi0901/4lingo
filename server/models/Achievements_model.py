@@ -10,13 +10,6 @@ session = Session()
 Base = db['Base']
 
 class Achievement(Base):
-#     CREATE TABLE IF NOT EXISTS achievement (
-# 	id INT AUTO_INCREMENT,
-# 	name VARCHAR(1024) NOT NULL,
-# 	content NVARCHAR(1024),
-# 	criteria NVARCHAR(1024) NOT NULL,
-# 	PRIMARY KEY (id)	
-# );
     __tablename__ = 'achievement'
     id = Column(Integer, primary_key=True)
     name = Column(String(1024), nullable=False)
