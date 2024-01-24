@@ -56,7 +56,8 @@ public class SentenceTranslationService {
                     jsonObject.getString("content"),
                     jsonObject.getString("answer"),
                     choices,
-                    jsonObject.getInt("score")
+                    jsonObject.getInt("score"),
+                    jsonObject.getInt("level")
             );
 
             questions.add(question);

@@ -101,7 +101,7 @@ def find_lesson(token, lesson_type):
         return jsonify({'message': 'Lesson not found'}), 402
     
     lesson_id = found_lesson.id
-    print(lesson_id)
+    
     # get all questions have lesson_id
     filter_criteria = Question.lesson_id == lesson_id
     questions = Question.find_all_questions_by_filter(filter_criteria)
@@ -114,9 +114,13 @@ def find_lesson(token, lesson_type):
             'content': question.content,
             'answer': question.answer,
             'explanation': question.explanation,
-            'choice': question.choice
+            'choice': question.choice,
+            'level': lesson_level
         }
         question_list.append(question_data)
+    
+    if len(question_list) == 0:
+        return jsonify({'message': 'Lack of questions in lesson'}), 403
     
     response = Response(json.dumps(question_list, ensure_ascii=False), content_type="application/json; charset=utf-8")
     return response, 200

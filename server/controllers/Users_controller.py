@@ -151,11 +151,6 @@ def update_user(user_token, update_data):
     new_phone_number = update_data.get('phone_number', None)
     new_username = update_data.get('username', None)
 
-    # Validate email
-    is_valid_email, error_message_email = validate_email(new_email)
-    if not is_valid_email:
-        return jsonify({'message': error_message_email}), 400
-
     # Check if the new email already exists
     if new_email:
         existing_email_user = User.find_one_user_by_filter(User.email == new_email)

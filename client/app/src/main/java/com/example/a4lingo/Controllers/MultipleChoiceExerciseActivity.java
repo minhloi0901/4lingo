@@ -70,6 +70,12 @@ public class MultipleChoiceExerciseActivity extends MainActivity{
                                 JSONArray jsonResponse = new JSONArray(response);
 
                                 questions = multipleChoiceService.parseJsonResponse(jsonResponse);
+
+                                if (questions != null && questions.size() > 0){
+                                    TextView levelTextView = v.findViewById(R.id.lesson_level);
+                                    levelTextView.setText("Level " + questions.get(0).getLevel());
+                                }
+
                                 renderAnInstance(v);
                             } catch (JSONException e) {
                                 System.out.println("Error parsing JSON in MultipleChoiceExerciseActivity");

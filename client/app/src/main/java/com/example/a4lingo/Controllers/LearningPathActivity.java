@@ -114,9 +114,13 @@ public class LearningPathActivity extends OneTopNavActivity {
                     else {
                         // HANDLE WHEN OUT OF QUESTION
                         // BEGIN
-                        Toast.makeText(LearningPathActivity.this, "Out of question", Toast.LENGTH_SHORT).show();
-                        LearningPathService learningPathService = new LearningPathService();
-                        String learningPath = learningPathService.getLearningPath(selected_answer);
+//                        Toast.makeText(LearningPathActivity.this, "Out of question", Toast.LENGTH_SHORT).show();
+//                        LearningPathService learningPathService = new LearningPathService();
+//                        String learningPath = learningPathService.getLearningPath(selected_answer);
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
                         // END
                     }
                 }
