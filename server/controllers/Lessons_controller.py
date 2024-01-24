@@ -114,7 +114,8 @@ def find_lesson(token, lesson_type):
             'content': question.content,
             'answer': question.answer,
             'explanation': question.explanation,
-            'choice': question.choice
+            'choice': question.choice,
+            'level': lesson_level
         }
         question_list.append(question_data)
     
